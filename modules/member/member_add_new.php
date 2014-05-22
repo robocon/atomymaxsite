@@ -1,10 +1,10 @@
-<TABLE WIDTH="750" BORDER="0" ALIGN="center" CELLPADDING="0" CELLSPACING="0">
+<TABLE width="740" BORDER="0" ALIGN="center" CELLPADDING="0" CELLSPACING="0">
   <TR>
             <TD width="10" vAlign=top></TD>
-          <TD width="740" vAlign=top colspan="2">
+          <TD width="730" vAlign=top colspan="2">
 
       &nbsp;&nbsp;<IMG SRC="images/menu/textmenu_member.gif" BORDER="0">
-				<TABLE width="740" align=center cellSpacing=0 cellPadding=0 border=0>
+				<TABLE width="730" align=center cellSpacing=0 cellPadding=0 border=0>
 				<TR>
 					<TD height="1" class="dotline" colspan="2"></TD>
 
@@ -116,7 +116,6 @@ $showmsgm="<br><br><center><font size='3' face='MS Sans Serif'>"._MEMBER_MOD_FOR
 	echo"<meta http-equiv=\"refresh\" content=\"3;URL=?name=member\" />";
 } else {
 
-
 // ตรวจสอบว่ามีชื่อ user นี้ใช้ไปหรือยัง
 $sql = "select user from ".TB_MEMBER." where user='$user_name'" ;
 $result = mysql_query($sql) ;
@@ -127,8 +126,10 @@ $showmsg="<br><br><center><font size='3' face='MS Sans Serif'>"._MEMBER_MOD_FORM
 //	echo"<meta http-equiv=\"refresh\" content=\"3;URL=?name=member\" />";
 } else {
 
-//Check Pic Size
+	//Check Pic Size
 if(!empty($FILE['tmp_name'])){
+
+if (($FILE['type']=='image/jpg') || ($FILE['type']=='image/jpeg') || ($FILE['type']=='image/pjpeg') || ($FILE['type']=='image/JPG') || ($FILE['type']=='image/gif') || ($FILE['type']=='image/x-png') ){
 
 	$size = getimagesize($FILE['tmp_name']);
 	$sizezz=$size[0]*$size[1];
@@ -140,7 +141,7 @@ if(!empty($FILE['tmp_name'])){
 	showerror($showmsg);
 	exit();
 	}
-
+	
 if (($FILE['type']=='image/jpg') || ($FILE['type']=='image/jpeg') || ($FILE['type']=='image/pjpeg') || ($FILE['type']=='image/JPG') || ($FILE['type']=='image/gif') || ($FILE['type']=='image/x-png')|| ($FILE['type']=='image/png') ){
 	if ($widths > _MEMBER_LIMIT_PICWIDTH) {
 		$images = $FILE["tmp_name"];
@@ -177,12 +178,14 @@ $Filenames="members_".TIMESTAMP."_".$FILE["name"]."";
 } else {
 $Filenames="";
 }
+}
+
 $db->connectdb(DB_NAME,DB_USERNAME,DB_PASSWORD);
 $sql = "select MAX(id) as IDS from ".TB_MEMBER." " ;
 $result = mysql_query($sql) ;
 $dbarr = mysql_fetch_array($result);;
 $member_db = $dbarr[IDS]+1 ; // นำค่า id มาเพิ่มให้กับค่ารหัสสมาชิกครั้งละ1
-
+$name="".$first_name." ".$last_name."";
 $member_id = "$yourcode$member_db" ; // รหัสสมาชิกเช่น ip0001
 $db->connectdb(DB_NAME,DB_USERNAME,DB_PASSWORD);
 $results =$db->add_db(TB_MEMBER,array(
@@ -228,7 +231,7 @@ ob_start();
 //session_start();
 $_SESSION['login_true']=$user_name;
 $_SESSION['pwd_login']=md5($pwd_name1);
-$_SESSION['uax'] = $_SESSION['login_true'].":".$_SERVER['HTTP_USER_AGENT'].":".$IPADDRESS.":".$_SERVER['HTTP_ACCEPT_LANGUAGE'];
+$_SESSION['ua'] = $_SESSION['login_true'].":".$_SERVER['HTTP_USER_AGENT'].":".$IPADDRESS.":".session_id().":".$_SERVER['HTTP_ACCEPT_LANGUAGE'];
 session_write_close();
 ob_end_flush();
 
@@ -262,10 +265,97 @@ ob_end_flush();
 			));
 			
 			}
-$name="".$first_name."  ".$last_name."";
 
-echo "<center><font size=\"3\" face='MS Sans Serif'><b>"._MEMBER_MOD_ADDMEMBER_SUCCESS."</b></font></center>" ;
-sendmailnewx($member_id ,$name, $user_name , $pwd_name1 , $email ,$home) ;  // ส่งเมล์หาลูกค้า เรียกฟังค์ชั่นให้ทำงาน
+function SendNewsUser($email,$name,$member_id,$user_name,$pwd_name1) {
+
+$home="".WEB_URL."" ;
+$subject_mail = _MAILNEW_TOPIC ; // หัวข้ออีเมล์ 
+//----------------------------------------------------------------------- เนื้อหาของอีเมล์ //
+$message_mail = "
+<html>
+<title>Email for new User</title>
+<body>
+<table>
+<tr><td><br>"._MAILNEW_DETAIL1." $name</td></tr>
+<tr><td><br>"._MAILNEW_DETAIL2."</td></tr>
+<tr><td><br>"._MAILNEW_DETAIL3." $member_id</td></tr>
+<tr><td><br>"._MAILNEW_DETAIL4."</td></tr>
+<tr><td><br>"._MAILNEW_DETAIL5." $user_name</td></tr>
+<tr><td><br>"._MAILNEW_DETAIL6." $pwd_name1</td></tr>
+<tr><td><br>"._MAILNEW_DETAIL7."</td></tr>
+<tr><td><br>"._MAILNEW_DETAIL8." $home</td></tr>
+</table>
+</body>
+</html>
+" ;
+//------------------------------------------------------------------------ จบเนื้อหาของอีเมล์ //
+require_once("includes/phpmailler/class.phpmailer.php");
+ $mail = new PHPMailer();
+ $mail->CharSet = "utf-8";
+ $mail->IsSMTP();
+ $mail->IsHTML(true);
+ $mail->Host = 'ssl://smtp.gmail.com';
+ $mail->Port = 465;
+ $mail->SMTPAuth = true;
+ $mail->Username = ""._GOOGLE_SEND_MAIL_USER.""; //อีเมล์ของคุณ (Google App)
+ $mail->Password = ""._GOOGLE_SEND_MAIL_PASS.""; //รหัสผ่านอีเมล์ของคุณ (Google App)
+ $mail->From = "".WEB_EMAIL.""; // ใครเป็นผู้ส่ง
+ $mail->FromName = ""._GOOGLE_SEND_MAIL_FROM.""; // ชื่อผู้ส่งสักนิดครับ
+ $mail->Subject  = $subject_mail;
+ $mail->Body     =  $message_mail;
+ $mail->AltBody =  $message_mail;
+ $mail->AddAddress($email); // ส่งไปที่ใครดีครับ
+// $mail->Send(); 
+
+if( $mail->send("".$email."")){
+	    echo ""._MEMBER_MOD_ADDMEMBER_SUCCESS."";
+} else {
+		echo "Mailer Error: " . $mail->ErrorInfo;
+}
+}
+
+SendNewsUser($email,$name,$member_id,$user_name,$pwd_name1) ;  
+
+
+//echo "<meta http-equiv='refresh' content='0.5;url=\"".$HTTP_REFERER."\"'>" ;
+if($IPADDRESS !='127.0.0.1'){
+$info = getInfo($IPADDRESS);
+$lastdate=date('Y-m-d', strtotime('-1 week'));
+$visitor_ip = $IPADDRESS;
+$visitor_browser = getBrowserType();
+$visitor_hour = date("h");
+$visitor_minute = date("i");
+$visitor_date = date("Y-m-d H:i:s");
+$visitor_day = date("d");
+$visitor_month = date("m");
+$visitor_year = date("Y");
+$visitor_refferer = $_SERVER['HTTP_REFERER'];
+$visited_page = str_replace(WEB_URL,"",selfURL());
+$db->connectdb(DB_NAME,DB_USERNAME,DB_PASSWORD);
+$result = mysql_query("select user,email from ".TB_MEMBER." where user='".$_SESSION['login_true']."' ") ;
+$dbarr = mysql_fetch_array($result) ;
+
+$db->del(TB_MEMBERLOG," visitor_date <='".$lastdate."' "); 
+
+$db->add_db(TB_MEMBERLOG,array(
+"user"=> "".$dbarr['user']."",
+"email"=> "".$dbarr['email']."",
+"visitor_ip"=> $visitor_ip,
+"visitor_browser"=> $visitor_browser,
+"visitor_date"=> $visitor_date,
+"city"=>  $info["city"],
+"location"=>  $info['country'],
+"longitude"=>  $info["long"],
+"latitude"=> $info["lat"],
+"visitor_refferer"=> $visitor_refferer,
+"visitor_page"=> $visited_page,
+"localTimeZone"=> $info["localTimeZone"]
+//"localTime"=> $info["localTime"]
+));
+}
+
+//echo "<center><font size=\"3\" face='MS Sans Serif'><b>"._MEMBER_MOD_ADDMEMBER_SUCCESS."</b></font></center>" ;
+//sendmailnewx($member_id ,$name, $user_name , $pwd_name1 , $email ,$home) ;  // ส่งเมล์หาลูกค้า เรียกฟังค์ชั่นให้ทำงาน
 
 echo "<meta http-equiv='refresh' content='5; url=?name=member&file=member_detail'>" ;
 

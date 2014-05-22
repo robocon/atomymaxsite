@@ -40,39 +40,15 @@ empty($_GET['page'])?$page="":$page=$_GET['page'];
 empty($_GET['category'])?$category="":$category=$_GET['category'];
 empty($_POST['loop'])?$loop="":$loop=$_POST['loop'];
 $IPADDRESS=get_real_ip();
-if (!empty($admin_user)){
-if(empty($_SESSION['ua']) || $_SESSION['ua'] != $admin_user.":".$_SERVER['HTTP_USER_AGENT'].":".$IPADDRESS.":".$_SERVER['HTTP_ACCEPT_LANGUAGE'])
-{
-$db->connectdb(DB_NAME,DB_USERNAME,DB_PASSWORD);
-$db->del(TB_useronline," useronline='".$_SESSION['admin_user']."' "); 
-$db->add_db(TB_IPBLOCK,array(
-	"ip"=>"".$IPADDRESS."",
-	"post_date"=>"".time().""
-	));
-$db->closedb ();
-session_unset();
-//session_destroy();
-session_regenerate_id(); // เริ่ม session อื่นใหม
-die('Session Hijacking Attempt');
+
+if (!empty($_SESSION['admin_user'])){
+anti_hacksession($_SESSION['admin_user'],session_id(),$IPADDRESS);
+}
+ 
+if(!empty($_SESSION['login_true'])){
+anti_hacksession($_SESSION['login_true'],session_id(),$IPADDRESS);
 }
 
-} 
-if(!empty($login_true)){
-if(empty($_SESSION['uax']) || $_SESSION['uax'] != $login_true.":".$_SERVER['HTTP_USER_AGENT'].":".$IPADDRESS.":".$_SERVER['HTTP_ACCEPT_LANGUAGE'])
-{
-$db->connectdb(DB_NAME,DB_USERNAME,DB_PASSWORD);
-$db->del(TB_useronline," useronline='".$_SESSION['login_true']."' "); 
-$db->add_db(TB_IPBLOCK,array(
-	"ip"=>"".$IPADDRESS."",
-	"post_date"=>"".time().""
-	));
-$db->closedb ();
-session_unset();
-//session_destroy();
-session_regenerate_id(); // เริ่ม session อื่นใหม
-die('Session Hijacking Attempt');
-}
-}
 //ตรวจสอบว่ามีโมดูลหรือไม่ (โมดูล User)
 function GETMODULE($name,$file){
 	global $MODPATH, $MODPATHFILE ;

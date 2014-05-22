@@ -1,4 +1,168 @@
-<?
+<?php
+
+function getBrowserType () {
+if (!empty($_SERVER['HTTP_USER_AGENT'])) 
+{ 
+   $HTTP_USER_AGENT = $_SERVER['HTTP_USER_AGENT']; 
+} 
+else if (!empty($HTTP_SERVER_VARS['HTTP_USER_AGENT'])) 
+{ 
+   $HTTP_USER_AGENT = $HTTP_SERVER_VARS['HTTP_USER_AGENT']; 
+} 
+else if (!isset($HTTP_USER_AGENT)) 
+{ 
+   $HTTP_USER_AGENT = ''; 
+} 
+  // Create list of browsers with browser name as array key and user agent as value. 
+	$browsers = array(
+		'Opera' => 'Opera',
+		'Mozilla Firefox'=> '(Firebird)|(Firefox)', // Use regular expressions as value to identify browser
+		'Galeon' => 'Galeon',
+		'Mozilla'=>'Gecko',
+		'MyIE'=>'MyIE',
+		'Lynx' => 'Lynx',
+		'Netscape' => '(Mozilla/4\.75)|(Netscape6)|(Mozilla/4\.08)|(Mozilla/4\.5)|(Mozilla/4\.6)|(Mozilla/4\.79)',
+		'Konqueror'=>'Konqueror',
+		'SearchBot' => '(nuhk)|(Googlebot)|(Yammybot)|(Openbot)|(Slurp/cat)|(msnbot)|(ia_archiver)',
+		'Internet Explorer 8' => '(MSIE 8\.[0-9]+)',
+                'Internet Explorer 7' => '(MSIE 7\.[0-9]+)',
+		'Internet Explorer 6' => '(MSIE 6\.[0-9]+)',
+		'Internet Explorer 5' => '(MSIE 5\.[0-9]+)',
+		'Internet Explorer 4' => '(MSIE 4\.[0-9]+)',
+	);
+
+	foreach($browsers as $browser=>$pattern) { // Loop through $browsers array
+    // Use regular expressions to check browser type
+		if(preg_match("/".$pattern."/", $HTTP_USER_AGENT)) { // Check if a value in $browsers array matches current user agent.
+			return $browser; // Browser was matched so return $browsers key
+		}
+	}
+	return 'Unknown'; // Cannot find browser so return Unknown
+}
+
+function selfURL() { 
+$s = empty($_SERVER["HTTPS"]) ? '' : ($_SERVER["HTTPS"] == "on") ? "s" : "";
+$protocol = strleft(strtolower($_SERVER["SERVER_PROTOCOL"]), "/").$s; 
+$port = ($_SERVER["SERVER_PORT"] == "80") ? "" : (":".$_SERVER["SERVER_PORT"]); 
+return $protocol."://".$_SERVER['SERVER_NAME'].$port.$_SERVER['REQUEST_URI']; 
+}
+function strleft($s1, $s2) { 
+return substr($s1, 0, strpos($s1, $s2)); 
+}
+
+function getInfo($ips){
+//        $url = get_content("http://api.easyjquery.com/ips/?ip=".$ips."&full=true");
+        $url = get_content("http://smart-ip.net/geoip-json/".$ips."");
+//		$url = get_content("http://freegeoip.net/json/".$ips."");
+//		$url = get_content("http://api.ipinfodb.com/v3/ip-city/?key=9730aa0c8b5c67b560947f664bf9c4f5128a3b81b0ff6f3f0f16dca1bea46fcb&ip=".$ips."&format=json");
+        $xml = json_decode($url,true);
+
+//        $info["ip"] = $xml['IP'];
+//        $info["region"] = $xml['RegionName'];
+//        $info["city"] = $xml['CityName'];
+//        $info["lat"] = $xml['CityLatitude'];
+//        $info["long"] = $xml['CityLongitude'];
+//        $info['country'] = $xml['CountryName'];
+//		$info['localTimeZone'] = $xml['LocalTimeZone'];
+//        $info['localTime'] = $xml->localTime;
+
+        $info["ip"] = $xml['host'];
+        $info["region"] = $xml['region'];
+        $info["city"] = $xml['city'];
+        $info["lat"] = $xml['latitude'];
+        $info["long"] = $xml['longitude'];
+        $info['country'] = $xml['countryName'];
+		$info['localTimeZone'] = $xml['timezone'];
+//        $info['localTime'] = $xml->localTime;
+/*
+       $info["ip"] = $xml['ip'];
+        $info["region"] = $xml['region_name'];
+        $info["city"] = $xml['city'];
+        $info["lat"] = $xml['latitude'];
+        $info["long"] = $xml['longitude'];
+        $info['country'] = $xml['country_name'];
+		$info['localTimeZone'] = $xml['timezone'];
+/*
+        $info["ip"] = $xml['ipAddress'];
+        $info["region"] = $xml['regionName'];
+        $info["city"] = $xml['cityName'];
+        $info["lat"] = $xml['latitude'];
+        $info["long"] = $xml['longitude'];
+        $info['country'] = $xml['countryName'];
+		$info['localTimeZone'] = $xml['timeZone'];
+*/
+        return $info;
+    }
+
+function anti_hacksession($User,$SessionID,$IP) {
+global $db ;
+if(empty($_SESSION['ua']) || $_SESSION['ua'] != $User.":".$_SERVER['HTTP_USER_AGENT'].":".$IP.":".$SessionID.":".$_SERVER['HTTP_ACCEPT_LANGUAGE'])
+{
+$db->connectdb(DB_NAME,DB_USERNAME,DB_PASSWORD);
+$db->del(TB_useronline," useronline='".$User."' "); 
+$db->add_db(TB_IPBLOCK,array(
+	"ip"=>"".$IP."",
+	"post_date"=>"".time().""
+	));
+session_unset();
+//session_destroy();
+session_regenerate_id(); // เริ่ม session อื่นใหม
+die('Session Hijacking Attempt');
+}
+}
+
+function highlight($word, $subject) {
+  $pattern = '/(>[^<]*)('.$word.')/i';
+  $replacement = '\1<span class="search">\2</span>';
+  return preg_replace($pattern, $replacement, $subject);
+}
+
+
+function thai_date(){
+$thaiday = array(_Sunday,_Monday,_Tuesday,_Wednesday,_Thursday,_Friday,_Saturday);
+$thaimonth = array(_Month_1,_Month_2,_Month_3,_Month_4,_Month_5,_Month_6,_Month_7,_Month_8,_Month_9,_Month_10,_Month_11,_Month_12);
+$Date =$thaiday[date("w")]." ".date("j")." ".$thaimonth[date("m")-1]." ";
+$Ythai= date("Y")+543;
+$Date .= $Ythai; 
+ return $Date;
+}
+
+
+//	$strDate = "2008-08-14 13:42:44";
+//	echo "ThaiCreate.Com Time now : ".DateThai($strDate);
+	function DateThaiNew($strDate,$full="")
+	{
+		$strYear = date("Y",strtotime($strDate))+543;
+		$strMonth= date("n",strtotime($strDate));
+		$strDay= date("j",strtotime($strDate));
+		$strHour= date("H",strtotime($strDate));
+		$strMinute= date("i",strtotime($strDate));
+		$strSeconds= date("s",strtotime($strDate));
+		$strMonthCut = Array("",""._Month_1."",""._Month_2."",""._Month_3."",""._Month_4."",""._Month_5."",""._Month_6."",""._Month_7."",""._Month_8."",""._Month_9."",""._Month_10."",""._Month_11."",""._Month_12."");
+		$strMonthThai=$strMonthCut[$strMonth];
+		if($full){
+		return "$strDay $strMonthThai $strYear, $strHour:$strMinute";
+		} else {
+		return "$strDay $strMonthThai $strYear";
+		}
+	}
+
+// เปลี่ยนวันที่ของการเพิ่มกิจกรรมจาก 01 02 2013 23:50 เป็น 2013-02-01 23:50:00
+  function CalTimeCon($timeSD)
+	{
+		$m1 = substr($timeSD, 0, 2);
+		$d1 = substr($timeSD, 3, 2);
+		$y1 = substr($timeSD, 6, 4) ;
+		$h1 = substr($timeSD, 10, 6);
+		if ($timeSD == "")
+		{
+			return "";
+		} else
+		{
+			return $y1 . "-" . $m1 . "-" . $d1. "" . $h1;
+		}
+	}
+
 function anti_injection( $user, $pass ,$ip) {
 	global $db;
            // We'll first get rid of any special characters using a simple regex statement.
@@ -397,17 +561,43 @@ function fb_date($timestamp){
 
 function get_real_ip()
 {
-    if( array_key_exists('HTTP_X_FORWARDED_FOR', $_SERVER) && !empty($_SERVER['HTTP_X_FORWARDED_FOR']) ) {
-        if (strpos($_SERVER['HTTP_X_FORWARDED_FOR'], ',')>0) {
-            $addr = explode(",",$_SERVER['HTTP_X_FORWARDED_FOR']);
-            return trim($addr[0]);
-        } else {
-            return $_SERVER['HTTP_X_FORWARDED_FOR'];
-        }
-    }
-    else {
-        return $_SERVER['REMOTE_ADDR'];
-    }
+$ip = false;
+if(!empty($_SERVER['HTTP_CLIENT_IP']))
+{
+$ip = $_SERVER['HTTP_CLIENT_IP'];
+}
+if(!empty($_SERVER['HTTP_X_FORWARDED_FOR']))
+{
+$ips = explode(", ", $_SERVER['HTTP_X_FORWARDED_FOR']);
+if($ip)
+{
+array_unshift($ips, $ip);
+$ip = false;
+}
+for($i = 0; $i < count($ips); $i++)
+{
+if(!preg_match("/^(10|172\.16|192\.168)\./i", $ips[$i]))
+{
+if(version_compare(phpversion(), "5.0.0", ">="))
+{
+if(ip2long($ips[$i]) != false)
+{
+$ip = $ips[$i];
+break;
+}
+}
+else
+{
+if(ip2long($ips[$i]) != - 1)
+{
+$ip = $ips[$i];
+break;
+}
+}
+}
+}
+}
+return ($ip ? $ip : $_SERVER['REMOTE_ADDR']);
 }
 
 

@@ -121,21 +121,27 @@ echo "<center><b>"._ADMIN_MEMBER_FUNCTION_SENDMAIL_NO_BIRTDAY."</b>" ;
 echo "<meta http-equiv='refresh' content='3; url=?name=admin&file=member&file=member_mail'>" ;
 }
 else {
-require_once("includes/mimemail.inc.php");
- $mail = new MIMEMAIL("HTML"); // ส่งแบบ HTML  
- $mail->senderName = "admin"; // ชื่อผู้ส่ง  
- $mail->senderMail = "".WEB_EMAIL.""; // อีเมลล์ผู้ส่ง  
- //$mail->bcc = $email; // ส่งแบบ bind carbon copy  
- $mail->subject =$subject; // หัวข้ออีเมลล์  
- $mail->body = $messagex;   // ข้อความ หรือ HTML ก็ได้  
-// $mail->attachment[] = "path_to_file1/filename1"; // ระบุตำแหน่งไฟล์ที่จะแนบ  
- $mail->create();  
-// $mail->send("".$email.""); // เมลล์ผู้รับ  
-//$mail->send("".$email."");
+//------------------------------------------------------------------------ จบเนื้อหาของอีเมล์ //
+require_once("includes/phpmailler/class.phpmailer.php");
+ $mail = new PHPMailer();
+ $mail->CharSet = "utf-8";
+ $mail->IsSMTP();
+ $mail->IsHTML(true);
+ $mail->Host = 'ssl://smtp.gmail.com';
+ $mail->Port = 465;
+ $mail->SMTPAuth = true;
+ $mail->Username = ""._GOOGLE_SEND_MAIL_USER.""; //อีเมล์ของคุณ (Google App)
+ $mail->Password = ""._GOOGLE_SEND_MAIL_PASS.""; //รหัสผ่านอีเมล์ของคุณ (Google App)
+ $mail->From = "".WEB_EMAIL.""; // ใครเป็นผู้ส่ง
+ $mail->FromName = ""._GOOGLE_SEND_MAIL_FROM.""; // ชื่อผู้ส่งสักนิดครับ
+ $mail->Subject  = $subject;
+ $mail->Body     =  $messagex;
+ $mail->AltBody =  $messagex;
 
 while($dbarrx = mysql_fetch_array($resultx)) {
 $email_member = $dbarrx['email'] ;
-$mail->send("".$email_member."");
+$mail->AddAddress($email_member); // ส่งไปที่ใครดีครับ
+$send=$mail->send("".$email_member."");
 }
 if($send) {
 echo "<center><b>"._ADMIN_MEMBER_FUNCTION_SENDMAIL_OK."</b></font></center>" ;
@@ -152,21 +158,26 @@ function sendmail_total($subject_total ,$message_total) {
 $subject_total= $_POST['subject_total'] ;
 $message_total = $_POST['message_total'] ;
 $result = mysql_query("select email from ".TB_MEMBER."") ;
-require_once("includes/mimemail.inc.php");
- $mail = new MIMEMAIL("HTML"); // ส่งแบบ HTML  
- $mail->senderName = "admin"; // ชื่อผู้ส่ง  
- $mail->senderMail = "".WEB_EMAIL.""; // อีเมลล์ผู้ส่ง  
- //$mail->bcc = $email; // ส่งแบบ bind carbon copy  
- $mail->subject =$subject_total; // หัวข้ออีเมลล์  
- $mail->body = $message_total;   // ข้อความ หรือ HTML ก็ได้  
-// $mail->attachment[] = "path_to_file1/filename1"; // ระบุตำแหน่งไฟล์ที่จะแนบ  
- $mail->create();  
-// $mail->send("".$email.""); // เมลล์ผู้รับ  
-//$mail->send("".$email."");
+require_once("includes/phpmailler/class.phpmailer.php");
+ $mail = new PHPMailer();
+ $mail->CharSet = "utf-8";
+ $mail->IsSMTP();
+ $mail->IsHTML(true);
+ $mail->Host = 'ssl://smtp.gmail.com';
+ $mail->Port = 465;
+ $mail->SMTPAuth = true;
+ $mail->Username = ""._GOOGLE_SEND_MAIL_USER.""; //อีเมล์ของคุณ (Google App)
+ $mail->Password = ""._GOOGLE_SEND_MAIL_PASS.""; //รหัสผ่านอีเมล์ของคุณ (Google App)
+ $mail->From = "".WEB_EMAIL.""; // ใครเป็นผู้ส่ง
+ $mail->FromName = ""._GOOGLE_SEND_MAIL_FROM.""; // ชื่อผู้ส่งสักนิดครับ
+ $mail->Subject  = $subject_total;
+ $mail->Body     =  $message_total;
+ $mail->AltBody =  $message_total;
 
 while($dbarr = mysql_fetch_array($result)) {
 $user_mail=$dbarr['email'];
-$mail->send("".$user_mail."");
+$mail->AddAddress($user_mail); // ส่งไปที่ใครดีครับ
+$send=$mail->send("".$user_mail."");
 }
 
 if($send) {

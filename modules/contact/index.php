@@ -38,7 +38,49 @@ check_captcha($_POST['security_code']);
 			"form_mail"=>"".$yourmail.""
 		));
 		$db->closedb ();
-		sendmailnew($subject ,$alldetail,$yourmail,$province,$known,$suggest);
+
+function SendMailContact($subject ,$alldetail,$yourmail) {
+
+$home="".WEB_URL."" ;
+$subject_mail = $subject ; // หัวข้ออีเมล์ 
+//----------------------------------------------------------------------- เนื้อหาของอีเมล์ //
+$message_mail = "
+<html>
+<title>".$subject."</title>
+<body>
+<table>
+<tr><td><br>".$alldetail." $name</td></tr>
+</table>
+</body>
+</html>
+" ;
+//------------------------------------------------------------------------ จบเนื้อหาของอีเมล์ //
+require_once("includes/phpmailler/class.phpmailer.php");
+ $mail = new PHPMailer();
+ $mail->CharSet = "utf-8";
+ $mail->IsSMTP();
+ $mail->IsHTML(true);
+ $mail->Host = 'ssl://smtp.gmail.com';
+ $mail->Port = 465;
+ $mail->SMTPAuth = true;
+ $mail->Username = ""._GOOGLE_SEND_MAIL_USER.""; //อีเมล์ของคุณ (Google App)
+ $mail->Password = ""._GOOGLE_SEND_MAIL_PASS.""; //รหัสผ่านอีเมล์ของคุณ (Google App)
+ $mail->From = "".$yourmail.""; // ใครเป็นผู้ส่ง
+ $mail->FromName = "".$yourmail.""; // ชื่อผู้ส่งสักนิดครับ
+ $mail->Subject  = $subject_mail;
+ $mail->Body     =  $message_mail;
+ $mail->AltBody =  $message_mail;
+ $mail->AddAddress($yourmail); // ส่งไปที่ใครดีครับ
+// $mail->Send(); 
+
+if( $mail->send("".$yourmail."")){
+	    echo ""._MEMBER_MOD_ADDMEMBER_SUCCESS."";
+} else {
+		echo "Mailer Error: " . $mail->ErrorInfo;
+}
+}
+
+		SendMailContact($subject ,$alldetail,$yourmail);
 //		SendMail("Tis-620","".$_POST[YOURMAIL]."","".WEB_EMAIL."","".WEB_EMAIL."","".$_POST[SUBJECT]."","".$_POST[DETAIL]."");
 		$Process = "<BR><BR><CENTER><IMG SRC=\"images/icon/mail.gif\" BORDER=\"0\" ><BR><BR><FONT SIZE=\"3\" COLOR=\"#009900\"><B>"._CONTACT_DATA_SUC."</B></FONT></CENTER><BR><BR>";
 		$Process .= "<meta http-equiv='refresh' content='1; url=?name=contact'>";

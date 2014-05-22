@@ -1,4 +1,4 @@
-<?
+<?php
 //////////////////////////////////////////// แสดงรายการข่าวสาร / ประชาสัมพันธ์ 
 if($op == ""){
 $_GET['id'] = intval($_GET['id']);
@@ -59,16 +59,6 @@ else if($op == "addmail"){
 	//////////////////////////////////////////// กรณีเพิ่ม Database
 function sendmailtofreind($mailtos,$topic,$emailx,$sendname,$LINK) {
 global $mailtos,$topic,$emailx,$sendname,$LINK;
-//require("class.phpmailer.php");
-
-$Headers = "MIME-Version: 1.0\r\n" ;
-$Headers .= "Content-type: text/html; charset=windows-874\r\n" ;
-                          // ส่งข้อความเป็นภาษาไทย ใช้ "windows-874"
-$Headers .= "From: ".$emailx."\r\n" ;
-$Headers .= "X-Priority: 3\r\n" ;
-$Headers .= "X-Mailer: PHP mailer\r\n" ;
-
-//----------------------------------------------------------------------- เนื้อหาของอีเมล์ //
 $message_mail = "
 <html>
 <title>"._MOD_SENDMAIL_FUNTION_SEND_TITLE."</title>
@@ -81,13 +71,29 @@ $message_mail = "
 </body>
 </html>
 " ;
-//------------------------------------------------------------------------ จบเนื้อหาของอีเมล์ //
-if(@mail($mailtos,$topic,$message_mail,$Headers,$sendname))
-{
-echo "<br><br><center><b>" ;
-echo "<center><font size=\"3\" face='MS Sans Serif'><b>"._MOD_SENDMAIL_FUNTION_SEND_MESS_ACC." ".$mailtos."  "._MOD_SENDMAIL_FUNTION_SEND_MESS_ACC1."</b></font></center>" ;
-}else{
-echo ""._MOD_SENDMAIL_FUNTION_SEND_MESS_NOACC."";
+
+require_once("includes/phpmailler/class.phpmailer.php");
+ $mail = new PHPMailer();
+ $mail->CharSet = "utf-8";
+ $mail->IsSMTP();
+ $mail->IsHTML(true);
+ $mail->Host = 'ssl://smtp.gmail.com';
+ $mail->Port = 465;
+ $mail->SMTPAuth = true;
+ $mail->Username = ""._GOOGLE_SEND_MAIL_USER.""; //อีเมล์ของคุณ (Google App)
+ $mail->Password = ""._GOOGLE_SEND_MAIL_PASS.""; //รหัสผ่านอีเมล์ของคุณ (Google App)
+ $mail->From = "".$emailx.""; // ใครเป็นผู้ส่ง
+ $mail->FromName = "".$sendname.""; // ชื่อผู้ส่งสักนิดครับ
+ $mail->Subject  = $topic;
+ $mail->Body     =  $message_mail;
+ $mail->AltBody =  $message_mail;
+ $mail->AddAddress($mailtos); // ส่งไปที่ใครดีครับ
+// $mail->Send(); 
+
+if( $mail->send("".$mailtos."")){
+	    echo ""._MOD_SENDMAIL_FUNTION_SEND_MESS_ACC." ".$mailtos."  "._MOD_SENDMAIL_FUNTION_SEND_MESS_ACC1."";
+} else {
+		echo "Mailer Error: " . $mail->ErrorInfo;
 }
 
 }
