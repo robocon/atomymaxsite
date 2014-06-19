@@ -1,10 +1,10 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <HEAD>
-<TITLE><?=WEB_TITILE;?></TITLE>
-<meta http-equiv="Content-Type" content="text/html; charset=<?=$iso;?>">
-<meta name="keywords" content="<?=WEB_TITILE;?>">
-<meta name="description" content="<?=WEB_TITILE;?>">
+<TITLE><?php echo WEB_TITILE;?></TITLE>
+<meta http-equiv="Content-Type" content="text/html; charset=<?php echo $iso;?>">
+<meta name="keywords" content="<?php echo WEB_TITILE;?>">
+<meta name="description" content="<?php echo WEB_TITILE;?>">
 
 <meta name="google-site-verification" content="ivsFd-l28inFeN0lt4bISp98fdzCDXEJb4BcXJGfEog" />
 <link href="templates/cli3/css/cli3.css" rel="stylesheet" type="text/css">
@@ -31,7 +31,7 @@ var loadtime = ( stopsec - startsec ) / 1000;
 
 <body background="templates/cli3/images/bg.gif">
 
-<?
+<?php
 require_once("mainfile.php");
 $_SERVER['PHP_SELF'] = "index.php";
 if(ISO =='utf-8'){
@@ -48,7 +48,7 @@ require_once("templates/".WEB_TEMPLATES."/lang/tem_thai_tis620.php");
 			<div align="center">
 			<div id="outer1" >
 				<div id="outer2" >
-				<table id="Table_01" width="<?=_TEMPLATES_WIDTH_CONFIG;?>" border="0" cellpadding="0" cellspacing="0">
+				<table id="Table_01" width="<?php echo _TEMPLATES_WIDTH_CONFIG;?>" border="0" cellpadding="0" cellspacing="0">
 					<tr>
 						<td colspan="6" >
 <?php
@@ -60,13 +60,13 @@ $arr['config'] = $db->fetch($res['config']);
 
  if ($types !='application/x-shockwave-flash' ) {
 ?>
-<TABLE width="<?=$arr['config']['width'];?>" align=right cellSpacing=0 cellPadding=0 border=0>
+<TABLE width="<?php echo $arr['config']['width'];?>" align=right cellSpacing=0 cellPadding=0 border=0>
 <TR>
-<TD valign="top" width="<?=$arr['config']['width'];?>" background="templates/<?echo WEB_TEMPLATES;?>/images/config/<?=$arr['config']['picname'];?>"  width="<?=$arr['config']['width'];?>" height="<?=$arr['config']['height'];?>" border="0" valign="top" colspan="6">
+<TD valign="top" width="<?php echo $arr['config']['width'];?>" background="templates/<?php echo WEB_TEMPLATES;?>/images/config/<?php echo $arr['config']['picname'];?>"  width="<?php echo $arr['config']['width'];?>" height="<?php echo $arr['config']['height'];?>" border="0" valign="top" colspan="6">
 <table align=right cellSpacing=0 cellPadding=0 border="0">
 <tr>
 <td colspan="6" align="right" >
-		<?
+		<?php
 empty($_SESSION['admin_user'])?$admin_user="":$admin_user=$_SESSION['admin_user'];
 empty($_SESSION['admin_pwd'])?$admin_pwd="":$admin_pwd=$_SESSION['admin_pwd'];
 empty($_SESSION['login_true'])?$login_true="":$login_true=$_SESSION['login_true'];
@@ -83,51 +83,51 @@ echo "<font color=#CFCFCF><b>"._TEM_WEL." </font><font color=#CC0000>"._TEM_WEL_
 </tr>
 <?php if (CountBlock('header')) { ?>
 <tr><td colspan="6" align="right" >
-<?
+<?php
 	LoadBlock('header'); 
 ?>
 </td>
 </tr>
-<? } ?>
+<?php } ?>
 					<tr>
-						<td background="templates/<?echo WEB_TEMPLATES;?>/images/menu/menu_01.png" width="95" height="37" border="0">
-			<a href="index.php" onMouseOut="MM_swapImgRestore()" onMouseOver="MM_swapImage('home','','templates/<?echo WEB_TEMPLATES;?>/images/menu/menu1_01.png',1)"><img src="templates/<?echo WEB_TEMPLATES;?>/images/menu/menu_01.png" width="95" height="37" alt="" name="home"></a></td>
-						<td  background="templates/<?echo WEB_TEMPLATES;?>/images/menu/menu_02.png" width="83" height="37" border="0" >
-			<a href="?name=news" onMouseOut="MM_swapImgRestore()" onMouseOver="MM_swapImage('news','','templates/<?echo WEB_TEMPLATES;?>/images/menu/menu1_02.png',1)"><img src="templates/<?echo WEB_TEMPLATES;?>/images/menu/menu_02.png" width="83" height="37" alt="" name="news"></a></td>
-						<td background="templates/<?echo WEB_TEMPLATES;?>/images/menu/menu_03.png" border="0" width="96" height="37">
-			<a href="?name=webboard" onMouseOut="MM_swapImgRestore()" onMouseOver="MM_swapImage('webboard','','templates/<?echo WEB_TEMPLATES;?>/images/menu/menu1_03.png',1)"><img src="templates/<?echo WEB_TEMPLATES;?>/images/menu/menu_03.png" width="96" height="37" name="webboard" alt=""></a></td>
-						<td background="templates/<?echo WEB_TEMPLATES;?>/images/menu/menu_04.png" border="0" width="102" height="37">
-			<a href="?name=gallery" onMouseOut="MM_swapImgRestore()" onMouseOver="MM_swapImage('gallery','','templates/<?echo WEB_TEMPLATES;?>/images/menu/menu1_04.png',1)"><img src="templates/<?echo WEB_TEMPLATES;?>/images/menu/menu_04.png" width="102" height="37" alt="" name="gallery"></a></td>
-						<td background="templates/<?echo WEB_TEMPLATES;?>/images/menu/menu_05.png" border="0" width="93" height="37">
-				<a href="?name=gbook" onMouseOut="MM_swapImgRestore()" onMouseOver="MM_swapImage('gbook','','templates/<?echo WEB_TEMPLATES;?>/images/menu/menu1_05.png',1)"><img src="templates/<?echo WEB_TEMPLATES;?>/images/menu/menu_05.png" width="93" height="37" alt="" name="gbook"></a></td>
-						<td background="templates/<?echo WEB_TEMPLATES;?>/images/menu/menu_06.png" border="0" width="91" height="37"><a href="?name=admin" onMouseOut="MM_swapImgRestore()" onMouseOver="MM_swapImage('admin','','templates/<?echo WEB_TEMPLATES;?>/images/menu/menu1_06.png',1)"><img src="templates/<?echo WEB_TEMPLATES;?>/images/menu/menu_06.png" width="91" height="37" alt="" name="admin"></a></td>
+						<td background="templates/<?php echo WEB_TEMPLATES;?>/images/menu/menu_01.png" width="95" height="37" border="0">
+			<a href="index.php" onMouseOut="MM_swapImgRestore()" onMouseOver="MM_swapImage('home','','templates/<?php echo WEB_TEMPLATES;?>/images/menu/menu1_01.png',1)"><img src="templates/<?php echo WEB_TEMPLATES;?>/images/menu/menu_01.png" width="95" height="37" alt="" name="home"></a></td>
+						<td  background="templates/<?php echo WEB_TEMPLATES;?>/images/menu/menu_02.png" width="83" height="37" border="0" >
+			<a href="?name=news" onMouseOut="MM_swapImgRestore()" onMouseOver="MM_swapImage('news','','templates/<?php echo WEB_TEMPLATES;?>/images/menu/menu1_02.png',1)"><img src="templates/<?php echo WEB_TEMPLATES;?>/images/menu/menu_02.png" width="83" height="37" alt="" name="news"></a></td>
+						<td background="templates/<?php echo WEB_TEMPLATES;?>/images/menu/menu_03.png" border="0" width="96" height="37">
+			<a href="?name=webboard" onMouseOut="MM_swapImgRestore()" onMouseOver="MM_swapImage('webboard','','templates/<?php echo WEB_TEMPLATES;?>/images/menu/menu1_03.png',1)"><img src="templates/<?php echo WEB_TEMPLATES;?>/images/menu/menu_03.png" width="96" height="37" name="webboard" alt=""></a></td>
+						<td background="templates/<?php echo WEB_TEMPLATES;?>/images/menu/menu_04.png" border="0" width="102" height="37">
+			<a href="?name=gallery" onMouseOut="MM_swapImgRestore()" onMouseOver="MM_swapImage('gallery','','templates/<?php echo WEB_TEMPLATES;?>/images/menu/menu1_04.png',1)"><img src="templates/<?php echo WEB_TEMPLATES;?>/images/menu/menu_04.png" width="102" height="37" alt="" name="gallery"></a></td>
+						<td background="templates/<?php echo WEB_TEMPLATES;?>/images/menu/menu_05.png" border="0" width="93" height="37">
+				<a href="?name=gbook" onMouseOut="MM_swapImgRestore()" onMouseOver="MM_swapImage('gbook','','templates/<?php echo WEB_TEMPLATES;?>/images/menu/menu1_05.png',1)"><img src="templates/<?php echo WEB_TEMPLATES;?>/images/menu/menu_05.png" width="93" height="37" alt="" name="gbook"></a></td>
+						<td background="templates/<?php echo WEB_TEMPLATES;?>/images/menu/menu_06.png" border="0" width="91" height="37"><a href="?name=admin" onMouseOut="MM_swapImgRestore()" onMouseOver="MM_swapImage('admin','','templates/<?php echo WEB_TEMPLATES;?>/images/menu/menu1_06.png',1)"><img src="templates/<?php echo WEB_TEMPLATES;?>/images/menu/menu_06.png" width="91" height="37" alt="" name="admin"></a></td>
 					</tr>
 </table>
 </td>
 </tr>
 </table>
-<?
+<?php
 	} else {
 		  ?>
 
-<TABLE width="<?=$arr['config']['width'];?>" align=center cellSpacing=0 cellPadding=0 border=0>
+<TABLE width="<?php echo $arr['config']['width'];?>" align=center cellSpacing=0 cellPadding=0 border=0>
 <TR>
-<TD width="<?=$arr['config']['width'];?>" border="0">
-<object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" codebase="http://fpdownload.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=8,0,0,0" width="<?=$arr['config']['width'];?>" height="<?=$arr['config']['height'];?>" border="0">
- <param name="movie" value="templates/<?=WEB_TEMPLATES;?>/images/config/<?=$arr['config']['picname'];?>" />
+<TD width="<?php echo $arr['config']['width'];?>" border="0">
+<object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" codebase="http://fpdownload.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=8,0,0,0" width="<?php echo $arr['config']['width'];?>" height="<?php echo $arr['config']['height'];?>" border="0">
+ <param name="movie" value="templates/<?php echo WEB_TEMPLATES;?>/images/config/<?php echo $arr['config']['picname'];?>" />
 <param name="quality" value="high" />
 <param name="wmode" value="transparent">
-<embed src="templates/<?=WEB_TEMPLATES;?>/images/config/<?=$arr['config']['picname'];?>"
+<embed src="templates/<?php echo WEB_TEMPLATES;?>/images/config/<?php echo $arr['config']['picname'];?>"
       quality="high"
       type="application/x-shockwave-flash"
-      width="<?=$arr['config']['width'];?>"
-      height="<?=$arr['config']['height'];?>"
+      width="<?php echo $arr['config']['width'];?>"
+      height="<?php echo $arr['config']['height'];?>"
 pluginspage="http://www.macromedia.com/go/getflashplayer" type="application/x-shockwave-flash" wmode="opaque"></embed>
 </object>
 </td>
 </tr>
 </table>
-<?
+<?php
 }
 ?>
 
@@ -135,10 +135,10 @@ pluginspage="http://www.macromedia.com/go/getflashplayer" type="application/x-sh
 						</td>
 					</tr>
 					<tr>
-						<td colspan="6"><? include 'modules/config/top2.php'; ?></td>
+						<td colspan="6"><?php include 'modules/config/top2.php'; ?></td>
 					</tr>
 					<tr>
-						<td colspan="6" background="templates/<?echo WEB_TEMPLATES;?>/images/bar.png" width=1000 height=27 >
+						<td colspan="6" background="templates/<?php echo WEB_TEMPLATES;?>/images/bar.png" width=1000 height=27 >
 							<?php if (CountBlock('pathway')) { ?>
 													<?php LoadBlock('pathway'); ?>
 									<?php } ?>
@@ -147,7 +147,7 @@ pluginspage="http://www.macromedia.com/go/getflashplayer" type="application/x-sh
 				</table>
 
 <center>
-				<TABLE cellSpacing=0 cellPadding=0 width=<?=_TEMPLATES_WIDTH_CONFIG;?> align=center border=0>
+				<TABLE cellSpacing=0 cellPadding=0 width=<?php echo _TEMPLATES_WIDTH_CONFIG;?> align=center border=0>
 				<TBODY>
 				</table>
 <table cellSpacing=0 cellPadding=0 width=990 align=center border=0>
@@ -157,10 +157,10 @@ pluginspage="http://www.macromedia.com/go/getflashplayer" type="application/x-sh
 				<TBODY>
 					<TR>
 					<td width="220" valign="top">
-								<? if($name<>"admin" && $name<>"admin/workboard" && $name<>"admin/backup" ) { ?>
+								<?php if($name<>"admin" && $name<>"admin/workboard" && $name<>"admin/backup" ) { ?>
 
 
-								<? //blockleft;?>
+								<?php //blockleft;?>
 
 									<?php if (CountBlock('left')) { ?>
 
@@ -173,12 +173,12 @@ pluginspage="http://www.macromedia.com/go/getflashplayer" type="application/x-sh
 									<?php } ?>
 
 
-						<?}?>
+						<?php } ?>
 						</td>
 						<TD vAlign="top" align="center" width="10" ></TD>
 <TD vAlign="top" align="center" width="100%" align="center">
 
-	<? if($name=="") { ?>
+	<?php if($name=="") { ?>
 
 										<table width="100%" cellspacing="0" cellpadding="0" >
 											<tr>
@@ -186,7 +186,7 @@ pluginspage="http://www.macromedia.com/go/getflashplayer" type="application/x-sh
           <TD width="770" vAlign=top align=left><IMG src="images/topfader.gif" border=0><BR>
 		  <!-- Admin -->
 		  &nbsp;&nbsp;
-								<? //blockcenter;?>
+								<?php //blockcenter;?>
  									<?php if (CountBlock('user2')) { ?>
 
 										<table width="100%" cellspacing="0" cellpadding="0" >
@@ -231,7 +231,7 @@ pluginspage="http://www.macromedia.com/go/getflashplayer" type="application/x-sh
 				</td>
 
 
-<? //blockright;?>
+<?php //blockright;?>
 							<?php if (CountBlock('right')) { ?>
         <TD width="10" vAlign=top></TD>
           <TD width="220" vAlign=top align=left>
@@ -249,7 +249,7 @@ pluginspage="http://www.macromedia.com/go/getflashplayer" type="application/x-sh
 			</tr>
 			</table>
 
-<?} else {
+<?php } else {
 OpenTable();
 require_once ("".$MODPATHFILE."");
  CloseTable();
@@ -262,7 +262,7 @@ require_once ("".$MODPATHFILE."");
 									<?php if (CountBlock('bottom')) { ?>
 <tr>
 <td>
-									<table width="<?=_TEMPLATES_WIDTH_CONFIG;?>" cellspacing="0" cellpadding="0">
+									<table width="<?php echo _TEMPLATES_WIDTH_CONFIG;?>" cellspacing="0" cellpadding="0">
 										<tr>
 											<td >
                         					<div >
@@ -276,21 +276,21 @@ require_once ("".$MODPATHFILE."");
 									<?php } ?>
 </table>
 
-	  <table border="0" align="center" cellpadding="0" cellspacing="0" width="<?=_TEMPLATES_WIDTH_CONFIG;?>">
+	  <table border="0" align="center" cellpadding="0" cellspacing="0" width="<?php echo _TEMPLATES_WIDTH_CONFIG;?>">
         <tr>
           <td valign="top" class="footer" bgcolor="#1B6AE0"><?include "modules/config/top3.php";?>
 		  </td>
 		  </tr>
 		  <tr>
           <td valign="top" class="footer" bgcolor="#1B6AE0">
-		  <div align="center" ><strong><b><?=WEB_FOOTER1;?></b></strong><br><?=WEB_FOOTER2;?>
+		  <div align="center" ><strong><b><?php echo WEB_FOOTER1;?></b></strong><br><?php echo WEB_FOOTER2;?>
 <br>
 <SCRIPT>
- document.write(" : <?echo _TEM_LOAD_PAGE;?>" +loadtime+ " <? echo _TEM_LOAD_PAGE_TIME;?> : ");
+ document.write(" : <?php echo _TEM_LOAD_PAGE;?>" +loadtime+ " <?php echo _TEM_LOAD_PAGE_TIME;?> : ");
 </SCRIPT>
 <br>
-@2010-2011 under <a target="_blank" href="http://www.gnu.org/copyleft/gpl.html"><font color="#CCCCCC" size="2">  GNU General Public License</font></a><font color="#ffffff">   Edit&Applied by</font><a target="_blank" title="<?=_TEM_POSITION;?>" href="http://maxtom.sytes.net/">  <font color="#CCCCCC" size="2">Chudsagorn phikulthong</font></a><br>
-<div align="center" ><font color="#ffffff" size="2">Power by : <a href="http://maxtom.sytes.net" target="_blank" ><font color="#CCCCCC" size="2"><?= _SCRIPT." "._VERSION ;?></font></a>
+@2010-2011 under <a target="_blank" href="http://www.gnu.org/copyleft/gpl.html"><font color="#CCCCCC" size="2">  GNU General Public License</font></a><font color="#ffffff">   Edit&Applied by</font><a target="_blank" title="<?php echo _TEM_POSITION;?>" href="http://maxtom.sytes.net/">  <font color="#CCCCCC" size="2">Chudsagorn phikulthong</font></a><br>
+<div align="center" ><font color="#ffffff" size="2">Power by : <a href="http://maxtom.sytes.net" target="_blank" ><font color="#CCCCCC" size="2"><?php echo  _SCRIPT." "._VERSION ;?></font></a>
 </div>
 
 		  </td>

@@ -1,4 +1,4 @@
-<?                   
+<?php
 $ct_ip = $_SERVER["REMOTE_ADDR"];
 $ct_yyyy = date("Y") ;
 $ct_mm = date("m") ;

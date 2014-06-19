@@ -1,0 +1,10 @@
+{
+	"require": {
+        "gregwar/captcha": "dev-master"
+    },
+    "autoload": {
+        "psr-0": {
+            "Gregwar\\Captcha": ""
+        }
+    }
+}

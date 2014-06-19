@@ -1,5 +1,4 @@
-<?
-//หากมีการเรียกไฟล์นี้โดยตรง
+<?php
 if (preg_match("/array.in.php/i",$_SERVER['PHP_SELF'])) {
     Header("Location: ../index.php");
     die();
@@ -69,5 +68,3 @@ $FULL_MONTH2 = array(
 "11" => ""._F2_Month_11."",
 "12" => ""._F2_Month_12.""
 );
-
-?>

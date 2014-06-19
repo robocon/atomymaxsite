@@ -1,17 +1,17 @@
-<?
-define("_TEMPLATES_WIDTH_CONFIG","1000"); //ขนาดไฟล์
-//loadblock
+<?php
+define("_TEMPLATES_WIDTH_CONFIG","1000");
+
 function LoadBlock($pblock=""){
 	global $db ;
-	$widthLR=220; //ขนาดของ block ซ้าย,ขวา
-	$widthL=5; // ขนาดของเส้นขอบซ้าย ของ block ซ้าย,ขวา
-	$widthR=4; // ขนาดของเส้นขอบขวา ของ block ซ้าย,ขวา
-	$widthSUM=$widthLR-($widthL+$widthR);  //ขนาดที่เหลือแสดงผลแต่ละ block ซ้าย,ขวา
+	$widthLR=220;
+	$widthL=5;
+	$widthR=4;
+	$widthSUM=$widthLR-($widthL+$widthR);
 
-	$widthCU=530; //ขนาดของ block ที่แสดงผลตรงกลาง
-	$widthCL=5; // ขนาดของเส้นขอบซ้าย ของ block ตรงกลาง
-	$widthCR=4; // ขนาดของเส้นขอบขวา ของ block ตรงกลาง
-	$widthSUMC=$widthCU-($widthCL+$widthCR); //ขนาดที่เหลือแสดงผลแต่ละ block ตรงกลาง
+	$widthCU=530;
+	$widthCL=5;
+	$widthCR=4;
+	$widthSUMC=$widthCU-($widthCL+$widthCR);
 	//Check Level
 	$db->connectdb(DB_NAME,DB_USERNAME,DB_PASSWORD);
 	$res['blocksx'] = $db->select_query("SELECT * FROM ".TB_BLOCK." WHERE status='1' and pblock='$pblock' order by sort");
@@ -31,7 +31,7 @@ function LoadBlock($pblock=""){
 	<tr>
 		<td background="templates/<?echo WEB_TEMPLATES;?>/images/menu/ict_02.png" width="5" height="100%" alt=""></td>
 		<td >
-	<?
+	<?php
 	if($code==''){
 	include ("modules/block/".$filename.".".$sfile."");
 	}else{
@@ -61,7 +61,7 @@ function LoadBlock($pblock=""){
 	<tr>
 		<td background="templates/<?echo WEB_TEMPLATES;?>/images/menu/ict_02.png" width="<?=$widthCL;?>" height="100%" alt=""></td>
 		<td width="<?=$widthSUMC;?>">
-	<?
+	<?php
 	if($code==''){
 	include ("modules/block/".$filename.".".$sfile."");
 	}else{
@@ -80,7 +80,7 @@ function LoadBlock($pblock=""){
 			<img src="templates/<?echo WEB_TEMPLATES;?>/images/menu/ict_06.png" width="4" height="15" alt=""></td>
 	</tr>
 </table>
-	<?
+	<?php
 	} else {
 	if($code==''){
 	include ("modules/block/".$filename.".".$sfile."");
@@ -92,4 +92,3 @@ function LoadBlock($pblock=""){
 
 	}
 }
-?>

@@ -1,21 +1,10 @@
-
 	<TABLE cellSpacing=0 cellPadding=0 width=720 border=0>
       <TBODY>
-
-<?php 
-require_once("mainfile.php");
-		$classtext = array("", "");
-		$classbox = array("noborder2", "noborder2");
-		$username = "";
-		$password = "";
-//////////////////////		 เพิ่ม  สมาชิกออนไลน์   ////////////////////////////
-//			
-//			$db->add(TB_useronline," useronline='".$_SESSION['admin_user']."' "); 
-//			
-//echo "$_POST[username]<br>";
-//echo "$_POST[password]<br>";
-//echo "".md5($_POST[password])."<br>";
-//Check Admin
+<?php
+$classtext = array("", "");
+$classbox = array("noborder2", "noborder2");
+$username = "";
+$password = "";
 
 $db->connectdb(DB_NAME,DB_USERNAME,DB_PASSWORD);
 
@@ -50,15 +39,19 @@ if(USE_CAPCHA){
 if(!empty($arr['admin']['id'])){
 session_unset($login_true);
 	//Login ผ่าน
-	ob_start();
+	// ob_start();
 	$_SESSION['admin_user'] = $Username ;
 	$_SESSION['admin_pwd'] = md5($Password) ;
-	$admin_user=$_SESSION['admin_user'];
-	$admin_pwd=$_SESSION['admin_pwd'];
+
+
+	// var_dump($_SESSION);
+	// exit;
+	$admin_user = $_SESSION['admin_user'];
+	$admin_pwd = $_SESSION['admin_pwd'];
 	$_SESSION['CKFinder_UserRole'] ='admin';
 	$_SESSION['ua'] = $_SESSION['admin_user'].":".$_SERVER['HTTP_USER_AGENT'].":".$IPADDRESS.":".session_id().":".$_SERVER['HTTP_ACCEPT_LANGUAGE'];
-	session_write_close();
-	ob_end_flush();
+	// session_write_close();
+	// ob_end_flush();
 			$timeoutseconds=20*60*60;
 			$_SESSION['timestamp2']=time();
 			$timeout=$_SESSION['timestamp2'] + $timeoutseconds;

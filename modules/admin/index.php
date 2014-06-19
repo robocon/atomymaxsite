@@ -1,5 +1,15 @@
 <?php 
-//require_once("mainfile.php");
+/*
+use Gregwar\Captcha\CaptchaBuilder;
+
+$builder = new CaptchaBuilder;
+$builder->build();
+
+?>
+<img src="<?php echo $builder->inline(); ?>" />
+<?php
+$_SESSION['phrase'] = $builder->getPhrase();
+*/
 		$classtext = array("", "");
 		$classbox = array("noborder2", "noborder2");
 		$username = "";

@@ -79,13 +79,13 @@ $ColorFill = 'class="odd"';
      <td align="center" valign="top"><?echo $arr['config']['type'];?></td>
     </tr>
 
-<?
+<?php
 	$count++;
 	$i++;
  } 
 ?>
  </table><br>
-<?
+<?php
 	$paths="".WEB_PATH."/templates/".WEB_TEMPLATES."/images/config/";
 //////////////////////////////////////////// แสดงรายการข่าวสาร / ประชาสัมพันธ์ 
 $db->connectdb(DB_NAME,DB_USERNAME,DB_PASSWORD);

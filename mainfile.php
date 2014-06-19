@@ -1,8 +1,6 @@
 <?php 
-//session_save_path('/var/www/vhosts/buraphank.com/httpdocs/sessions');
-ob_start();
 if (session_id() =='') { session_start(); }
-//session_start();
+
 $globals_test = @ini_get('register_globals');
 if ( isset($globals_test) && empty($globals_test) ) {
 $types_to_register = array('GET', 'POST', 'COOKIE', 'SESSION', 'SERVER');
@@ -12,10 +10,7 @@ if (@count($arr) > 0)
 extract($arr, EXTR_SKIP);
 }
 }
-//error_reporting(E_ALL);
 
-//error_reporting(E_ALL ^ E_NOTICE);
-//หากมีการเรียกไฟล์นี้โดยตรง
 if (preg_match("/mainfile.php/i",$_SERVER['PHP_SELF'])) {
     Header("Location: index.php");
     die();
@@ -29,6 +24,7 @@ require_once("includes/array.in.php");
 require_once("includes/class.ban.php");
 require_once("includes/class.calendar.php");
 header( 'Content-Type:text/html; charset='.ISO.'');
+
 $db = New DB();
 empty($_SESSION['admin_user'])?$admin_user="":$admin_user=$_SESSION['admin_user'];
 empty($_SESSION['admin_pwd'])?$admin_pwd="":$admin_pwd=$_SESSION['admin_pwd'];
@@ -49,7 +45,6 @@ if(!empty($_SESSION['login_true'])){
 anti_hacksession($_SESSION['login_true'],session_id(),$IPADDRESS);
 }
 
-//ตรวจสอบว่ามีโมดูลหรือไม่ (โมดูล User)
 function GETMODULE($name,$file){
 	global $MODPATH, $MODPATHFILE ;
 	$targetPath = WEB_PATH;
@@ -67,8 +62,6 @@ header( 'Content-Type:text/html; charset='.ISO.'');
 	}
 }
 
-
-//ผู้ดูแลระบบไม่ผ่านสิทธิการใช้งาน
 $PermissionFalse = "<BR><BR>";
 $PermissionFalse .= "<CENTER><A HREF=\"?name=admin&file=main\"><IMG SRC=\"images/icon/notview.gif\" BORDER=\"0\"></A><BR><BR>";
 $PermissionFalse .= "<FONT COLOR=\"#336600\"><B>"._PERMISSION_ADMIN."</B></FONT><BR><BR>";
@@ -76,13 +69,12 @@ $PermissionFalse .= "<A HREF=\"?name=admin&file=main\"><B>"._PERMISSION_INDEX."<
 $PermissionFalse .= "</CENTER>";
 $PermissionFalse .= "<BR><BR>";
 
-// ส่วนของระบบสมาชิกเพิ่มเติมภายหลังโดย narongrit.net
-$home = "".WEB_URL."" ; // url เว็บไซด์ของคุณ เวลาที่ต้องการเรียก
-$admin_email = "".WEB_EMAIL."" ; // อีเมล์ของคุณ
-$yourcode = "web" ; // รหัสนำหน้าหมายเลขสมาชิกของคุณ เช่น ip00001 , abc00005
-$member_num_show = 5 ;  // จำนวนของสมาชิกที่ต้องการให้แสดงต่อ  1 หน้า ในระบบของ admin 
-$member_num_show_last = 5 ;  // จำนวนของสมาชิกล่าสุดที่ต้องการให้แสดง
-$member_num_last = 1 ;  // จำนวนของสมาชิกล่าสุดที่ต้องการให้แสดงหน้าแรก
+$home = "".WEB_URL."" ;
+$admin_email = "".WEB_EMAIL."" ;
+$yourcode = "web" ;
+$member_num_show = 5 ;
+$member_num_show_last = 5 ;
+$member_num_last = 1 ;
 
 $bkk= mktime(gmdate("H")+7,gmdate("i")+0,gmdate("s"),
 	gmdate("m") ,gmdate("d"),gmdate("Y"));
@@ -108,11 +100,10 @@ exit();
 $timestamp=time();
 $db->connectdb(DB_NAME,DB_USERNAME,DB_PASSWORD);
 $res['user3'] = $db->select_query("SELECT * FROM ".TB_useronline." where timeout < $timestamp");
-//$rows['user3'] = $db->fetch($res['user3']);
-//if($rows['user3']['useronline']){
+
 while ($rows['user3'] = $db->fetch($res['user3'])){
 if ($login_true==$rows['user3']['useronline']){
-//$db->del(TB_useronline,"  timeout < $timestamp  "); 
+
 $db->del(TB_useronline,"  timeout < $timestamp and useronline='".$login_true."' "); 
 session_unset($rows['user3']['useronline']);
 setcookie($rows['user3']['useronline'],'');
@@ -129,6 +120,3 @@ setcookie($rows['user3']['useronline'],'');
 
 require_once("templates/".WEB_TEMPLATES."/function.php");
 }
-
-?>
-

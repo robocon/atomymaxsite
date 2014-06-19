@@ -1,4 +1,4 @@
-<?
+<?php
 /*
 	ชื่อไฟล์					class.mysql.php
 	การใช้งาน				ใช้ในการเชื่อมต่อฐานข้อมูล MySQL
@@ -39,7 +39,7 @@ class DB{
 		$this->database = $db_name;
 		$this->username = $user;
 		$this->password = $pwd;
-		$this->connect_db = mysql_pconnect ( $this->host, $this->username, $this->password ) or $this->_error();
+		$this->connect_db = mysql_connect ( $this->host, $this->username, $this->password ) or $this->_error();
 		//$this->connect_db = mysql_pconnect ( $this->host, $this->username, $this->password ) or $this->_error();
 		$this->db = mysql_select_db ( $this->database, $this->connect_db) or $this->_error();
 //		mysql_query("SET NAMES ".$resultsx." collation_connection=".$langset." collation_database=".$langset." collation_server=".$langset.""); 

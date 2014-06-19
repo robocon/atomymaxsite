@@ -1,28 +1,22 @@
 <?php 
-//$ebits = ini_get('error_reporting');
-//error_reporting($ebits ^ E_NOTICE);
-//ob_start();
-//session_start();
+session_start();
+error_reporting(0);
 
-
-//$ebits = ini_get('error_reporting');   //รายงาน error ของ php
-//error_reporting($ebits ^ E_NOTICE);  //รายงาน error ของ php
+require 'vendor/autoload.php';
 
 if ( !file_exists( 'includes/config.in.php' ) || filesize( 'includes/config.in.php' ) < 9.00 ) {
 	header( 'Location: install/index.php' );
 	exit();
 }
 
-
-/*
-Installation sub folder check, removed for work with CVS*/
+/* Installation sub folder check, removed for work with CVS */
 if (file_exists( 'install/index.php' )) {
 	include ('offline.php');
 	exit();
 }
-/**/
 
 require_once("mainfile.php");
+
 $_SERVER['PHP_SELF'] = "index.php";
 empty($_GET['name'])?$name="":$name=$_GET['name'];
 empty($_GET['file'])?$file="":$file=$_GET['file'];

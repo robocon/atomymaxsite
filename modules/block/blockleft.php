@@ -1,4 +1,4 @@
-<?
+<?php
 	//	CheckUser($_SESSION['admin_user']);
 		$db->connectdb(DB_NAME,DB_USERNAME,DB_PASSWORD);
 		$res['block'] = $db->select_query("SELECT * FROM ".TB_BLOCK." where leftblock='1' order by sort");
