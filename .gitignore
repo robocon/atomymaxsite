@@ -1,2 +1,18 @@
+# Project #
+############
 *install/
+install/*
+vendor/*
 includes/config.in.php
+
+# Vim #
+############
+*~
+*.swp
+*.swo
+
+# Packages #
+############
+*.rar
+*.tar
+*.zip

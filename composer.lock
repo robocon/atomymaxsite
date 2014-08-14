@@ -4,56 +4,43 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "5270397cb222555e930473091f1956e9",
+    "hash": "7351680ac1a7188ad6b8424e17991623",
     "packages": [
         {
-            "name": "gregwar/captcha",
-            "version": "dev-master",
-            "target-dir": "Gregwar/Captcha",
+            "name": "corneltek/pux",
+            "version": "1.5.0",
             "source": {
                 "type": "git",
-                "url": "https://github.com/Gregwar/Captcha.git",
-                "reference": "977514417af0a061cdfef0a2cf2433934da2e236"
+                "url": "https://github.com/c9s/Pux.git",
+                "reference": "6bdf19d71febe4601d65489d64de1e2591ff6e44"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Gregwar/Captcha/zipball/977514417af0a061cdfef0a2cf2433934da2e236",
-                "reference": "977514417af0a061cdfef0a2cf2433934da2e236",
+                "url": "https://api.github.com/repos/c9s/Pux/zipball/6bdf19d71febe4601d65489d64de1e2591ff6e44",
+                "reference": "6bdf19d71febe4601d65489d64de1e2591ff6e44",
                 "shasum": ""
             },
-            "require": {
-                "ext-gd": "*",
-                "php": ">=5.3.0"
+            "require-dev": {
+                "corneltek/cliframework": "dev-master",
+                "corneltek/phpunit-testmore": "dev-master",
+                "corneltek/universal": "dev-master"
             },
-            "type": "captcha",
+            "type": "library",
             "autoload": {
                 "psr-0": {
-                    "Gregwar\\Captcha": ""
+                    "Pux": "src"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
             "authors": [
                 {
-                    "name": "Grégoire Passault",
-                    "email": "g.passault@gmail.com",
-                    "homepage": "http://www.gregwar.com/"
-                },
-                {
-                    "name": "Jeremy Livingston",
-                    "email": "jeremy.j.livingston@gmail.com"
+                    "name": "c9s",
+                    "email": "cornelius.howl@gmail.com",
+                    "homepage": "http://c9s.me"
                 }
             ],
-            "description": "Captcha generator",
-            "homepage": "https://github.com/Gregwar/Captcha",
-            "keywords": [
-                "bot",
-                "captcha",
-                "spam"
-            ],
-            "time": "2014-05-07 14:42:26"
+            "description": "Fast PHP router",
+            "time": "2014-02-19 10:45:14"
         }
     ],
     "packages-dev": [
@@ -63,9 +50,9 @@
 
     ],
     "minimum-stability": "stable",
-    "stability-flags": {
-        "gregwar/captcha": 20
-    },
+    "stability-flags": [
+
+    ],
     "platform": [
 
     ],

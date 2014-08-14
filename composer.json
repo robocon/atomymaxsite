@@ -1,6 +1,6 @@
 {
 	"require": {
-        "gregwar/captcha": "dev-master"
+        "corneltek/pux": "~1.5"
     },
     "autoload": {
         "psr-0": {

@@ -4,6 +4,42 @@ error_reporting(0);
 
 require 'vendor/autoload.php';
 
+use Pux\Mux;
+use Pux\Executor;
+
+// var_dump($_SERVER['PATH_INFO']);
+/**
+* 
+*/
+class HelloController
+{
+	function index(){
+		echo "Base";
+	}
+
+	function helloAction()
+	{
+		echo "Hello";
+	}
+}
+var_dump($_SERVER['PATH_INFO']);
+// exit;
+$mux = new Mux;
+// $mux->get(null, ['HelloController','index']);
+$mux->get('/get', ['HelloController','helloAction']);
+// $mux->post('/post', ['HelloController','helloAction']);
+// $mux->put('/put', ['HelloController','helloAction']);
+
+// $mux->mount('/test', new HelloController);
+
+$route = $mux->dispatch( $_SERVER['PATH_INFO'] );
+echo Executor::execute($route);
+
+
+
+exit;
+
+
 if ( !file_exists( 'includes/config.in.php' ) || filesize( 'includes/config.in.php' ) < 9.00 ) {
 	header( 'Location: install/index.php' );
 	exit();
