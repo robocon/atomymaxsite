@@ -26,7 +26,7 @@ class DB{
 		if(ISO=='tis-620'){
 		$isox='TIS620';
 		$resultsx='tis620';
-		$langset=='tis620_thai_ci';
+		$langset='tis620_thai_ci';
 		} else if(ISO=='utf-8'){
 		$isox='UTF8';
 		$resultsx='utf8';

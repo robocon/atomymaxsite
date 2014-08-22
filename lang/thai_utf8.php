@@ -1,4 +1,4 @@
-<?php 
+<?php
 //#####maincore
 //array week
 define("_Sunday","อาทิตย์");
@@ -319,18 +319,17 @@ define("_TIME_POST","เมื่อ");
 define("_TIME_POST_YES1","วันที่แล้ว");
 define("_TIME_POST_MONTH","เดือนที่แล้ว");
 define("_RESET_MAIL_SUB","นี่คือรหัสผ่านในการเข้าสู่ระบบของคุณนะครับ");
-define("_RESET_MAIL_BODY","นี่คือรหัสผ่านในการเข้าสู่ระบบของคุณนะครับ");
-define("_RESET_MAIL_BODY1","สวัสดีครับ คุณ ");
-define("_RESET_MAIL_BODY2","username ในการเข้าสู่ระบบของคุณคือ ");
-define("_RESET_MAIL_BODY3","password ในการเข้าสุ่ระบบของคุณคือ ");
-define("_RESET_MAIL_BODY4","กดที่นี่เพื่อยืนยันการเปลี่ยนรหัสผ่าน");
-define("_RESET_MAIL_BODY5","");
-define("_RESET_MAIL_BODY7","กดที่นี่เพื่อยืนยันการเปลี่ยนรหัสผ่าน");
+define("_RESET_MAIL_BODY","<html><title>นี่คือรหัสผ่านในการเข้าสู่ระบบของคุณนะครับ</title><body><table>");
+define("_RESET_MAIL_BODY1","<tr><td><br>สวัสดีครับ คุณ </td></tr>");
+define("_RESET_MAIL_BODY2","<tr><td><br>username ในการเข้าสู่ระบบของคุณคือ </td></tr>");
+define("_RESET_MAIL_BODY3","<tr><td><br>password ในการเข้าสุ่ระบบของคุณคือ </td></tr>");
+define("_RESET_MAIL_BODY4","<tr><td><br>ขอขอบคุณมากครับ ที่เป็นส่วนหนึ่งของทีมงาน  </td></tr>");
+define("_RESET_MAIL_BODY5","</table></body></html>");
 define("_RESET_MAIL_SEND1","ขณะนี้ระบบของเราได้ส่งรหัสผ่านของคุณไปทางอีเมล์");
 define("_RESET_MAIL_SEND2","เรียบร้อยแล้วครับ");
 define("_RESET_MAIL_SEND_WAIT","รอสักครู่ ระบบจะนำท่านกลับไปยังหน้าหลัก");
 define("_RESET_MAIL_SEND_NO","ไม่สามารถส่งอีเมล์ได้ครับ");
-define("_RESET_MAIL_ADDCON_TITLE","ได้ทำการเปลียนรหัสผ่านเรียบร้อยแล้วครับ");
+
 // admin
 define("_ADMIN_GOBACK","หน้าหลักผู้ดูแลระบบ");
 define("_ADMIN_BUTTON_ADD","บันทึก");
@@ -1654,8 +1653,4 @@ define("_MOD_SENDMAIL_FUNTION_SEND_MESS_ACC1","เรียบร้อยแล
 define("_MOD_SENDMAIL_FUNTION_SEND_MESS_NOACC","ไม่สามารถส่งอีเมล์ได้ครับ");
 define("_MOD_SENDMAIL_FUNTION_SEND_MESS_FORM_NOACC","ท่านไม่สามารถใช้งานส่วนนี้ได้ เนื่องจากเงื่อนไขไม่ถูกต้อง");
 
-//admin_log
-define("_ADMIN_LOG_MENU_LINK","ประวัติการ login");
-define("_ADMIN_LOG_MESSAGE_DEL","ได้ลบข้อมูลการเข้าระบบแล้ว");
-define("_ADMIN_LOG_MESSAGE_GOBACK","กลับไปหน้าที่แล้ว");
 ?>

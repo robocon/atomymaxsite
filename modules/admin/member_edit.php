@@ -8,10 +8,6 @@ include ("editor.php");
 
 ?>
 
-
-<HTML>
-<HEAD>
-
 <!-- จาวา แถบสี -->
 <SCRIPT LANGUAGE="javascript"> 
 function mOvr(src,clrOver){ 
@@ -66,7 +62,7 @@ function mosMakePassword($length) {
               <FORM NAME="checkForm" ACTION="?name=admin&file=member_edit_add&id=<?=$dbarr['id'];?>" METHOD="post" onSubmit="return check2();" ENCTYPE="multipart/form-data">
                 <TABLE WIDTH="100%" BORDER="0" CELLSPACING="5" CELLPADDING="0" >
 				<tr>
-				<td ALIGN="right"><B><?=_MEMBER_MOD_MEMEDIT_USERNAME;?> :</B></td><td><INPUT TYPE="text" NAME="USERNAME" size="30" VALUE="<?=$dbarr['user'];?>" readonly style="color: #FF0000">
+				<td ALIGN="right"><B><?=_MEMBER_MOD_MEMEDIT_USERNAME;?> :</B></td><td><INPUT TYPE="text" NAME="USERNAME" size="30" VALUE="<?=$dbarr['user'];?>" style="color: #FF0000">
 				<INPUT TYPE="hidden" NAME="USERNAME_OLD" VALUE="<?=$dbarr['user'];?>" >
 				</td>
 				<td ALIGN="right"><B><?=_MEMBER_MOD_MEMEDIT_PASSWORD;?> :</B></td><td><INPUT TYPE="text" NAME="PASSWORD" size="10" ><font color="#FF0000"><b>** New password</b></font></td>
@@ -74,7 +70,7 @@ function mosMakePassword($length) {
 				                  <TR>
                     <TD ALIGN="right">&nbsp;<STRONG>email </STRONG>: </FONT></TD>
                     <TD>
-                      <INPUT NAME="email" TYPE="text" VALUE="<?php echo $dbarr['email'] ;?>" SIZE="25">
+                      <INPUT id="email" NAME="email" TYPE="text" VALUE="<?php echo $dbarr['email'] ;?>" SIZE="25">
                     </FONT></TD>
                     <TD ALIGN="right" WIDTH="18%"><STRONG><?=_MEMBER_MOD_MEMDETAIL_MEMPIC;?> : </FONT></STRONG></TD>
                     <TD WIDTH="38%" ROWSPAN="5" VALIGN="top"><?
@@ -102,7 +98,7 @@ function mosMakePassword($length) {
                   </TR>
                   <TR>
                     <TD WIDTH="14%" ALIGN="right"><STRONG><?=_MEMBER_MOD_MEMDETAIL_BIRTDAY;?> : </FONT></STRONG></TD>
-<?
+<?php
 $dt=date('d');
 $mt=date('m');
 $yy=date('Y');
@@ -240,8 +236,6 @@ echo "</select>";
                   <TR>
                     <TD WIDTH="21%" ALIGN="right" BGCOLOR="#FFFFFF"><STRONG><?=_MEMBER_MOD_FORM_USER_NICK;?> : </STRONG></TD>
                     <TD BGCOLOR="#FFFFFF" ><INPUT NAME="nic_name" TYPE="text"  size="5" VALUE="<?php echo "$dbarr[nic_name]" ; ?>"></TD>
-                    <TD WIDTH="21%" ALIGN="right" BGCOLOR="#FFFFFF"><STRONG>Email : </STRONG></TD>
-                    <TD BGCOLOR="#FFFFFF" ><INPUT NAME="email" TYPE="text"  size="30" VALUE="<?php echo "$dbarr[email]" ; ?>"></TD>
                   </TR>
                   <TR>
                     <TD WIDTH="21%" ALIGN="right" BGCOLOR="#FFFFFF" valign="top" ><FONT SIZE="2"><STRONG>&nbsp;&nbsp;<?=_MEMBER_MOD_FORM_USER_SIG;?> : </STRONG></FONT></TD>
@@ -261,13 +255,16 @@ echo "</select>";
 
 function check2() {
 var x=document.forms["checkForm"]["email"].value;
-var atpos=x.indexOf("@");
-var dotpos=x.lastIndexOf(".");
-if (atpos<1 || dotpos<atpos+2 || dotpos+2>=x.length)
-  {
+
+var mail = document.getElementById('email').value;
+var pattern = /.+@.+\..+/;
+var validate = pattern.test(mail);
+if (validate===false)
+{
   alert("<?echo _MEMBER_MOD_FORM_JAVA_EMAIL;?>");
   return false;
-  }
+}
+
 if(document.checkForm.name.value=="") {
 alert("<?echo _MEMBER_MOD_FORM_JAVA_USER;?>") ;
 document.checkForm.name.focus() ;
@@ -291,10 +288,6 @@ return false ;
 else if(isNaN(document.checkForm.age.value)) {
 alert("<?echo _MEMBER_MOD_FORM_JAVA_AGE_NUM;?>") ;
 document.checkForm.age.focus() ;
-return false ;
-}
-else if(document.checkForm.email.value=="") {
-alert("<?echo _MEMBER_MOD_FORM_JAVA_EMAIL_NULL;?>") ;
 return false ;
 }
 else 

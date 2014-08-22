@@ -40,20 +40,26 @@ if ($admin_user) {
             <td align="left"><ul style="list-style:none; padding:0;height:24px;" id="menu"><li><a href="index.php?name=admin&file=member_detail"> <?=_MEMBER_AUTH;?> </a></li></ul></td>
 			</tr>
 			<tr class="off" onmouseover="this.className='on'" onmouseout="this.className='off'">
+            <td align="left"><ul style="list-style:none; padding:0;height:24px;" id="menu"><li><a href="index.php?name=admin&file=change_pwd"> <?=_MEMBER_CPASS;?> </a></li></ul></td>
+			</tr>
+			<tr class="off" onmouseover="this.className='on'" onmouseout="this.className='off'">
             <td align="left"><ul style="list-style:none; padding:0;height:24px;" id="menu"><li><a href="index.php?name=blog&file=blogad"> <?=_MEMBER_BLOG;?> </a></li></ul></td>
 			</tr>
 			<tr class="off" onmouseover="this.className='on'" onmouseout="this.className='off'">
             <td align="left"><ul style="list-style:none; padding:0;height:24px;" id="menu"><li><a href="index.php?name=blog&file=blogad&op=article_add"> <?=_MEMBER_BLOGADD;?> </a></li></ul></td>
 			</tr>
 			<tr>
-			<td align="center"><a href='index.php?name=admin&file=logout'>[ <?=_MEMBER_EXIT;?> ]</a></td>
+				<td align="left"><ul style="list-style:none; padding:0;height:24px;" id="menu"><li><a href='index.php?name=subreport'><?php echo toTis620('ส่งข้อมูลถึง สปสข.')?></a></li></ul></td>
+			</tr>
+			<tr>
+			<td align="left"><ul style="list-style:none; padding:0;height:24px;" id="menu"><li><a href='index.php?name=admin&file=logout'><?=_MEMBER_EXIT;?></a></li></ul></td>
 			</tr>
 			<table>
 			</td>
 </tr>
 </table>
-			<?
-	
+			<?php
+
 } else if($login_true){
 
 	//	CheckUser($_SESSION['user_user']);
@@ -84,10 +90,16 @@ if ($admin_user) {
             <td align="left"><ul style="list-style:none; padding:0;height:24px;" id="menu"><li><a href="index.php?name=blog&file=blog"> <?=_MEMBER_BLOG;?> </a></li></ul></td>
 			</tr>
 			<tr class="off" onmouseover="this.className='on'" onmouseout="this.className='off'">
-            <td align="left"><ul style="list-style:none; padding:0;height:24px;" id="menu"><li><a href="index.php?name=blog&file=blog&op=article_add"> <?=_MEMBER_BLOGADD;?> </a></li></ul></td>
+            <tr>
+				<td align="left"><ul style="list-style:none; padding:0;height:24px;" id="menu"><li><a href='index.php?name=blog&file=blog&op=article_add'><?php echo toTis620('เขียน blog ใหม่')?></a></li></ul></td>
+			</tr>
+            <tr>
+				<td align="left"><ul style="list-style:none; padding:0;height:24px;" id="menu"><li><a href='index.php?name=subreport'><?php echo toTis620('ส่งข้อมูลถึง สปสข.')?></a></li></ul></td>
+			</tr>
 			<tr>
-            <td align="center"><a href="index.php?name=member&file=logout"> <?=_MEMBER_EXIT;?> </a>
-			</td>
+	            <td align="left">
+	            	<ul style="list-style:none; padding:0;height:24px;" id="menu"><li><a href="index.php?name=member&file=logout"> <?=_MEMBER_EXIT;?> </a></li></ul>
+				</td>
 			</tr>
 			<table>
 			</td>
@@ -159,17 +171,18 @@ if ($admin_user) {
 <tr><td width="<?=$widthSUM;?>" bgcolor="#F7F7F7" colspan="2"><img src="images/admin/i_member[1].gif" border="0"> <?=_MEMBER_ALL_ONLINE;?> <font color="#FF0033"><?=$rows['user2']['online'];?> </font><?=_COUNT_ONLINE_KON;?></td></tr>
 <?
 $db->connectdb(DB_NAME,DB_USERNAME,DB_PASSWORD);
-$res['mem2'] = $db->select_query("SELECT * FROM ".TB_useronline.",".TB_MEMBER." where useronline=user ");
+$sql = "SELECT * FROM `".TB_MEMBER."` AS a, `".TB_useronline."` AS b WHERE b.useronline = a.user";
+$query = $db->select_query($sql);
 
 $count=0;
-while($arr['mem2'] = $db->fetch($res['mem2'])){
+while($online = $db->fetch($query)){
 	if ($count==0) { echo "<TR bgcolor=#F7F7F7>"; }
 ?>
-<td width="50%"  align="center" bgcolor="#F7F7F7" ><? if($arr['mem2']['member_pic']==""){ ?>
+<td width="50%"  align="center" bgcolor="#F7F7F7" ><? if($online['member_pic']==""){ ?>
 	<IMG SRC="images/user_blank.gif" BORDER='1' ALIGN='center' class="membericon" style="filter:alpha(opacity=100)" onMouseover="makevisible(this,1)" onMouseout="makevisible(this,0)">
 	<? }else{  ?>
-	<A HREF="icon/<? echo $arr['mem2']['member_pic'];?>" class="highslide" onclick="return hs.expand(this)"><IMG SRC="icon/<?=$arr['mem2']['member_pic']; ?>" width='48' BORDER='1' ALIGN='center' ></a>
-	<? };?><br>[<?=$arr['mem2']['user'];?>]
+	<A HREF="icon/<? echo $online['member_pic'];?>" class="highslide" onclick="return hs.expand(this)"><IMG SRC="icon/<?=$online['member_pic']; ?>" width='48' BORDER='1' ALIGN='center' ></a>
+	<? };?><br>[<?=$online['user'];?>]
 <?
 $count++;
 

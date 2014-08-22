@@ -1,9 +1,9 @@
 <?php
 //หากมีการเรียกไฟล์นี้โดยตรง
-if (preg_match("/class.ban.php/i",$_SERVER['PHP_SELF'])) {
-    Header("Location: ../index.php");
-    die();
-}
+// if (preg_match("/class.ban.php/i",$_SERVER['PHP_SELF'])) {
+//     Header("Location: ../index.php");
+//     die();
+// }
 
 ###### Function Check คำโฆษณา #######
 // function check ข้อความว่าโฆษณามาหรือปล่าว

@@ -22,15 +22,15 @@ $arr['admin'] = $db->fetch($res['admin']);
 
 if($arr['admin']['username']){
 			echo "<script language='javascript'>" ;
-			echo "alert('<?echo _MEMBER_MOD_FORM_JAVA_USERACC;?>')" ;
+			echo "alert('<?php echo _MEMBER_MOD_FORM_JAVA_USERACC;?>')" ;
 			echo "</script>" ;
 			echo "<script language='javascript'>javascript:history.go(-1)</script>";
 			exit();
 }
 $FILE = $_FILES['FILE'];
 
-$db->connectdb(DB_NAME,DB_USERNAME,DB_PASSWORD);
-//�к���Ҫԡ����� maxsite 1.10 �Ѳ���� www.narongrit.net
+// $db->connectdb(DB_NAME,DB_USERNAME,DB_PASSWORD);
+//ÃÐººÊÁÒªÔ¡àÊÃÔÁ maxsite 1.10 ¾Ñ²¹Òâ´Â www.narongrit.net
 
 
 $member_id=$_POST['member_id'];
@@ -54,8 +54,29 @@ $phone=$_POST['phone'];
 $zipcode=$_POST['zipcode'];
 $member_pic=$_POST['member_pic'];
 
-// ��ҡ�͡���������١��ͧ
-if(preg_match("/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$/i", $email)){
+$session_user = isset($_SESSION['admin_user']) ? $_SESSION['admin_user'] : $_SESSION['login_true'] ;
+
+$statement = sprintf("SELECT * FROM `web_member` WHERE `user` = '%s' ;", $session_user);
+$query = $db->select_query($statement);
+$user = $db->fetch($query);
+
+
+$sql = sprintf("SELECT * FROM `web_member` WHERE `user` = '%s' AND `id` != '%s'", $username, $user['id']);
+$query = $db->select_query($sql);
+$rows = $db->rows($query);
+if ($rows > 0) {
+	?>
+	<script type="text/javascript">
+		alert('<?php echo toTis620("ชื่อผู้ใช้งานซ้ำกับคนอื่น กรุณาตรวจสอบอีกครั้ง");?>');
+		window.history.back(-1);
+	</script>
+	<?php
+	exit();
+}
+
+
+// ¶éÒ¡ÃÍ¡ÍÕàÁÅìäÁè¶Ù¡µéÍ§
+if(!preg_match("/.+@.+\..+/i", $email)){
 //if(!eregi("^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)$",$email)){
 $showmsg="<br><br><center><font size='3' face='MS Sans Serif'><b>"._MEMBER_MOD_CHEMAIL_CONF."</b></font><br><br>
 <input type='button' value='"._MEMBER_MOD_FORM_JAVA_RETERN."' onclick='history.back();'></center>" ;
@@ -64,7 +85,7 @@ $showmsg="<br><br><center><font size='3' face='MS Sans Serif'><b>"._MEMBER_MOD_C
 
 	//Check Pic Size
 	$FILE = $_FILES['FILE'];
-	//�ŧ���ʡ�� ��зӡ�� upload
+	//á»Å§¹ÒÁÊ¡ØÅ áÅÐ·Ó¡ÒÃ upload
 	if ( empty($FILE['tmp_name']))
 			{$Filenames = $member_pic ;} 
 			else {
@@ -133,30 +154,35 @@ $address = htmlspecialchars($address) ;
 $zipcode = htmlspecialchars($zipcode) ;
 $phone = htmlspecialchars($phone) ;
 
-$db->connectdb(DB_NAME,DB_USERNAME,DB_PASSWORD);
-       for($i=0;$i<21;$i++) {
-	
-      $result =  $db->select_query("update ".TB_MEMBER." set name='$name' where member_id='$member_id' ") ;
-      $result =  $db->select_query("update ".TB_MEMBER." set sex='$sex' where member_id='$member_id' ") ;
-      $result =  $db->select_query("update ".TB_MEMBER." set date='$date' where member_id='$member_id' ") ;
-      $result =  $db->select_query("update ".TB_MEMBER." set month='$month' where member_id='$member_id' ") ;
-      $result =  $db->select_query("update ".TB_MEMBER." set year='$year' where member_id='$member_id' ") ;
-      $result =  $db->select_query("update ".TB_MEMBER." set work='$work' where member_id='$member_id'") ;
-      $result =  $db->select_query("update ".TB_MEMBER." set age='$age' where member_id='$member_id' ") ;
-      $result =  $db->select_query("update ".TB_MEMBER." set address='$address' where member_id='$member_id' ") ;
-      $result =  $db->select_query("update ".TB_MEMBER." set amper='$amper' where member_id='$member_id' ") ;
-      $result =  $db->select_query("update ".TB_MEMBER." set province='$province' where member_id='$member_id' ") ;
-      $result =  $db->select_query("update ".TB_MEMBER." set zipcode ='$zipcode' where member_id='$member_id' ") ;
-      $result =  $db->select_query("update ".TB_MEMBER." set phone='$phone' where member_id='$member_id' ") ;
-      $result =  $db->select_query("update ".TB_MEMBER." set education='$education' where member_id='$member_id' ") ;
-      $result =  $db->select_query("update ".TB_MEMBER." set work='$work' where member_id='$member_id' ") ;
-      $result =  $db->select_query("update ".TB_MEMBER." set member_pic='$Filenames' where member_id='$member_id' ") ;
-      $result =  $db->select_query("update ".TB_MEMBER." set office='$office' where member_id='$member_id' ") ;
-      $result =  $db->select_query("update ".TB_MEMBER." set signature='$signature' where member_id='$member_id' ") ;
-      $result =  $db->select_query("update ".TB_MEMBER." set nic_name='$nic_name' where member_id='$member_id' ") ;
-      $result =  $db->select_query("update ".TB_MEMBER." set email='$email' where member_id='$member_id' ") ;
-       }
+       // for($i=0;$i<21;$i++) {
+	$result =  $db->select_query("UPDATE ".TB_MEMBER." SET user='$username' WHERE id = '".$user['id']."' ") ;
+	$result =  $db->select_query("UPDATE ".TB_MEMBER." SET name='$name' WHERE id = '".$user['id']."' ") ;
+	$result =  $db->select_query("UPDATE ".TB_MEMBER." SET sex='$sex' WHERE id = '".$user['id']."' ") ;
+	$result =  $db->select_query("UPDATE ".TB_MEMBER." SET date='$date' WHERE id = '".$user['id']."' ") ;
+	$result =  $db->select_query("UPDATE ".TB_MEMBER." SET month='$month' WHERE id = '".$user['id']."' ") ;
+	$result =  $db->select_query("UPDATE ".TB_MEMBER." SET year='$year' WHERE id = '".$user['id']."' ") ;
+	$result =  $db->select_query("UPDATE ".TB_MEMBER." SET work='$work' WHERE id = '".$user['id']."'") ;
+	$result =  $db->select_query("UPDATE ".TB_MEMBER." SET age='$age' WHERE id = '".$user['id']."' ") ;
+	$result =  $db->select_query("UPDATE ".TB_MEMBER." SET address='$address' WHERE id = '".$user['id']."' ") ;
+	$result =  $db->select_query("UPDATE ".TB_MEMBER." SET amper='$amper' WHERE id = '".$user['id']."' ") ;
+	$result =  $db->select_query("UPDATE ".TB_MEMBER." SET province='$province' WHERE id = '".$user['id']."' ") ;
+	$result =  $db->select_query("UPDATE ".TB_MEMBER." SET zipcode ='$zipcode' WHERE id = '".$user['id']."' ") ;
+	$result =  $db->select_query("UPDATE ".TB_MEMBER." SET phone='$phone' WHERE id = '".$user['id']."' ") ;
+	$result =  $db->select_query("UPDATE ".TB_MEMBER." SET education='$education' WHERE id = '".$user['id']."' ") ;
+	$result =  $db->select_query("UPDATE ".TB_MEMBER." SET work='$work' WHERE id = '".$user['id']."' ") ;
+	$result =  $db->select_query("UPDATE ".TB_MEMBER." SET member_pic='$Filenames' WHERE id = '".$user['id']."' ") ;
+	$result =  $db->select_query("UPDATE ".TB_MEMBER." SET office='$office' WHERE id = '".$user['id']."' ") ;
+	$result =  $db->select_query("UPDATE ".TB_MEMBER." SET signature='$signature' WHERE id = '".$user['id']."' ") ;
+	$result =  $db->select_query("UPDATE ".TB_MEMBER." SET nic_name='$nic_name' WHERE id = '".$user['id']."' ") ;
+	$result =  $db->select_query("UPDATE ".TB_MEMBER." SET email='$email' WHERE id = '".$user['id']."' ") ;
+       // }
 
+	// Reset session
+	if (isset($_SESSION['admin_user'])) {
+		$_SESSION['admin_user'] = $username;
+	}else{
+		$_SESSION['login_true'] = $username;
+	}
 
 if($result) {
 echo "<br><br><center><font size=\"3\" face='MS Sans Serif'><b>"._MEMBER_MOD_EDIT_ACCESS."</b></font></center>" ;

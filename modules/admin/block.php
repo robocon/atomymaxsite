@@ -1,4 +1,4 @@
-<?php
+<?
 CheckAdmin($admin_user, $admin_pwd);
 include ("editor.php");
 ?>
@@ -44,7 +44,7 @@ if($op == ""){
       <td width="50"><CENTER><B><?=_ADMIN_BLOCK_TABLE_HEADER_STATUS;?></B></CENTER></td>
    <td width="40"><CENTER><B>Check</B></CENTER></td>
   </tr>  
-<?
+<?php
 $db->connectdb(DB_NAME,DB_USERNAME,DB_PASSWORD);
 
 $res['block'] = $db->select_query("SELECT * FROM ".TB_BLOCK." ORDER BY pblock,sort  LIMIT $goto, $limit ");
@@ -269,10 +269,6 @@ else if($op == "block_add"){
 else if($op == "block_edit" AND $action == "edit" ){
 	//////////////////////////////////////////// กรณีแก้ไข Database Edit
 	if(CheckLevel($admin_user,$op)){
-	// 	echo "<pre>";
-	// 	print_r($_POST['DETAIL']);
-	// exit;
-
 		//ดึงค่า
 		//ทำการแก้ไขข้อมูลลงดาต้าเบส
 //$REF = TIMESTAMP ;
@@ -317,7 +313,6 @@ $handle = fopen("".WEB_PATH."/modules/block/".$_POST['FILENAME'].".".$_POST['SFI
 fwrite($handle, "".stripslashes($_POST['DETAIL'])."");
 fclose($handle);
 } else {
-
 $db->connectdb(DB_NAME,DB_USERNAME,DB_PASSWORD);
 $db->update_db(TB_BLOCK,array(
 "name"=> $_POST['NAME'],
@@ -350,15 +345,6 @@ $handle = fopen("".WEB_PATH."/modules/block/".$_POST['FILENAME'].".".$_POST['SFI
 fwrite($handle, "".stripslashes($_POST['DETAIL'])."");
 fclose($handle);
 } else {
-
-
-
-
-	// var_dump($_POST['DETAIL']);
-	// exit;
-
-
-
 $db->connectdb(DB_NAME,DB_USERNAME,DB_PASSWORD);
 $db->update_db(TB_BLOCK,array(
 "name"=> $_POST['NAME'],

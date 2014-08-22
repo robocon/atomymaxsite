@@ -1,4 +1,4 @@
-<?
+<?php
 //#####maincore
 //array week
 define("_Sunday","อาทิตย์");

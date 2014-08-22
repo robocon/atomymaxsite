@@ -12,7 +12,7 @@ if(!empty($category)){
 	$SQLwhere2 = " WHERE category='".$category."' ";
 }
 $db->connectdb(DB_NAME,DB_USERNAME,DB_PASSWORD);
-$limit = 7;
+$limit = 4;
 
 
 $res['news'] = $db->select_query("SELECT * FROM ".TB_NEWS." $SQLwhere2 ORDER BY id DESC LIMIT $limit ");
@@ -40,7 +40,7 @@ if ($i <=_NEWS_COL){
 															<TR>
 															<TD class="timemini"><font size="4"><b><?= ThaiTimeMini($arr['news']['post_date'],"");?></b></font></td>
 															<td ><?=_BLOG_AUTH;?> <FONT COLOR="#990000"><B><?=$arr['news']['posted'];?></font><br><font color=#C3C3C3> 
-					<?= ThaiTimeConvert($arr['news']['post_date'],"","");?> </font>&nbsp;&nbsp;<a href="createpdf.php?mo=news&id=<?=$arr['news']['id'];?>" target="_blank"><img src="images/pdf_button.png" border="0"></a>&nbsp;<a href="print.php?name=news&file=readprint&id=<?=$arr['news']['id'];?>" title="<?=_FORM_BUTTON_PRINT;?>" onclick="window.open(this.href,'win2','status=no,toolbar=no,scrollbars=yes,titlebar=no,menubar=no,resizable=yes,width=770,height=580,directories=no,location=no'); return false;" rel="nofollow"><img src="images/printButton.png" border="0"></a>&nbsp;<A HREF="popup.php?name=sendmail&mo=news&id=<?=$arr['news']['id'];?>" onclick="return hs.htmlExpand(this, { contentId: 'highslide-html', objectType: 'iframe', objectWidth: 500, objectHeight: 200} )" class="highslide"><img src="images/emailButton.png" border="0"></a></td></tr>
+					<?= ThaiTimeConvert($arr['news']['post_date'],"","");?> </font>  <a href="createpdf.php?mo=news&id=<?=$arr['news']['id'];?>" target="_blank"><img src="images/pdf_button.png" border="0"></a> <a href="print.php?name=news&file=readprint&id=<?=$arr['news']['id'];?>" title="<?=_FORM_BUTTON_PRINT;?>" onclick="window.open(this.href,'win2','status=no,toolbar=no,scrollbars=yes,titlebar=no,menubar=no,resizable=yes,width=770,height=580,directories=no,location=no'); return false;" rel="nofollow"><img src="images/printButton.png" border="0"></a> <A HREF="popup.php?name=sendmail&mo=news&id=<?=$arr['news']['id'];?>" onclick="return hs.htmlExpand(this, { contentId: 'highslide-html', objectType: 'iframe', objectWidth: 500, objectHeight: 200} )" class="highslide"><img src="images/emailButton.png" border="0"></a></td></tr>
 					<tr><td colspan="2"><?//=$arr['category']['category_name'];?><?$rater_ids=$arr['news']['id'];$rater_item_name='news';include("modules/rater/raterss.php");?>
 															</TD>
 															</TR>
@@ -52,7 +52,7 @@ if ($i <=_NEWS_COL){
 															</tr>
 															<tr>
 															<td colspan="2" ><img src="images/a.gif"><A HREF="?name=news&file=readnews&id=<?=$arr['news']['id'];?>" ><b><?=$arr['news']['topic'];?></b></A>
-					<?=NewsIcon(TIMESTAMP, $arr['news']['post_date'], "images/icon_new.gif");?> ( <?=$arr['news']['pageview'];?> / <?=$arrs['com']['com'];?> )<br>&nbsp;&nbsp;&nbsp;&nbsp;<?=$Detail;?> <A HREF="?name=news&file=readnews&id=<?=$arr['news']['id'];?>" ><font color="#0066FF"><?=_BLOG_NEXT;?></font></a>
+					<?=NewsIcon(TIMESTAMP, $arr['news']['post_date'], "images/icon_new.gif");?> ( <?=$arr['news']['pageview'];?> / <?=$arrs['com']['com'];?> )<br>    <?=$Detail;?> <A HREF="?name=news&file=readnews&id=<?=$arr['news']['id'];?>" ><font color="#0066FF"><?=_BLOG_NEXT;?></font></a>
 															</TD>
 															</TR>
 															<TR><TD height="3" ></TD></TR>

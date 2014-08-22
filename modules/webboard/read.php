@@ -29,7 +29,7 @@ hza.style.display = state;
 //--> 
 </script> 
 
-<?
+<?php
 if ($_GET['s_page']){
 $s_pagex=$_GET['s_page'];
 } else {
@@ -226,7 +226,7 @@ function emoticon(theSmilie) {
                 <tr>
                   <td width="89%"><img src="images/icon/icon-sk-05[1].gif" width="40" height="31" hspace="5" vspace="5" align="absmiddle" /><font color="#990000" size="2"><b>
                     <?=$VIEWBOARD['topic'];?>&nbsp;
-<?
+<?php
 $db->connectdb(DB_NAME,DB_USERNAME,DB_PASSWORD);
 $Comm = $db->select_query("SELECT * FROM ".TB_WEBBOARD_COMMENT." where topic_id='".$VIEWBOARD['id']."' ORDER BY id DESC  LIMIT $goto, $limit ");
 	$Comms = $db->fetch($Comm);
@@ -244,7 +244,7 @@ $Comm = $db->select_query("SELECT * FROM ".TB_WEBBOARD_COMMENT." where topic_id=
               </table>              </td>
 		    </tr>
           </table>
-<?
+<?php
 //แสดงผลการPost 
 if(!empty($PostComplete)){
 	//Complete
@@ -262,7 +262,7 @@ if(!empty($PostComplete)){
 	</CENTER></TD>
 </TR>
 </TABLE><BR>
-<?
+<?php
 }else{
 	//Not Complete
 ?>
@@ -351,7 +351,7 @@ echo "<font color=#000000><b>"._FORM_MOD_POSTED."</font><font color=#CC0000>	 ".
 }
 ?>
 <br />
-			  <?
+			  <?php
 $rpgSettings = array();
 $rpgSettings['init'] = 5;
 $rpgSettings['incre'] = 3;
@@ -375,7 +375,7 @@ function calRpg($p) {
 <table width="98%" border="0" cellspacing="0" cellpadding="0">
   <tr>
     <td valign="top"><font size="2" color="#333333">UID : </font><font size="2" color="#3399FF"><b>No.<? echo $id;?></b></font><br />      <font size="2" color="#FF3399"><?=_WEBBOARD_READ_POSTED;?></font> : <font size="2" color="#339900"><? echo $topic;?></font><br /><font size="2" color="#FF6600"><?=_WEBBOARD_READ_COMMENTED;?></font> : <font size="2" color="#FF6600"><? echo $post;?></font><br />      <font size="2" color="#333333"><?=_WEBBOARD_READ_MEMBER_SEX;?> : <? echo $sex;?></font><br />
-<?
+<?php
 
 
 		$cp = $VIEWS['topic']+$VIEWS['post'];
@@ -397,7 +397,7 @@ $COMSx =  $db->rows($db->select_query("SELECT * FROM ".TB_WEBBOARD_COMMENT." whe
 <table width="98%" border="0" cellspacing="0" cellpadding="0">
   <tr>
     <td valign="top"><font size="2" color="#333333">UID : </font><font color="#CC0000"><?=_WEBBOARD_READ_MEMBER_NULL;?></font><br />      <font size="2" color="#FF3399"><?=_WEBBOARD_READ_POSTED;?></font> : <font size="2" color="#339900"><? echo $POSTSx;?></font><br /><font size="2" color="#FF6600"><?=_WEBBOARD_READ_COMMENTED;?></font> : <font size="2" color="#FF6600"><? echo $COMSx;?></font><br />      <font size="2" color="#333333"><?=_WEBBOARD_READ_MEMBER_SEX;?> : <? echo $sex?></font><br />
-<?
+<?php
 		$cpx = $POSTSx+$COMSx;
          $crx = calRpg($cpx);
          echo "<FONT size='2' color='#333333'>"._WEBBOARD_READ_MEMBER_LEVEL." : ". $crx['level']."</FONT><br>
@@ -409,7 +409,7 @@ $COMSx =  $db->rows($db->select_query("SELECT * FROM ".TB_WEBBOARD_COMMENT." whe
 </table>
 
 <BR>
-<?
+<?php
 }
 ?>
 </td>
@@ -419,7 +419,7 @@ $COMSx =  $db->rows($db->select_query("SELECT * FROM ".TB_WEBBOARD_COMMENT." whe
                         <td width="666" height="28"><b><font color="#000000"><?=_WEBBOARD_DETAIL_POST;?> : </font></b>
 <?= ThaiTimeConvert($VIEWBOARD['post_date'],"1","1");?>
 
-<?
+<?php
 if($admin_user){
 	echo "<br>";
 	if($VIEWBOARD['pin_date']){
@@ -463,7 +463,7 @@ if ($bigbtn) {
                   </tr>
                   <tr>
                     <td height="250" valign="top"><br />
-                      <?
+                      <?php
 					//Show Picture
 					if($VIEWBOARD['picture']){
 						$postpicupload = @getimagesize ("webboard_upload/".$VIEWBOARD['picture']."");
@@ -514,7 +514,7 @@ if($VIEWBOARD['att']) {?><br><table cellSpacing=0 cellPadding=0 width='90%' alig
                   </tr>
             </table><br>
 
-				<?
+				<?php
 //ดึงรายการความคิดเห็น
 $db->connectdb(DB_NAME,DB_USERNAME,DB_PASSWORD);
 $total = $db->num_rows(TB_WEBBOARD_COMMENT,"id"," topic_id=' ".$VIEWBOARD['id']." ' ");
@@ -599,7 +599,7 @@ echo "</td></tr></table>";
 <table width="98%" border="0" cellspacing="0" cellpadding="0">
   <tr>
     <td valign="top"><font size="2" color="#333333">UID : </font><font size="2" color="#3399FF"><b>No.<? echo $idxx;?></b></font><br />      <font size="2" color="#FF3399"><?=_WEBBOARD_READ_POSTED;?></font> : <font size="2" color="#339900"><? echo $topicx;?></font><br />      <font size="2" color="#FF6600"><?=_WEBBOARD_READ_COMMENTED;?></font> : <font size="2" color="#FF6600"><? echo $postx;?></font><br />      <font size="2" color="#333333"><?=_WEBBOARD_READ_MEMBER_SEX;?> : <? echo $sexx;?></font><br />
-        <?
+        <?php
 	$res['onx'] = $db->select_query("SELECT * FROM ".TB_useronline." WHERE useronline='".$VIEWSxx['user']."' ");
 	$arr['onx'] = $db->fetch($res['onx']);
 	$useronxs = $arr['onx']['useronline'];
@@ -616,7 +616,7 @@ echo "</td></tr></table>";
 <a href="mailto:<? echo $emailx; ?>" ><img src="images/icon/email.gif" width="16" height="16" border="0"  title="<? echo $emailx;?>" /></a>
 <BR>
 <BR>
-<?
+<?php
 } else {
 $db->connectdb(DB_NAME,DB_USERNAME,DB_PASSWORD);
 $VIEWyy = $db->select_query("SELECT * FROM ".TB_ADMIN." where username='".$arr['comment']['post_name']."' ");
@@ -648,7 +648,7 @@ echo "</td></tr></table>";
 <table width="98%" border="0" cellspacing="0" cellpadding="0">
   <tr>
     <td valign="top"><font size="2" color="#333333">UID : </font><font size="2" color="#3399FF"><b>No.<? echo $idyy;?></b></font><br />      <font size="2" color="#FF3399"><?=_WEBBOARD_READ_POSTED;?></font> : <font size="2" color="#339900"><? echo $POSTS;?></font><br />      <font size="2" color="#FF6600"><?=_WEBBOARD_READ_COMMENTED;?></font> : <font size="2" color="#FF6600"><? echo $COMS;?></font><br />
-        <?
+        <?php
 		$cp = $POSTS+$COMS;
          $cr = calRpg($cp);
          echo "<FONT size='2' color='#333333'>"._WEBBOARD_READ_MEMBER_LEVEL." : ". $cr['level']."</FONT><br><FONT size='2' color='#333333'>Exp : ".round($cr['perce'])."%</FONT>"; ?>
@@ -662,7 +662,7 @@ echo "</td></tr></table>";
 <a href="mailto:<? echo $emaily; ?>" ><img src="images/icon/email.gif" width="16" height="16" border="0"  title="<? echo $emaily;?>" /></a>
 <BR>
 <BR>
-<?
+<?php
 }
 
 } else {
@@ -678,7 +678,7 @@ echo "<font color=#000000><b>"._WEBBOARD_READ_POSTEDX."</font><font color=#CC000
 <table width="98%" border="0" cellspacing="0" cellpadding="0">
   <tr>
     <td valign="top"><font size="2" color="#333333">UID : </font><font color="#CC0000"><?=_WEBBOARD_READ_MEMBER_NULL;?></font></b></font><br />      <font size="2" color="#FF3399"><?=_WEBBOARD_READ_POSTED;?></font> : <font size="2" color="#339900"><?=$POSTSaa;?></font><br />      <font size="2" color="#FF6600"><?=_WEBBOARD_READ_COMMENTED;?></font> : <font size="2" color="#FF6600"><?=$COMSaa;?></font><br />
-        <?
+        <?php
 		$cpaa = $POSTSaa+$COMSaa;
          $craa = calRpg($cp);
          echo "<FONT size='2' color='#333333'>"._WEBBOARD_READ_MEMBER_LEVEL." : ". $craa['level']."</FONT><br><FONT size='2' color='#333333'>Exp : ".round($craa['perce'])."%</FONT>"; ?>
@@ -689,7 +689,7 @@ echo "<font color=#000000><b>"._WEBBOARD_READ_POSTEDX."</font><font color=#CC000
 </table>
 <br />
 
-<?
+<?php
 }
 ?>
 
@@ -715,7 +715,7 @@ echo "<font color=#000000><b>"._WEBBOARD_READ_POSTEDX."</font><font color=#CC000
 			</tr>
 			    <tr>
                 <td height="200" valign="top"><br />
-                  <?
+                  <?php
 //Show Picture
 if($arr['comment']['picture']){
 	$postpicupload = @getimagesize ("webboard_upload/".$arr['comment']['picture']."");
@@ -773,14 +773,14 @@ if($arr['comment']['picture']){
 </td>
 </td>
 </table>
-			<?
+			<?php
 //							$count  ++;
 }
 $db->closedb ();
 ?>
 			<table width="100%" border="0" cellpadding="0" cellspacing="0" >
   <tr>
-    <td width="500" class="browse_page" ><?
+    <td width="500" class="browse_page" ><?php
 		page_navigator("webboard","read",$id="".$_GET['id']."",$before_p,$plus_p,$total,$total_p,$chk_page); ?></td></tr>
      <tr><td width="100%" align=right><? echo "<a href=\"#div1\" onclick=\"showhide('div1');\"><img src='images/webboard/reply.png'  hspace='2' vspace='5' border='0' /></a><a href='index.php?name=webboard&amp;file=post&category=".$boardcategory['id']."'><img src='images/webboard/post.png' hspace='2' vspace='5'  border='0' /></a>" ; ?></td>
    </tr>
@@ -805,7 +805,7 @@ $db->closedb ();
 	<TD width=150 align=right><B><?=_WEBBOARD_COMMENT_TOPIC_RE;?> : </B></TD>
 	<TD><INPUT TYPE="text" NAME="topic" style="width:450"  class="inputform" value="<?=$VIEWBOARD['topic'];?>" readonly style="color: #FF0000"></TD>
 </TR>
-<?
+<?php
 //กรณี โพสรูปได้ 
 if(_ENABLE_BOARD_UPLOAD){
 ?>
@@ -814,7 +814,7 @@ if(_ENABLE_BOARD_UPLOAD){
 	<TD><input type="file" name="FILE" style="width:350" class="inputform"> 
 	<?=_WEBBOARD_FORM_LIMIT_SIZE;?> <?=(_WEBBOARD_LIMIT_UPLOAD/1024);?> kB</TD>
 </TR>
-<?
+<?php
 }
 if($login_true || $admin_user){
 ?>
@@ -823,7 +823,7 @@ if($login_true || $admin_user){
 	<TD><input type="file" name="FILEATT" style="width:250" class="inputform"> Limit <?=(_WEBBOARD_LIMIT_UPLOADS/1024);?> kB</TD>
 </TR>
 <TR><TD colspan=2 height=1 class="dotline"></TD></TR>
-<?
+<?php
 }
 ?>
 <TR>
@@ -839,7 +839,7 @@ padding-right: 5px;
 border: 2px dashed #FC8A42;
 }
 </style>
-<?
+<?php
 	if ($_GET['actionpost']) {
 	echo "<a name=reply>";
 	if ($_GET[commentpost]) {
@@ -861,7 +861,7 @@ background-color :#F3F3F3;width: 520px;border: 1px dashed #FC8A42;"><?=$TextCont
 	</TD>
 </TR>
 
-<?
+<?php
 } else {
 if($login_true || $admin_user){
 ?>
@@ -871,7 +871,7 @@ background-color :#F3F3F3;width: 520px;border: 1px dashed #FC8A42;"><?=$TextCont
 	</TD>
 </TR>
 
-<?
+<?php
 } else {
 ?>
 <textarea cols="50" id="editor1" rows="50"  name="detail" ><div style="background-repeat: no-repeat;background-position: left center;
@@ -888,7 +888,7 @@ background-color :#F3F3F3;width: 520px;border: 1px dashed #FC8A42;"><?php echo _
 		<script type="text/javascript">CKEDITOR.replace ( 'editor1',{toolbar: 'Basic'});</script>
 	</TD>
 </TR>
-<?
+<?php
 }
 if($login_true || $admin_user){
 } else {
@@ -903,7 +903,7 @@ if(USE_CAPCHA){
 							};?>							</TD>
 							<TD><input name="security_code" type="text" id="security_code" size="20" maxlength="6" style="width:80" > <?=_JAVA_CAPTCHA_ADD;?></TD>
 						</TR>
-<?
+<?php
 }}
 ?>
 <TR>

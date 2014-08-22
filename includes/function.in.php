@@ -1,121 +1,20 @@
 <?php
+// Convert utf-8 to tis-620
+function toTis620($str){
+	return iconv('utf-8', 'tis-620', $str);
+}
 
-function getBrowserType () {
-	if (!empty($_SERVER['HTTP_USER_AGENT'])) 
-	{ 
-	   $HTTP_USER_AGENT = $_SERVER['HTTP_USER_AGENT']; 
-	} 
-	else if (!empty($HTTP_SERVER_VARS['HTTP_USER_AGENT'])) 
-	{ 
-	   $HTTP_USER_AGENT = $HTTP_SERVER_VARS['HTTP_USER_AGENT']; 
-	} 
-	else if (!isset($HTTP_USER_AGENT)) 
-	{ 
-	   $HTTP_USER_AGENT = ''; 
-	} 
-	// Create list of browsers with browser name as array key and user agent as value. 
-	$browsers = array(
-		'Opera' => 'Opera',
-		'Mozilla Firefox'=> '(Firebird)|(Firefox)', // Use regular expressions as value to identify browser
-		'Galeon' => 'Galeon',
-		'Mozilla'=>'Gecko',
-		'MyIE'=>'MyIE',
-		'Lynx' => 'Lynx',
-		'Netscape' => '(Mozilla/4\.75)|(Netscape6)|(Mozilla/4\.08)|(Mozilla/4\.5)|(Mozilla/4\.6)|(Mozilla/4\.79)',
-		'Konqueror'=>'Konqueror',
-		'SearchBot' => '(nuhk)|(Googlebot)|(Yammybot)|(Openbot)|(Slurp/cat)|(msnbot)|(ia_archiver)',
-		'Internet Explorer 8' => '(MSIE 8\.[0-9]+)',
-                'Internet Explorer 7' => '(MSIE 7\.[0-9]+)',
-		'Internet Explorer 6' => '(MSIE 6\.[0-9]+)',
-		'Internet Explorer 5' => '(MSIE 5\.[0-9]+)',
-		'Internet Explorer 4' => '(MSIE 4\.[0-9]+)',
-	);
+function getToken(){
+	$token = md5(mt_rand().time());
+	$_SESSION['token'] = $token;
+	return $token;
+}
 
-	foreach($browsers as $browser=>$pattern) { // Loop through $browsers array
-    // Use regular expressions to check browser type
-		if(preg_match("/".$pattern."/", $HTTP_USER_AGENT)) { // Check if a value in $browsers array matches current user agent.
-			return $browser; // Browser was matched so return $browsers key
-		}
+function checkToken(){
+	if ($_POST['token']!==$_SESSION['token']) {
+		return false;
 	}
-	return 'Unknown'; // Cannot find browser so return Unknown
-}
-
-function selfURL() { 
-	$s = empty($_SERVER["HTTPS"]) ? '' : ($_SERVER["HTTPS"] == "on") ? "s" : "";
-	$protocol = strleft(strtolower($_SERVER["SERVER_PROTOCOL"]), "/").$s; 
-	$port = ($_SERVER["SERVER_PORT"] == "80") ? "" : (":".$_SERVER["SERVER_PORT"]); 
-	return $protocol."://".$_SERVER['SERVER_NAME'].$port.$_SERVER['REQUEST_URI']; 
-}
-
-function strleft($s1, $s2) { 
-	return substr($s1, 0, strpos($s1, $s2)); 
-}
-
-function getInfo($ips){
-
-    $url = get_content("http://smart-ip.net/geoip-json/".$ips."");
-	$xml = json_decode($url,true);
-
-    $info["ip"] = $xml['host'];
-    $info["region"] = $xml['region'];
-    $info["city"] = $xml['city'];
-    $info["lat"] = $xml['latitude'];
-    $info["long"] = $xml['longitude'];
-    $info['country'] = $xml['countryName'];
-	$info['localTimeZone'] = $xml['timezone'];
-
-    return $info;
-}
-
-function anti_hacksession($User,$SessionID,$IP) {
-	global $db ;
-	if(empty($_SESSION['ua']) || $_SESSION['ua'] != $User.":".$_SERVER['HTTP_USER_AGENT'].":".$IP.":".$SessionID.":".$_SERVER['HTTP_ACCEPT_LANGUAGE'])
-	{
-		$db->connectdb(DB_NAME,DB_USERNAME,DB_PASSWORD);
-		$db->del(TB_useronline," useronline='".$User."' "); 
-		$db->add_db(TB_IPBLOCK,array(
-			"ip"=> $IP,
-			"post_date"=> time()
-			));
-		session_unset();
-		session_regenerate_id();
-		die('Session Hijacking Attempt');
-	}
-}
-
-function highlight($word, $subject) {
-	$pattern = '/(>[^<]*)('.$word.')/i';
-	$replacement = '\1<span class="search">\2</span>';
-	return preg_replace($pattern, $replacement, $subject);
-}
-
-
-function thai_date(){
-	$thaiday = array(_Sunday,_Monday,_Tuesday,_Wednesday,_Thursday,_Friday,_Saturday);
-	$thaimonth = array(_Month_1,_Month_2,_Month_3,_Month_4,_Month_5,_Month_6,_Month_7,_Month_8,_Month_9,_Month_10,_Month_11,_Month_12);
-	$Date =$thaiday[date("w")]." ".date("j")." ".$thaimonth[date("m")-1]." ";
-	$Ythai= date("Y")+543;
-	$Date .= $Ythai; 
-	return $Date;
-}
-
-
-//	$strDate = "2008-08-14 13:42:44";
-//	echo "ThaiCreate.Com Time now : ".DateThai($strDate);
-function DateThaiNew($strDate,$full=""){
-	$strYear = date("Y",strtotime($strDate))+543;
-	$strMonth= date("n",strtotime($strDate));
-	$strDay= date("j",strtotime($strDate));
-	$strHour= date("H",strtotime($strDate));
-	$strMinute= date("i",strtotime($strDate));
-	$strSeconds= date("s",strtotime($strDate));
-	$strMonthCut = Array("",""._Month_1."",""._Month_2."",""._Month_3."",""._Month_4."",""._Month_5."",""._Month_6."",""._Month_7."",""._Month_8."",""._Month_9."",""._Month_10."",""._Month_11."",""._Month_12."");
-	$strMonthThai=$strMonthCut[$strMonth];
-	if($full){
-		return "$strDay $strMonthThai $strYear, $strHour:$strMinute";
-	} else {
-		return "$strDay $strMonthThai $strYear";
-	}
+	return true;
 }
 
 function anti_injection( $user, $pass ,$ip) {
@@ -144,23 +43,25 @@ function anti_injection( $user, $pass ,$ip) {
             // the whole script will stop dead in its tracks.
             $array = ARRAY ( 'user' => $user, 'pass' => $pass );
             // ---------------------------------------------
-            if ( in_array ( NULL, $array ) ) {
-				$db->connectdb(DB_NAME,DB_USERNAME,DB_PASSWORD);
-				$db->add_db(TB_IPBLOCK,array(
-					"ip"=>"".$ip."",
-					"post_date"=>"".time().""
-				));
-				$db->closedb ();
-				?>
-				<BR><BR>
-				<CENTER><A HREF="?name=index"><IMG SRC="images/dangerous.png" BORDER="0"></A><BR><BR>
-				<FONT COLOR="#336600"><B><?php echo _ADMIN_IPBLOCK_MESSAGE_HACK;?> <?php echo WEB_EMAIL;?></B></FONT><BR><BR>
-				<A HREF="?name=index"><B><?php echo _ADMIN_IPBLOCK_MESSAGE_HACK1;?></B></A>
-				</CENTER>
-				<?php echo "<meta http-equiv='refresh' content='10; url=?name=index'>" ; ?>
-				<BR><BR>
-				<?php
-            } else {
+            IF ( IN_ARRAY ( NULL, $array ) ) {
+/*
+		$db->connectdb(DB_NAME,DB_USERNAME,DB_PASSWORD);
+		$db->add_db(TB_IPBLOCK,array(
+			"ip"=>"".$ip."",
+			"post_date"=>"".time().""
+		));
+		$db->closedb ();
+?>
+<BR><BR>
+<CENTER><A HREF="?name=index"><IMG SRC="images/dangerous.png" BORDER="0"></A><BR><BR>
+<FONT COLOR="#336600"><B><?=_ADMIN_IPBLOCK_MESSAGE_HACK;?> <?=WEB_EMAIL;?></B></FONT><BR><BR>
+<A HREF="?name=index"><B><?=_ADMIN_IPBLOCK_MESSAGE_HACK1;?></B></A>
+</CENTER>
+<? echo "<meta http-equiv='refresh' content='10; url=?name=index'>" ; ?>
+<BR><BR>
+<?
+*/
+            } ELSE {
                     RETURN $array;
             }
     }
@@ -180,6 +81,25 @@ function youtubeID($url){
 	 return substr($res[1],0,12);
   	 return false;
  }
+
+function mbmGetFLVDuration($file){
+    // read file
+  if (file_exists($file)){
+    $handle = fopen($file, "r");
+    $contents = fread($handle, filesize($file));
+    fclose($handle);
+    //
+    if (strlen($contents) > 3){
+      if (substr($contents,0,3) == "FLV"){
+        $taglen = hexdec(bin2hex(substr($contents,strlen($contents)-3)));
+        if (strlen($contents) > $taglen){
+          $duration = hexdec(bin2hex(substr($contents,strlen($contents)-$taglen,3)))  ;
+          return $duration;
+        }
+      }
+    }
+  }
+}
 
 function check_captcha($cap) {
 	if($_SESSION['security_code'] != $cap OR empty($cap)) {
@@ -232,6 +152,40 @@ return true;
 }
 }
 
+function resetpassword($email,$name,$user,$password) {
+	// global $email,$name,$user,$password;
+	// $admin_mail=WEB_EMAIL;
+	$home=WEB_URL;
+
+	$Headers = 'MIME-Version: 1.0'."\r\n" ;
+	$Headers .= 'Content-type: text/html; charset='.ISO."\r\n" ;
+
+	$Headers .= 'To: '.$name.' <'.$email.'>' . "\r\n";
+	$Headers .= 'From: '.WEB_EMAIL.' <'.WEB_EMAIL.'>'."\r\n" ;
+	$Headers .= 'Reply-to: '.WEB_EMAIL.' <'.WEB_EMAIL.'>'."\r\n" ;
+	$Headers .= 'X-Mailer: PHP/'.phpversion();
+
+	$subject_mail = _RESET_MAIL_SUB ; // หัวข้ออีเมล์ 
+
+	//----------------------------------------------------------------------- เนื้อหาของอีเมล์ //
+	$message_mail = _RESET_MAIL_BODY."<br>" ;
+	$message_mail .= _RESET_MAIL_BODY1." $name<br>" ;
+	$message_mail .= _RESET_MAIL_BODY2." $user<br>" ;
+	$message_mail .= _RESET_MAIL_BODY3." $password<br>" ;
+	$message_mail .= _RESET_MAIL_BODY4." ".WEB_URL."<br>";
+	$message_mail .= _RESET_MAIL_BODY5."" ;
+
+	//------------------------------------------------------------------------ จบเนื้อหาของอีเมล์ //
+	// $from = "".WEB_EMAIL."" ;
+	if(@mail($email, $subject_mail, $message_mail, $Headers)){
+		echo "<br><br><center><font size='3' face='MS Sans Serif'><b>" ;
+		echo "<center><font size=\"3\" face='MS Sans Serif'><b>"._RESET_MAIL_SEND1." $email "._RESET_MAIL_SEND2."</b></font></center>" ;
+		echo ""._RESET_MAIL_SEND_WAIT."</b></font></center>" ;
+	}else{
+		echo ""._RESET_MAIL_SEND_NO."";
+	}
+}
+
 
 function get_content($URL) {
          $ch = curl_init();
@@ -245,6 +199,38 @@ function get_content($URL) {
           curl_close($ch);
            return $String;
  }
+
+function plgContentpdfembed( $row, $params) {
+	
+	// expression to search for
+	$regex = "#{pdf[\=|\s]?(.+)}#s";
+ 	$regex1 = '/{(pdf=)\s*(.*?)}/i';
+
+	// find all instances of mambot and put in $matches
+	preg_match_all( $regex1, $row, $matches );
+
+ 	// Number of mambots
+	$count = count( $matches[0] );
+
+	for ($i=0; $i<$count; $i++) {	
+		$r	=	str_replace( '{pdf=', '', $matches[0][$i]);
+		$r	=	str_replace( '}', '', $r); 
+		$ex	=	explode('|',$r);
+		
+		$ploc	=	$ex[0]; 		
+		$w	=	$ex[1];
+		$h	=	$ex[2];
+		
+		$replace = plg_pdfembed_replacer($ploc , $w, $h );
+		$row= str_replace( '{pdf='.$ex[0].'|'.$ex[1].'|'.$ex[2].'}', $replace, $row);
+	} 
+	return true;
+}
+	
+function plg_pdfembed_replacer($ploc , $w, $h ) {
+		
+		return '<embed src="'.$ploc.'" width="'.$w.'" height="'.$h.'"/>';
+	}
 
 function timeyoutube($duration){
 //Initially we set hours,minutes and second all to zero
@@ -274,6 +260,85 @@ if($hours > 0) {
 $time = ''.$hours.':'.$time.'';
 }
 return $time;
+}
+
+function dateTimeDiff($db_date) {
+
+	if (!function_exists('gregoriantojd')) {
+	 	function gregoriantojd() {
+	 		$msg = "The PHP calendar function is disabled\n
+	 		Please ask your host to do a normal php install";
+	 		$fo = @fopen('phpmotion_errors.txt', 'w');
+	 		@fwrite($fo, $msg);
+	 		@fclose($fo);
+	 	}
+	 }
+
+
+	$h_r			= '';
+	$m_r 			= '';
+	$s_r 			= '';
+
+	// from V3 tables
+	// 2008-07-14 20:34:03
+
+	$c_date		= date('Y-m-d H:i:s');
+	$c_year 		= substr($c_date,0,4);
+	$c_month 		= substr($c_date,5,2);
+	$c_day 		= substr($c_date,8,2);
+	$r_year 		= substr($db_date,0,4);
+	$r_month 		= substr($db_date,5,2);
+	$r_day 		= substr($db_date,8,2);
+	$tmp_m_dates	= $c_year . $c_month . $c_day;
+	$tmp_r_use 		= $r_year . $r_month . $r_day;
+	$tmp_dif 		= $tmp_m_dates-$tmp_r_use;
+	$use_diff 		= $tmp_dif;
+	$c_hour 		= substr($c_date,11,2);
+	$c_min 		= substr($c_date,14,2);
+	$c_seconds 		= substr($c_date,17,2);
+	$r_hour 		= substr($db_date,11,2);
+	$r_min 		= substr($db_date,14,2);
+	$r_seconds 		= substr($db_date,17,2);
+	$h_r 			= $c_hour-$r_hour;
+	$m_r 			= $c_min-$r_min;
+	$s_r 			= $c_seconds-$r_seconds;
+
+	if( $use_diff < 1 ) {
+		if( $h_r > 0 ) {
+			if( $m_r < 0 ) {
+				$m_r	= 60 + $m_r;
+				$h_r 	= $h_r - 1;
+				return $m_r . " Mins ago";
+			} else {
+				return $h_r. " Hrs " . $m_r . " Mins ago";
+			}
+		} else {
+			if( $m_r > 0 ){
+				return $m_r . " Mins ago";
+			} else {
+				return $s_r . " Secs ago";
+			}
+		}
+	} else {
+		$c_date		= date('m/d/Y');
+		$date_str 		= strtotime($db_date);
+		$db_date 		= date('m/d/Y', $date_str);
+		$dformat 		= '/';
+		$date_part_1	= explode($dformat, $db_date);
+		$date_part_2  	= explode($dformat, $c_date);
+		$db_date	  	= gregoriantojd($date_part_1[0], $date_part_1[1], $date_part_1[2]);
+		$c_date 		= gregoriantojd($date_part_2[0], $date_part_2[1], $date_part_2[2]);
+		$days_ago 		= $c_date - $db_date;
+
+		if ( $days_ago == 1 ) {
+			$day_word = 'day ago';
+		} else {
+			$day_word = 'days ago';
+		}
+
+		return $days_ago . " " . $day_word;
+	}
+
 }
 
 //function แปลง tis620 เป็น utf8
@@ -311,48 +376,66 @@ function utf8_to_tis620($string) {
 	}
   }
   return $res;
+} 
+
+//function แปลงวันที่ให้เหมือน facebook
+function fb_date($timestamp){
+	$difference = time() - $timestamp;
+	$periods = array("second", "minute", "hour");
+	$ending=" ago";
+	if($difference<60){
+		$j=0;
+		$periods[$j].=($difference != 1)?"s":"";
+		$difference=($difference==3 || $difference==4)?"a few ":$difference;
+		$text = "$difference $periods[$j] $ending";
+	}elseif($difference<3600){
+		$j=1;
+		$difference=round($difference/60);
+		$periods[$j].=($difference != 1)?"s":"";
+		$difference=($difference==3 || $difference==4)?"a few ":$difference;
+		$text = "$difference $periods[$j] $ending";		
+	}elseif($difference<86400){
+		$j=2;
+		$difference=round($difference/3600);
+		$periods[$j].=($difference != 1)?"s":"";
+		$difference=($difference != 1)?$difference:"about an ";
+		$text = "$difference $periods[$j] $ending";		
+	}elseif($difference<172800){
+		$difference=round($difference/86400);
+		$periods[$j].=($difference != 1)?"s":"";
+		$text = "Yesterday at ".date("g:ia",$timestamp);								
+	}else{
+		if($timestamp<strtotime(date("Y-01-01 00:00:00"))){
+			$text = date("l j, Y",$timestamp)." at ".date("g:ia",$timestamp);		
+		}else{
+			$text = date("l j",$timestamp)." at ".date("g:ia",$timestamp);			
+		}
+	}
+	return $text;
 }
 
 
 function get_real_ip()
 {
-$ip = false;
-if(!empty($_SERVER['HTTP_CLIENT_IP']))
-{
-$ip = $_SERVER['HTTP_CLIENT_IP'];
+    if( array_key_exists('HTTP_X_FORWARDED_FOR', $_SERVER) && !empty($_SERVER['HTTP_X_FORWARDED_FOR']) ) {
+        if (strpos($_SERVER['HTTP_X_FORWARDED_FOR'], ',')>0) {
+            $addr = explode(",",$_SERVER['HTTP_X_FORWARDED_FOR']);
+            return trim($addr[0]);
+        } else {
+            return $_SERVER['HTTP_X_FORWARDED_FOR'];
+        }
+    }
+    else {
+        return $_SERVER['REMOTE_ADDR'];
+    }
 }
-if(!empty($_SERVER['HTTP_X_FORWARDED_FOR']))
-{
-$ips = explode(", ", $_SERVER['HTTP_X_FORWARDED_FOR']);
-if($ip)
-{
-array_unshift($ips, $ip);
-$ip = false;
-}
-for($i = 0; $i < count($ips); $i++)
-{
-if(!preg_match("/^(10|172\.16|192\.168)\./i", $ips[$i]))
-{
-if(version_compare(phpversion(), "5.0.0", ">="))
-{
-if(ip2long($ips[$i]) != false)
-{
-$ip = $ips[$i];
-break;
-}
-}
-else
-{
-if(ip2long($ips[$i]) != - 1)
-{
-$ip = $ips[$i];
-break;
-}
-}
-}
-}
-}
-return ($ip ? $ip : $_SERVER['REMOTE_ADDR']);
+
+
+//webboard Icon
+function WebIcon($Ntime="", $Otime="", $Icon=""){
+	if(TIMESTAMP <= ($Otime + 86400)){
+		echo "<IMG SRC=\"".$Icon."\" BORDER=\"0\" ALIGN=\"absmiddle\"> ";
+	}
 }
 
 //News Icon
@@ -367,8 +450,8 @@ function UpdateIcon($Ntime="", $Otime="", $Icon=""){
 		echo "<IMG SRC=\"".$Icon."\" BORDER=\"0\" ALIGN=\"absmiddle\"> ";
 	}
 }
-
-function FixQuotes($what = "") {
+//ฟังก์ชั่นในการลบตัว \ ออกเพื่อให้แสดงผลได้ถุกต้อง
+function FixQuotes ($what = "") {
         $what = preg_replace("/'/i","''",$what);
         while (preg_match("/\\\\'/i", $what)) {
                 $what = preg_replace("/\\\\'/i","'",$what);
@@ -376,10 +459,17 @@ function FixQuotes($what = "") {
         return $what;
 }
 
+//ฟังก์ชั่นเปลี่ยนข้อความเว็บและเมล์ให้เป็นลิงก์ 
+function CHANGE_LINK($Message = ""){
+	$Message = preg_replace("/([[:alnum:]]+)://([^[:space:]]*)([[:alnum:]#?/&=])/i","<a href=\"\\1://\\2\\3\" target=\"_blank\">\\1://\\2\\3</a>",$Message);
+	$Message = preg_replace("/([[:alnum:]]+)@([^[:space:]]*)([[:alnum:]])/i","<a href=mailto:\\1@\\2\\3>\\1@\\2\\3</a>",$Message); 
+return ($Message);
+}
 
+//ทำการแบ่งหน้า
 function SplitPage($page="",$totalpage="",$option=""){
 	global $ShowSumPages , $ShowPages ;
-	
+	// สร้าง link เพื่อไปหน้าก่อน-หน้าถัดไป
 	$ShowSumPages .= "<B>"._FUNC_Page1."  </B>";
 	if($page>1 && $page<=$totalpage) {
 		$prevpage = $page-1;
@@ -394,6 +484,7 @@ function SplitPage($page="",$totalpage="",$option=""){
 		$ShowSumPages .= "<a href='".$option."&page=$nextpage' title='Next'><B>-></B></a>\n";
 	}
 
+	// วนลูปแสดงเลขหน้าทั้งหมด แบบเป็นช่วงๆ ช่วงละ 10 หน้า
 	$b=floor($page/10); 
 	$c=(($b*10));
 
@@ -428,6 +519,63 @@ function SplitPage($page="",$totalpage="",$option=""){
 	}
 }
 
+//ทำการแบ่งหน้า webboard
+function SplitPageboard($page="",$totalpage="",$option=""){
+	global $ShowSumPages , $ShowPages ;
+	// สร้าง link เพื่อไปหน้าก่อน-หน้าถัดไป
+	echo "<div align=left><table  cellpadding=0 cellspacing=0 align=left><tr>";
+	$ShowSumPages .= "<td align=left><div class=pagessum><B>"._FUNC_Page1."</B>";
+	if($page>1 && $page<=$totalpage) {
+		$prevpage = $page-1;
+		$ShowSumPages .= "<a href='".$option."&page=$prevpage' title='Back'><B><-</B></a>";
+	}
+	$ShowSumPages .= " <b>$page/$totalpage</b>";
+	if($page!=$totalpage) {
+		$nextpage = $page+1;
+		if($nextpage >= $totalpage){
+			$nextpage = $totalpage ;
+		}
+		$ShowSumPages .= "<a href='".$option."&page=$nextpage' title='Next'><B>-></B></a>";
+	}
+	$ShowSumPages .="</div></td><td border=0 align=left>&nbsp;&nbsp;</td>";
+	// วนลูปแสดงเลขหน้าทั้งหมด แบบเป็นช่วงๆ ช่วงละ 10 หน้า
+	$b=floor($page/10); 
+	$c=(($b*10));
+
+	if($c>1) {
+		$prevpage = $c-1;
+		$ShowPages .= "<td align=left><div class=pages><a href='".$option."&page=$prevpage' title='10 "._FUNC_Page2."'><<</a>";
+	}
+	else{
+		$ShowPages .= "<td align=left><div class=pages><B><<</B>";
+	}
+	$ShowPages .= " <b></div></td><td border=0 align=left>&nbsp;</td>";
+
+	for($i=$c; $i<$page ; $i++) {
+		if($i>0)
+		$ShowPages .= "<td align=left><div class=pages><a href='".$option."&page=$i'>$i</a></div></td><td border=0 align=left>&nbsp;</td>";
+	}
+	$ShowPages .= "<td align=left><div class=pages><font color=red>$page</font></div></td><td border=0 align=left>&nbsp;</td>";
+	for($i=($page+1); $i<($c+10) ; $i++) {
+		if($i<=$totalpage)
+		$ShowPages .= "<td align=left><div class=pages><a href='".$option."&page=$i'>$i</a></div></td><td border=0 align=left>&nbsp;</td>";
+	}
+	$ShowPages .= "</b> ";
+	if($c>=0) {
+		if(($c+2)<$totalpage){
+	$nextpage = $c+10;
+	$ShowPages .= "<td align=left><div class=pages><a href='".$option."&page=$nextpage' title='10 "._FUNC_Page3."'>>></a></div></td><td border=0 align=left>&nbsp;</td>";
+		}
+		else
+	$ShowPages .= "<td align=left><div class=pages><B>>></B></div></td><td border=0 align=left>&nbsp;</td>";
+	}
+	else{
+		$ShowPages .= "<td align=left><div class=pages><B><td class=login>>></B></div></td><td border=0 align=left>&nbsp;</td>";
+	}
+	echo "</tr></table></div>";
+}
+
+// แบ่งหน้าแบบสวยงาม
 
 function page_navigator($modules="",$file="",$id="",$before_p="",$plus_p="",$total="",$total_p="",$chk_page=""){   
 	global $db;
@@ -482,9 +630,12 @@ function page_navigator($modules="",$file="",$id="",$before_p="",$plus_p="",$tot
 	if($total_p !='' && $chk_page<$total_p-1){
 		echo "<a href='?name=".$modules."&file=".$file."&id=".$id."&s_page=$pNext'  class='naviPN'>Next</a>";
 	}
-}
+}   
 
 
+
+
+//code แบ่งหน้าสำหรับบทความที่มีข้อความยาวๆ
 function breakpage($mod="",$page="",$id="",$thepage=""){
 	global $mod , $page ,$id ,$thepage;
 
@@ -513,12 +664,22 @@ else {
 $thepageNew .= "<br /><center><b> $previous_page $next_page </b></center><br />";
 $thepages = $thepageNew;
 echo "$thepages";
+// End PageBreak Code
 }
 
 //Function Sendmail
 function SendMail($charset="",$to="",$tocc="",$from="",$subject="",$topic=""){
 	/* message */
-	$message = "<html> <head> <title>".$subject."</title> </head> <body> ".$topic."</body> </html> ";
+	$message = "
+	<html>
+	<head>
+	<title>".$subject."</title>
+	</head>
+	<body>
+	".$topic."
+	</body>
+	</html>
+	";
 
 	/* To send HTML mail, you can set the Content-type header. */
 	$headers  = "MIME-Version: 1.0\r\n";
@@ -537,6 +698,28 @@ function SendMail($charset="",$to="",$tocc="",$from="",$subject="",$topic=""){
 	}
 }
 
+
+function sendmailnew($subject ,$detail,$yourmail,$province,$known,$suggest) {
+//$yourmail= $_POST['YOURMAIL'];
+//$from = "From:\"$yourmail\"<$yourmail>" ;
+$admin_mail="".WEB_EMAIL."";
+$Headers = "MIME-Version: 1.0\r\n" ;
+$Headers .= "Content-type: text/html; charset=".ISO."\r\n" ;
+                          // ส่งข้อความเป็นภาษาไทย ใช้ "windows-874"
+$Headers .= "From: ".$yourmail." <".$yourmail.">\r\n" ;
+$Headers .= "Reply-to: ".WEB_EMAIL." <".WEB_EMAIL.">\r\n" ;
+$Headers .= "X-Priority: 3\r\n" ;
+$Headers .= "X-Mailer: PHP mailer\r\n" ;
+ //----------------------------------------------------------------------- ???????????????? //
+$alldetail = _MAIL_NEW;
+$alldetail .= _MAIL_NEW1." $yourmail";
+$alldetail .= _MAIL_NEW2." $province";
+$alldetail .= _MAIL_NEW3." $known";
+$alldetail .= _MAIL_NEW4." $suggest";
+$alldetail .= _MAIL_NEW5." $detail";
+@mail($admin_mail,$subject,$alldetail,$Headers,$from);
+}
+
 function ThaiTimeMini($timestamp="",$mini=""){
 	global $SHORT_MONTH, $FULL_MONTH, $DAY_SHORT_TEXT, $DAY_FULL_TEXT;
 	$day = date("l",$timestamp);
@@ -549,7 +732,7 @@ function ThaiTimeMini($timestamp="",$mini=""){
 
 return $ThaiText;
 }
-
+//แปลงเวลาเป็นภาษาไทย
 function ThaiTimeConvert($timestamp="",$full="",$showtime=""){
 	global $SHORT_MONTH, $FULL_MONTH, $DAY_SHORT_TEXT, $DAY_FULL_TEXT;
 	$day = date("l",$timestamp);
@@ -573,12 +756,14 @@ function ThaiTimeConvert($timestamp="",$full="",$showtime=""){
 	}
 }
 
+//เปลี่ยนจาก 11/2/2554  เป็น 11 ก.พ. 2554
 function formatDateThai($date){
-	$list= array("",""._Month_1."",""._Month_2."",""._Month_3."",""._Month_4."",""._Month_5."",""._Month_6."",""._Month_7."",""._Month_8."",""._Month_9."",""._Month_10."",""._Month_11."",""._Month_12."");
-	list($d,$m,$y) =preg_split("/\//",$date);
-	return "$d {$list[$m]} $y";
+$list= array("",""._Month_1."",""._Month_2."",""._Month_3."",""._Month_4."",""._Month_5."",""._Month_6."",""._Month_7."",""._Month_8."",""._Month_9."",""._Month_10."",""._Month_11."",""._Month_12."");
+list($d,$m,$y) =preg_split("/\//",$date);
+return "$d {$list[$m]} $y";
 }
 
+//ตรวจสอบสิทธิ์การใช้งาน webboard
 function CheckWebboard($user = "", $pwd ="" ,$cat="" ){
 	global $db ;
 	$db->connectdb(DB_NAME,DB_USERNAME,DB_PASSWORD);
@@ -615,6 +800,7 @@ function CheckWebboard($user = "", $pwd ="" ,$cat="" ){
 	    }
 }
 
+//ตรวจสอบว่าเป็น Admin จริงหรือไม่จริง
 function CheckAdmin($user = "", $pwd =""){
 	global $db ;
 	$db->connectdb(DB_NAME,DB_USERNAME,DB_PASSWORD);
@@ -629,6 +815,7 @@ function CheckAdmin($user = "", $pwd =""){
 	}
 }
 
+//ตรวจสอบว่าเป็น User จริงหรือไม่จริง ใช้สำหรับระบบสมาชิก สำหรับ MAXSITE @V.3
 function CheckUser($user = "", $pwd =""){
 	global $db ;
 	$db->connectdb(DB_NAME,DB_USERNAME,DB_PASSWORD);
@@ -643,7 +830,7 @@ function CheckUser($user = "", $pwd =""){
 	}
 }
 function OpenTable(){
-echo "<TABLE cellSpacing=0 cellPadding=0 width=660  border=0>
+echo "<TABLE cellSpacing=0 cellPadding=0 width='100%'  border=0>
       <TBODY>
         <TR>
           <TD><IMG SRC=images/main/1.gif BORDER=0 width=7 height=7></td><TD background=images/main/2.gif BORDER=0 height=7 width=650><IMG SRC=images/main/2.gif BORDER=0  height=7></td><TD><IMG SRC=images/main/3.gif BORDER=0 width=7 height=7></td>
@@ -750,6 +937,7 @@ function CheckUserblog($user = "", $pwd =""){
 	}
 }
 
+//ตรวจสอบระดับของผู้ดูแลระบบ
 function CheckLevel($Username = "", $Action = ""){
 	global $db ;
 	//Check Level
@@ -767,6 +955,28 @@ function CheckLevel($Username = "", $Action = ""){
 }
 
 
+//ตรวจสอบระดับของผู้ดูแลระบบ ใช้สำหรับระบบสมาชิก สำหรับ MAXSITE @V.3
+function CheckLevelUser($Username = "", $Action = ""){
+	global $db ;
+	//Check Level
+	$db->connectdb(DB_NAME,DB_USERNAME,DB_PASSWORD);
+	$res['user'] = $db->select_query("SELECT * FROM ".TB_MEMBER." WHERE user='$Username' ");
+	$arr['user'] = $db->fetch($res['user']);
+	//Check Action
+	$res['action'] = $db->select_query("SELECT * FROM ".TB_ADMIN_GROUP." WHERE id='".$arr[user][level]."' ");
+	$arr['action'] = $db->fetch($res['action']);
+	if($arr['action'][$Action]){
+		return True;
+	}else{
+		echo "<script language='javascript'>" ;
+		echo "alert('"._MEMBER_MOD_ALL."')" ;
+		echo "</script>" ;
+		echo "<script language='javascript'>javascript:history.go(-1)</script>";
+		exit();
+	}
+}
+
+
 //countblock
 function CountBlock($pblock=""){
 	global $db ;
@@ -774,11 +984,11 @@ function CountBlock($pblock=""){
 	$db->connectdb(DB_NAME,DB_USERNAME,DB_PASSWORD);
 	$res['Countsx'] = $db->select_query("SELECT *,count(pblock) as num FROM ".TB_BLOCK." WHERE status='1' and pblock='$pblock' group by pblock");
 	$arr['Countsx'] = $db->fetch($res['Countsx']);
-	if($arr['Countsx']['num']){
-		return True;
-	} else {
-		echo "";
-	}
+if($arr['Countsx']['num']){
+return True;
+} else {
+echo "";
+}
 }
 
 //blog level
@@ -787,36 +997,37 @@ function BlogLevel($count=""){
 	$db->connectdb(DB_NAME,DB_USERNAME,DB_PASSWORD);
 	$res['countsy'] = $db->select_query("SELECT * FROM ".TB_BLOG_LEVEL." ");
 
-	while ($arr['countsy'] = $db->fetch($res['countsy'])) {
-		$levelid=$arr['countsy']['level_id'];
-		if ($levelid=='1'){
-			$level1=$arr['countsy']['level_count'];
-		}
-		if ($levelid=='2'){
-			$level2=$arr['countsy']['level_count'];
-		} 
-		if ($levelid=='3'){
-			$level3=$arr['countsy']['level_count'];
-		} 
-		if ($levelid=='4'){
-			$level4=$arr['countsy']['level_count'];
-		} 
-		 if ($levelid=='5'){
-			$level5=$arr['countsy']['level_count'];
-		} 
-		 if ($levelid=='6'){
-			$level6=$arr['countsy']['level_count'];
-		}
-	}
-	if ($count >=0 && $count <= $level1 ){ echo '<img src=images/rate/rank1.gif BORDER=\"0\" ALIGN=\"absmiddle\">  <font color=#CC3399>[ '._COUNT_STAR1.' ]</font>';}
-	if ($count >$level1 && $count <= $level2) { echo '<img src=images/rate/rank2.gif BORDER=\"0\" ALIGN=\"absmiddle\">   <font color=#CC3399>[ '._COUNT_STAR2.' ]</font>';}
-	if ($count >$level2 && $count <= $level3) { echo '<img src=images/rate/rank3.gif BORDER=\"0\" ALIGN=\"absmiddle\">   <font color=#CC3399>[ '._COUNT_STAR3.' ]</font>';}
-	if ($count >$level3 && $count <= $level4) { echo '<img src=images/rate/rank4.gif BORDER=\"0\" ALIGN=\"absmiddle\">   <font color=#CC3399>[ '._COUNT_STAR4.' ]</font>';}
-	if ($count >$level4 && $count <= $level5 ) { echo '<img src=images/rate/rank5.gif BORDER=\"0\" ALIGN=\"absmiddle\">   <font color=#CC3399>[ '._COUNT_STAR5.' ]</font>';}
-	if ($count >=$level6) { echo '<img src=images/rate/rank6.gif BORDER=\"0\" ALIGN=\"absmiddle\">   <font color=#CC3399>[ '._COUNT_STAR6.' ]</font>';}
+while ($arr['countsy'] = $db->fetch($res['countsy'])) {
+$levelid=$arr['countsy']['level_id'];
+if ($levelid=='1'){
+	$level1=$arr['countsy']['level_count'];
+}
+if ($levelid=='2'){
+	$level2=$arr['countsy']['level_count'];
+} 
+if ($levelid=='3'){
+	$level3=$arr['countsy']['level_count'];
+} 
+if ($levelid=='4'){
+	$level4=$arr['countsy']['level_count'];
+} 
+ if ($levelid=='5'){
+	$level5=$arr['countsy']['level_count'];
+} 
+ if ($levelid=='6'){
+	$level6=$arr['countsy']['level_count'];
+}
+}
+if ($count >=0 && $count <= $level1 ){ echo '<img src=images/rate/rank1.gif BORDER=\"0\" ALIGN=\"absmiddle\">  <font color=#CC3399>[ '._COUNT_STAR1.' ]</font>';}
+if ($count >$level1 && $count <= $level2) { echo '<img src=images/rate/rank2.gif BORDER=\"0\" ALIGN=\"absmiddle\">   <font color=#CC3399>[ '._COUNT_STAR2.' ]</font>';}
+if ($count >$level2 && $count <= $level3) { echo '<img src=images/rate/rank3.gif BORDER=\"0\" ALIGN=\"absmiddle\">   <font color=#CC3399>[ '._COUNT_STAR3.' ]</font>';}
+if ($count >$level3 && $count <= $level4) { echo '<img src=images/rate/rank4.gif BORDER=\"0\" ALIGN=\"absmiddle\">   <font color=#CC3399>[ '._COUNT_STAR4.' ]</font>';}
+if ($count >$level4 && $count <= $level5 ) { echo '<img src=images/rate/rank5.gif BORDER=\"0\" ALIGN=\"absmiddle\">   <font color=#CC3399>[ '._COUNT_STAR5.' ]</font>';}
+if ($count >=$level6) { echo '<img src=images/rate/rank6.gif BORDER=\"0\" ALIGN=\"absmiddle\">   <font color=#CC3399>[ '._COUNT_STAR6.' ]</font>';}
 
 }
 
+//ตัว Alert ว่าไม่สามารถเข้าใช้งานได้ 
 function NotTrueAlert($permission="", $option="", $text=""){
 	if($option == 1){
 		$option = "<script language='javascript'>javascript:history.go(-1)</script>";
@@ -835,6 +1046,7 @@ function NotTrueAlert($permission="", $option="", $text=""){
 	}
 }
 
+//เช็คขนาด Folder
 function dirsize($dirName = '.') {
    $dir  = dir($dirName);
    $size = 0;
@@ -852,6 +1064,7 @@ function dirsize($dirName = '.') {
    return $size;
 }
 
+//แปลงหน่วยขนาดไฟล์ 
 function getfilesize($bytes) {
    if ($bytes >= 1099511627776) {
        $return = round($bytes / 1024 / 1024 / 1024 / 1024, 2);
@@ -928,20 +1141,203 @@ function showerror($showmsg) {
 </table>";
 } // end fuction checktel
 
+//ฟังก์ชั่นเปลี่ยนไอคอน
+function CHANGE_EMOTICON($Message = ""){
+	$Message = preg_replace("/:emo1:","<IMG SRC=\"images/emotion/angel_smile.gif\" BORDER=\"0\" ALIGN=\"absmiddle\">/i",$Message);
+	$Message = preg_replace("/:emo2:","<IMG SRC=\"images/emotion/angry_smile.gif\" BORDER=\"0\" ALIGN=\"absmiddle\">/i",$Message);
+	$Message = preg_replace("/:emo3:","<IMG SRC=\"images/emotion/broken_heart.gif\" BORDER=\"0\" ALIGN=\"absmiddle\">/i",$Message);
+	$Message = preg_replace("/:emo4:","<IMG SRC=\"images/emotion/cake.gif\" BORDER=\"0\" ALIGN=\"absmiddle\">/i",$Message);
+	$Message = preg_replace("/:emo5:","<IMG SRC=\"images/emotion/confused_smile.gif\" BORDER=\"0\" ALIGN=\"absmiddle\">/i",$Message);
+	$Message = preg_replace("/:emo6:","<IMG SRC=\"images/emotion/cry_smile.gif\" BORDER=\"0\" ALIGN=\"absmiddle\">/i",$Message);
+	$Message = preg_replace("/:emo7:","<IMG SRC=\"images/emotion/devil_smile.gif\" BORDER=\"0\" ALIGN=\"absmiddle\">/i",$Message);
+	$Message = preg_replace("/:emo8:","<IMG SRC=\"images/emotion/embaressed_smile.gif\" BORDER=\"0\" ALIGN=\"absmiddle\">/i",$Message);
+	$Message = preg_replace("/:emo9:","<IMG SRC=\"images/emotion/envelope.gif\" BORDER=\"0\" ALIGN=\"absmiddle\">/i",$Message);
+	$Message = preg_replace("/:emo10:","<IMG SRC=\"images/emotion/heart.gif\" BORDER=\"0\" ALIGN=\"absmiddle\">/i",$Message);
+	$Message = preg_replace("/:emo11:","<IMG SRC=\"images/emotion/kiss.gif\" BORDER=\"0\" ALIGN=\"absmiddle\">/i",$Message);
+	$Message = preg_replace("/:emo12:","<IMG SRC=\"images/emotion/lightbulb.gif\" BORDER=\"0\" ALIGN=\"absmiddle\">/i",$Message);
+	$Message = preg_replace("/:emo13:","<IMG SRC=\"images/emotion/omg_smile.gif\" BORDER=\"0\" ALIGN=\"absmiddle\">/i",$Message);
+	$Message = preg_replace("/:emo14:","<IMG SRC=\"images/emotion/regular_smile.gif\" BORDER=\"0\" ALIGN=\"absmiddle\">/i",$Message);
+	$Message = preg_replace("/:emo15:","<IMG SRC=\"images/emotion/sad_smile.gif\" BORDER=\"0\" ALIGN=\"absmiddle\">/i",$Message);
+	$Message = preg_replace("/:emo16:","<IMG SRC=\"images/emotion/shades_smile.gif\" BORDER=\"0\" ALIGN=\"absmiddle\">/i",$Message);
+	$Message = preg_replace("/:emo17:","<IMG SRC=\"images/emotion/teeth_smile.gif\" BORDER=\"0\" ALIGN=\"absmiddle\">/i",$Message);
+	$Message = preg_replace("/:emo18:","<IMG SRC=\"images/emotion/thumbs_down.gif\" BORDER=\"0\" ALIGN=\"absmiddle\">/i",$Message);
+	$Message = preg_replace("/:emo19:","<IMG SRC=\"images/emotion/thumbs_up.gif\" BORDER=\"0\" ALIGN=\"absmiddle\">/i",$Message);
+	$Message = preg_replace("/:emo20:","<IMG SRC=\"images/emotion/tounge_smile.gif\" BORDER=\"0\" ALIGN=\"absmiddle\">/i",$Message);
+	$Message = preg_replace("/:emo21:","<IMG SRC=\"images/emotion/whatchutalkingabout_smile.gif\" BORDER=\"0\" ALIGN=\"absmiddle\">/i",$Message);
+	$Message = preg_replace("/:emo22:","<IMG SRC=\"images/emotion/wink_smile.gif\" BORDER=\"0\" ALIGN=\"absmiddle\">/i",$Message);
+	$Message = preg_replace("/:emo23:","<img src=\"images/emotion2/001.gif\" BORDER=\"0\" ALIGN=\"absmiddle\">/i",$Message); 
+	$Message = preg_replace("/:emo24:","<img src=\"images/emotion2/002.gif\" BORDER=\"0\" ALIGN=\"absmiddle\">/i",$Message); 
+	$Message = preg_replace("/:emo25:","<img src=\"images/emotion2/003.gif\" BORDER=\"0\" ALIGN=\"absmiddle\">/i",$Message); 
+	$Message = preg_replace("/:emo26:","<img src=\"images/emotion2/004.gif\" BORDER=\"0\" ALIGN=\"absmiddle\">/i",$Message); 
+	$Message = preg_replace("/:emo27:","<img src=\"images/emotion2/005.gif\" BORDER=\"0\" ALIGN=\"absmiddle\">/i",$Message); 
+	$Message = preg_replace("/:emo28:","<img src=\"images/emotion2/006.gif\" BORDER=\"0\" ALIGN=\"absmiddle\">/i",$Message); 
+	$Message = preg_replace("/:emo29:","<img src=\"images/emotion2/007.gif\" BORDER=\"0\" ALIGN=\"absmiddle\">/i",$Message); 
+	$Message = preg_replace("/:emo30:","<img src=\"images/emotion2/008.gif\" BORDER=\"0\" ALIGN=\"absmiddle\">/i",$Message); 
+	$Message = preg_replace("/::emo31:","<img src=\"images/emotion2/009.gif\" BORDER=\"0\" ALIGN=\"absmiddle\">/i",$Message); 
+	$Message = preg_replace("/:emo32:","<img src=\"images/emotion2/010.gif\" BORDER=\"0\" ALIGN=\"absmiddle\">/i",$Message); 
+	$Message = preg_replace("/:emo33:","<img src=\"images/emotion2/011.gif\" BORDER=\"0\" ALIGN=\"absmiddle\">/i",$Message); 
+	$Message = preg_replace("/:emo34:","<img src=\"images/emotion2/012.gif\" BORDER=\"0\" ALIGN=\"absmiddle\">/i",$Message); 
+	$Message = preg_replace("/:emo35:","<img src=\"images/emotion2/013.gif\" BORDER=\"0\" ALIGN=\"absmiddle\">/i",$Message); 
+	$Message = preg_replace("/:emo36:","<img src=\"images/emotion2/014.gif\" BORDER=\"0\" ALIGN=\"absmiddle\">/i",$Message); 
+	$Message = preg_replace("/:emo37:","<img src=\"images/emotion2/015.gif\" BORDER=\"0\" ALIGN=\"absmiddle\">/i",$Message); 
+	$Message = preg_replace("/:emo38:","<img src=\"images/emotion2/016.gif\" BORDER=\"0\" ALIGN=\"absmiddle\">/i",$Message); 
+	$Message = preg_replace("/:emo39:","<img src=\"images/emotion2/017.gif\" BORDER=\"0\" ALIGN=\"absmiddle\">/i",$Message); 
+	$Message = preg_replace("/:emo40:","<img src=\"images/emotion2/018.gif\" BORDER=\"0\" ALIGN=\"absmiddle\">/i",$Message); 
+	$Message = preg_replace("/:emo41:","<img src=\"images/emotion2/019.gif\" BORDER=\"0\" ALIGN=\"absmiddle\">/i",$Message); 
+	$Message = preg_replace("/:emo42:","<img src=\"images/emotion2/020.gif\" BORDER=\"0\" ALIGN=\"absmiddle\">/i",$Message); 
+	$Message = preg_replace("/:emo43:","<img src=\"images/emotion2/021.gif\" BORDER=\"0\" ALIGN=\"absmiddle\">/i",$Message); 
+	$Message = preg_replace("/:emo44:","<img src=\"images/emotion2/022.gif\" BORDER=\"0\" ALIGN=\"absmiddle\">/i",$Message); 
+	$Message = preg_replace("/:emo45:","<img src=\"images/emotion2/023.gif\" BORDER=\"0\" ALIGN=\"absmiddle\">/i",$Message); 
+	$Message = preg_replace("/:emo46:","<img src=\"images/emotion2/024.gif\" BORDER=\"0\" ALIGN=\"absmiddle\">/i",$Message); 
+	$Message = preg_replace("/:emo47:","<img src=\"images/emotion2/025.gif\" BORDER=\"0\" ALIGN=\"absmiddle\">/i",$Message); 
+	$Message = preg_replace("/:emo48:","<img src=\"images/emotion2/026.gif\" BORDER=\"0\" ALIGN=\"absmiddle\">/i",$Message); 
+	$Message = preg_replace("/:emo49:","<img src=\"images/emotion2/027.gif\" BORDER=\"0\" ALIGN=\"absmiddle\">/i",$Message); 
+	$Message = preg_replace("/:emo50:","<img src=\"images/emotion2/028.gif\" BORDER=\"0\" ALIGN=\"absmiddle\">/i",$Message); 
+	$Message = preg_replace("/:emo51:","<img src=\"images/emotion2/029.gif\" BORDER=\"0\" ALIGN=\"absmiddle\">/i",$Message); 
+	$Message = preg_replace("/:emo52:","<img src=\"images/emotion2/030.gif\" BORDER=\"0\" ALIGN=\"absmiddle\">/i",$Message); 
+
+	return stripslashes($Message);
+}
+
+//BB Code
+$_BBCONFIG['QuotedBgColor'] = '#F7F7F7';
+$_BBCONFIG['QuotedBorderColor'] = '#CCCCCC';
+$_BBCONFIG['CodeBgColor'] = '#EFF7FF';
+$_BBCONFIG['CodeBorderColor'] = '#BDBEBD';
+
+function BBCODE($string){
+	global $_BBCONFIG;
+	$string = nl2br($string);
+	$patterns = array(
+		'`\[b\](.+?)\[/b\]`is',
+		'`\[i\](.+?)\[/i\]`is',
+		'`\[u\](.+?)\[/u\]`is',
+		'`\[strike\](.+?)\[/strike\]`is',
+		'`\[color=#([0-9A-F]{6})\](.+?)\[/color\]`is',
+		'`\[email\](.+?)\[/email\]`is',
+		'`\[img\](.+?)\[/img\]`is',
+		'`\[url=([a-z0-9]+://)([\w\-]+\.([\w\-]+\.)*[\w]+(:[0-9]+)?(/[^ \"\n\r\t<]*?)?)\](.*?)\[/url\]`si',
+		'`\[url\]([a-z0-9]+?://){1}([\w\-]+\.([\w\-]+\.)*[\w]+(:[0-9]+)?(/[^ \"\n\r\t<]*)?)\[/url\]`si',
+		'`\[url\]((www|ftp)\.([\w\-]+\.)*[\w]+(:[0-9]+)?(/[^ \"\n\r\t<]*?)?)\[/url\]`si',
+		'`\[flash=([0-9]+),([0-9]+)\](.+?)\[/flash\]`is',
+		'`\[quote\](.+?)\[/quote\]`is',
+		'`\[indent](.+?)\[/indent\]`is',
+		'`\[size=([1-6]+)\](.+?)\[/size\]`is',
+		'`\[sup\](.+?)\[/sup\]`is',
+		'`\[sub\](.+?)\[/sub\]`is',
+		'`\[code\](.+?)\[/code\]`is',
+		'`\r\n|\r|\n`',
+		'`\t`',
+		'`\[img=(.+?)\]`is',
+		'`\[align=(left|center|right)\](.+?)\[/align\]`is',
+		'`\[glow\](.+?)\[/glow\]`is',
+		'`\[shadow\](.+?)\[/shadow\]`is',
+		'`\[media\](.+?)\[/media\]`is',
+		'`\[movie\](.+?)\[/movie\]`is',
+
+		'`\[center\](.+?)\[/center\]`is',
+		'`\[left\](.+?)\[/left\]`is',
+		'`\[right\](.+?)\[/right\]`is',
+		'`\[\-\-\-\]`is',
+			);
+
+	$replaces =  array(
+			'<strong>\\1</strong>',
+			'<em>\\1</em>',
+			'<span style="border-bottom: 1px dotted">\\1</span>',
+			'<strike>\\1</strike>',
+			'<span style="color:#\1;">\2</span>',
+			'<a href="mailto:\1">\1</a>',
+			'<img src="\1" alt="" style="border:0px;" />',
+			'<a href="\1\2">\6</a>',
+			'<a href="\1\2">\1\2</a>',
+			'<a href="http://\1">\1</a>',
+			'<object width="\1" height="\2"><param name="movie" value="\3" /><embed src="\3" width="\1" height="\2"></embed></object>',
+			'<strong>'._WEBBOARD_READ_QOUTE.' :</strong><div style="margin:0px 10px;padding:5px;background-color:'.$_BBCONFIG["QuotedBgColor"].';border:1px dotted '.$_BBCONFIG["QuotedBorderColor"].';width:100%;"><em>\1</em></div>',
+			'<pre>\\1</pre>',
+			'<h\1 style="display:inline">\2</h\1>',
+			'<sup>\\1</sup>',
+			'<sub>\\1</sub>',
+			'<strong style="color:green;font-family:courier new,monospace;font-size:8pt;">Code:</strong><pre style="margin:0px 10px;padding:5px;background-color:'.$_BBCONFIG["CodeBgColor"].';border:1px solid '.$_BBCONFIG["CodeBorderColor"].';width:100%;font-size:10pt;font-family:courier new,monospace;">\1</pre>',
+			'',
+			'&nbsp;&nbsp;',
+			'<img src="\1" alt="" style="border:0px;" />',
+			'<div align="\1">\2</div>',
+				'<table style=filter:glow(color=#00FF00, strength=3)>\\1</table>',
+			'<table style=\"filter:shadow(color=pink, direction=left)\">\\1</table>',
+			'<embed src=\\1  TYPE=\"application/x-mplayer2\" align=\"middle\" width=\"200\" height=\"42\" autostart=\"1\" autoplay=\"true\" dhtype=\"wma\">',
+			'<object classid=\"CLSID:6BF52A52-394A-11d3-B153-00C04F79FAA6\" type=\"application/x-oleobject\" width=\"262\" height=\"260\" id=\"MediaPlayer1\">\n<param name=\"URL\" value=\\1  >\n<PARAM NAME=ShowControls VALUE=true>\n<PARAM NAME=ShowStatusBar VALUE=false>\n<PARAM NAME=Autostart VALUE=true>\n<PARAM NAME=ShowPositionControls value=true>\n<PARAM NAME=ShowTracker value=true>\n</object>',
+			'<div align=center>\\1</div>',
+			'<div align=left>\\1</div>',
+			'<div align=right>\\1</div>',
+			'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;',
+			);
+	$string = preg_replace($patterns, $replaces , $string);
+	return stripslashes($string);
+}
+
+#   [b]bold[/b]                                                                                         : BOLD TEXT
+#   [i]Italic[/i]                                                                                  : ITALIC TEXT
+#   [u]Underline[/u]                                                                                : UNDERLINED TEXT
+#   [strike]Text[/strike]                                                                        : STRIKE THROUGH TEXT
+#   [color=#ffffff]Colored Text[/color]                                          : COLORED TEXT
+#   [email]me@email.com[/email]                                                            : EMAIL LINK
+#   [img]http://www.blah.com/img.gif[/img]                                    : IMAGE
+#   [url=http://www.domain.com]Text[/url]                                        : HYPERLINKED TEXT OR IMAGE
+#   [url]http://www.url.com[/url]                                                        : HYPERLINK
+#   [url]www.yourdomain.com[/url]                                              : HYPERLINK WWW
+#   [flash=width,height]http://blah.com/flash.swf[/flash]        : FLASH MOVIE
+#   [quote]Text![/quote]                                                                        : QUOTE    
+#   [indent]Text[/indent]                                                                        : PREFORMATTED TEXT
+#   [size=1-6]Text[/size]                                                                        : TEXT HEADINGS
+#   [sup]superscription[/sup]
+#   [sub]subscription[/sub]
+#   [code]program code[/code]
+#   [img=http://www.blah.com/img.gif]
+#   [align=left,center,right]Alignment[/align]
+function sendmail_welcome($member_id ,$name, $user_name , $pwd_name1, $email ,$home) {
+                 ## ข้อความในการส่งเมล์เมื่อมีผู้สมัครสมาชิก ##
+                ##( หากกด Enter เว้นบรรทัด ข้อความของคุณก็จะเว้นบรรทัดด้วย) ##
+global $admin_email ;
+$subject_mail = _MAIL_WELCOME; // หัวข้ออีเมล์ 
+
+//----------------------------------------------------------------------- เนื้อหาของอีเมล์ //
+$message_mail =_MAIL_WELCOME1." $name" ;
+$message_mail .=_MAIL_WELCOME4." $member_id" ;
+$message_mail .=_MAIL_WELCOME5 ;
+$message_mail .=_MAIL_WELCOME6." $user_name" ;
+$message_mail .=_MAIL_WELCOME7." $pwd_name1" ;
+$message_mail .=_MAIL_WELCOME8 ;
+$message_mail .=_MAIL_WELCOME9."  $home";
+//------------------------------------------------------------------------ จบเนื้อหาของอีเมล์ //
+
+$from = "From:\"$admin_email\"<$admin_email>\r\n" ;
+if(mail($email,$subject_mail,$message_mail,$from)) {
+echo "<br><br><center><font size='3' face='MS Sans Serif'><b>" ;
+echo ""._MAIL_WELCOME2."</b></font></center>" ;
+}
+else {
+echo _MAIL_WELCOME;
+}
+}
+
 function sendmailnewx($member_id ,$name, $user_name , $pwd_name1, $email ,$home) {
-	$admin_mail="".WEB_EMAIL."";
-	$Headers = "MIME-Version: 1.0\r\n" ;
-	$Headers .= "Content-type: text/html; charset=".ISO."\r\n" ;
+	//global $admin_email ;
+	// $admin_mail="".WEB_EMAIL."";
 
-	$Headers .= "From: ".WEB_EMAIL." <".WEB_EMAIL.">\r\n" ;
-	$Headers .= "Reply-to: ".WEB_EMAIL." <".WEB_EMAIL.">\r\n" ;
-	$Headers .= "X-Priority: 3\r\n" ;
-	$Headers .= "X-Mailer: PHP mailer\r\n" ;
+	$Headers = 'MIME-Version: 1.0'."\r\n" ;
+	$Headers .= 'Content-type: text/html; charset='.ISO."\r\n" ;
 
-	$subject_mail = _MAILNEW_TOPIC ;
+	$Headers .= 'To: '.$name.' <'.$email.'>' . "\r\n";
+	$Headers .= 'From: '.WEB_EMAIL.' <'.WEB_EMAIL.'>'."\r\n" ;
+	$Headers .= 'Reply-to: '.WEB_EMAIL.' <'.WEB_EMAIL.'>'."\r\n" ;
+	// $Headers .= "X-Priority: 3\r\n" ;
+	$Headers .= 'X-Mailer: PHP/'.phpversion();
 
-	$message_mail = "
-	<html>
+	$subject_mail = _MAILNEW_TOPIC ; // หัวข้ออีเมล์ 
+
+	//----------------------------------------------------------------------- เนื้อหาของอีเมล์ //
+	$message_mail = "<html>
 	<title>Email for new User</title>
 	<body>
 	<table>
@@ -955,12 +1351,10 @@ function sendmailnewx($member_id ,$name, $user_name , $pwd_name1, $email ,$home)
 	<tr><td><br>"._MAILNEW_DETAIL8." $home</td></tr>
 	</table>
 	</body>
-	</html>
-	" ;
+	</html>" ;
+	//------------------------------------------------------------------------ จบเนื้อหาของอีเมล์ //
 
-	$from = "From:\"".WEB_EMAIL."\"<".WEB_EMAIL.">" ;
-	if(@mail($email,$subject_mail,$message_mail,$Headers,$from))
-	{
+	if(@mail($email, $subject_mail, $message_mail,$Headers)){
 		echo "<br><br><center><font size='3' face='MS Sans Serif'><b>" ;
 		echo ""._MAIL_WELCOME2."" ;
 	}else{
@@ -968,6 +1362,51 @@ function sendmailnewx($member_id ,$name, $user_name , $pwd_name1, $email ,$home)
 	}
 
 }
+
+function unzip(){
+    global $instdir;
+    global $zip_file;
+
+    $dir = $instdir;
+
+    $zip_file_full=$dir.$zip_file;
+
+    $zip = zip_open($zip_file_full);
+
+    if ($zip) {
+           while ($zip_entry = zip_read($zip)) {
+               $dirname=dirname(zip_entry_name($zip_entry));
+
+            $val=$dir.$dirname;
+
+            if (($dirname!=".") && (!is_dir($val))) {
+                mkdir($val);
+            }
+
+               $file = zip_entry_name($zip_entry);
+
+                   if (zip_entry_open($zip, $zip_entry, "r")) {
+
+                $size = zip_entry_filesize($zip_entry);
+                if ($size==0) continue;
+
+                   $fp = fopen($dir.$file, "w+");
+
+                       $buf = zip_entry_read($zip_entry, $size);
+
+                     fwrite($fp, $buf);
+                fclose($fp);
+
+                       zip_entry_close($zip_entry);
+                   }
+           }
+           zip_close($zip);
+        return true;
+    }
+    return false;
+}
+
+
 
 function writableCell( $folder ) {
 	echo '<tr>';
@@ -977,35 +1416,98 @@ function writableCell( $folder ) {
 	echo '</tr>';
 }
 
-function checkPostTimePast($timeStamp){
-    $dayArray    =    array(0 => _BOT_TODAY, 1 => _TIME_POST_YES );
-    $datePost     =     time() - $timeStamp;
-    $datePast    =    $datePost / 86400;
-    list ( $number1, $number2)    =    explode(".", $datePast);
-    if ( $number1 < 30)
+function checkPostTimePast($timeStamp)
+
     {
-        foreach ( $dayArray as $f => $d)
+        $dayArray    =    array(
+                                    0    =>    _BOT_TODAY,
+                                    1    =>   _TIME_POST_YES
+                                    );
+        
+        $datePost     =     time() - $timeStamp;
+        
+        $datePast    =    $datePost / 86400;
+        
+        list ( $number1, $number2)    =    explode(".", $datePast);
+        
+        if ( $number1 < 30)
         {
-            if ( $f == $number1 )
-            return $d;
+        
+            foreach ( $dayArray as $f => $d)
+            {
+                if ( $f == $number1 )
+                
+                return $d;
+            }
+            
+            return ""._TIME_POST." " . $number1 . " "._TIME_POST_YES1."";    
+        
         }
-        return ""._TIME_POST." " . $number1 . " "._TIME_POST_YES1."";    
+        
+        return ""._TIME_POST." " . round($number1 / 30) . " "._TIME_POST_MONTH."";
+        
     }
-    return ""._TIME_POST." " . round($number1 / 30) . " "._TIME_POST_MONTH."";
+
+//ตรวจสอบชนิดไฟล์อัพโหลด
+
+//แปลง ip ให้เป็น xxx.xxx
+// $ip1 = '127.0.0.1';
+//     $ip2 = '111.222.11.33';
+     
+     // แบบที่ 1 ใช้ explode
+//     list($a, $b, $c, $d) = explode('.', $ip1); // แยก IP ออกเป็นตำแหน่งต่างๆ
+//     echo "$a.$b.xxx.xxx"; // ผลลัพท์สามารถเลือกได้ว่าจะบล๊อกตำแหน่งไหนบ้าง
+     
+ //    echo '<br />';
+     
+     // แบบที่ 2 ใช้ preg_replace แบ่งออกเป็น 2 กลุ่มโดยแทนที่กลุ่มหลังด้วย xxx.xxx
+ //    echo preg_replace('/([0-9]+\.[0-9]+)\.[0-9]+\.[0-9]+/', '\1<span style="color:red">.xxx.xxx</span>', $ip2);
+      
+      // แบบที่ 3 ใช้ preg_replace แทนที่รายการที่ block ทีละตัวตามตำแหน่งของมัน
+  //    function bockipstr( $ip ) {
+  //        preg_match('/([0-9]+\.[0-9]+\.)([0-9\.]+)/', $ip, $ips); // แยกออกเป็น 2 กลุ่ม คือ 2 หลักหน้า และ 2 หลักหลัง
+   //       return  $ips[1].preg_replace('/[0-9]/','<span style="color:red">x</span>',$ips[2]); // แทนที่ตัวเลขหลักหลังด้วย x ทีละตัว
+  //    }
+      
+ //     echo '<br />';
+  //    echo "$ip1 = ".bockipstr($ip1);
+  //    echo '<br />';
+  //    echo "$ip2 = ".bockipstr($ip2);
+function remove_directory($dir) {
+  if ($handle = opendir("$dir")) {
+    while (false !== ($item = readdir($handle))) {
+      if ($item != "." && $item != "..") {
+        if (is_dir("$dir/$item")) {
+          remove_directory("$dir/$item");
+        } else {
+          unlink("$dir/$item");
+    //      echo " removing $dir/$item<br>\n";
+        }
+      }
+    }
+    closedir($handle);
+    rmdir($dir);
+//    echo "removing $dir<br>\n";
+  }
+
+
+
+function upimg($img,$imglocate){
+			if($img['name']!=''){
+			$fileupload1=$img['tmp_name'];
+			$g_img=explode(".",$img['name']);
+			$file_up=TIMESTAMP.".".$g_img[1];  // เปลี่ยนชื่อไฟล์ไหม่ เป็นตัวเลข
+				if($fileupload1){
+					$array_last=explode(".",$file_up);
+					$c=count($array_last)-1;
+					$lastname=strtolower($array_last[$c]);
+						@copy($fileupload1,$imglocate.$file_up);			
+						
+				}				
+			}
+			return $file_up; // ส่งกลับชื่อไฟล์
 }
 
-function remove_directory($dir) {
-	if ($handle = opendir("$dir")) {
-		while (false !== ($item = readdir($handle))) {
-			if ($item != "." && $item != "..") {
-				if (is_dir("$dir/$item")) {
-					remove_directory("$dir/$item");
-				} else {
-					unlink("$dir/$item");
-				}
-			}
-		}
-		closedir($handle);
-		rmdir($dir);
-	}
+
 }
+?>

@@ -168,7 +168,7 @@ function mosMakePassword($length) {
               <TR>
                 <TD WIDTH="20%" ALIGN="right" BGCOLOR="#FFFFFF">&nbsp;&nbsp;<STRONG>Password : </STRONG></FONT></TD>
                 <TD BGCOLOR="#FFFFFF">
-                  <INPUT NAME="pwd_name1" TYPE="text" ID="pwd_name1" SIZE="20" MAXLENGTH="20" value="<?php echo mosMakePassword(8); ?>"  readonly style="color: #FF0000">
+                  <INPUT NAME="pwd_name1" TYPE="text" ID="pwd_name1" SIZE="20" MAXLENGTH="20" value=""  style="color: #FF0000">
 &nbsp;<FONT COLOR="#FF0000" >**</FONT> </FONT></TD>
               </TR>
               <TR>
@@ -334,7 +334,7 @@ if(USE_CAPCHA){
 					</TR>
 <?
 }
-//�к���Ҫԡ����� maxsite 1.10 �Ѳ���� www.narongrit.net
+//ÃÐººÊÁÒªÔ¡àÊÃÔÁ maxsite 1.10 ¾Ñ²¹Òâ´Â www.narongrit.net
 
 ?>
 
@@ -362,16 +362,16 @@ if(USE_CAPCHA){
                     </TD>
                   </TR>
                 </TABLE>
-<SCRIPT LANGUAGE="javascript">
+<script type="text/javascript">
 function check() {
 if(document.getElementById('FILE').value!=""){
-    var fty=new Array(".gif",".jpg",".jpeg",".png"); // �����������͹حҵ����Ѿ��Ŵ  
-        var a=document.checkForm.FILE.value; //��˹���Ңͧ����ˡѺ����� a   
-        var permiss=0; // ���͹����͹حҵ
+    var fty=new Array(".gif",".jpg",".jpeg",".png"); // »ÃÐàÀ·ä¿Åì·ÕèÍ¹Ø­ÒµãËéÍÑ¾âËÅ´  
+        var a=document.checkForm.FILE.value; //¡ÓË¹´¤èÒ¢Í§ä¿ÅìãË¡ÑºµÑÇá»Ã a   
+        var permiss=0; // à§×èÍ¹ä¢ä¿ÅìÍ¹Ø­Òµ
         a=a.toLowerCase();   
         if(a !=""){
-            for(i=0;i<fty.length;i++){ // ǹ Loop ��Ǩ�ͺ�����͹حҵ  
-                if(a.lastIndexOf(fty[i])>=0){  // ���͹������͹حҵ  
+            for(i=0;i<fty.length;i++){ // Ç¹ Loop µÃÇ¨ÊÍºä¿Åì·ÕèÍ¹Ø­Òµ  
+                if(a.lastIndexOf(fty[i])>=0){  // à§×èÍ¹ä¢ä¿Åì·ÕèÍ¹Ø­Òµ  
                     permiss=1;
                     break;
                 }else{
@@ -384,81 +384,81 @@ if(document.getElementById('FILE').value!=""){
                 return false;              
             }        
         }       
+}
 
+// var x=document.forms["checkForm"]["email"].value;
+// var atpos=x.indexOf("@");
+// var dotpos=x.lastIndexOf(".");
+// if (atpos<1 || dotpos<atpos+2 || dotpos+2>=x.length)
+//   {
+//   alert("<?echo _MEMBER_MOD_FORM_JAVA_EMAIL;?>");
+//   return false;
+//   }
 
-var x=document.forms["checkForm"]["email"].value;
-var atpos=x.indexOf("@");
-var dotpos=x.lastIndexOf(".");
-if (atpos<1 || dotpos<atpos+2 || dotpos+2>=x.length)
-  {
+var mail = document.getElementById('email').value;
+var pattern = /.+@.+\..+/;
+var validate = pattern.test(mail);
+if (validate===false){
   alert("<?echo _MEMBER_MOD_FORM_JAVA_EMAIL;?>");
   return false;
-  }
+}
 
 if(document.checkForm.name.value=="") {
-alert("<?echo _MEMBER_MOD_FORM_JAVA_USER;?>") ;
-document.checkForm.name.focus() ;
-return false ;
-}
-else if(document.checkForm.year.value=="") {
-alert("<?echo _MEMBER_MOD_FORM_JAVA_BIRTH;?>") ;
-document.checkForm.year.focus() ;
-return false ;
-}
-else if(isNaN(document.checkForm.year.value)) {
-alert("<?echo _MEMBER_MOD_FORM_JAVA_YEAR;?>") ;
-document.checkForm.year.focus() ;
-return false ;
-}
-else if(document.checkForm.age.value=="") {
-alert("<?echo _MEMBER_MOD_FORM_JAVA_AGE;?>") ;
-document.checkForm.age.focus() ;
-return false ;
-}else if(isNaN(document.checkForm.age.value)) {
-alert("<?echo _MEMBER_MOD_FORM_JAVA_AGE_NUM;?>") ;
-document.checkForm.age.focus() ;
-return false ;
-}
-else if(document.checkForm.province.selectedIndex==0) {
-alert("<?echo _MEMBER_MOD_FORM_JAVA_PROV;?>") ;
-return false ;
-}
-else if(isNaN(document.checkForm.zipcode.value)) {
-alert("<?echo _MEMBER_MOD_FORM_JAVA_POST;?>") ;
-document.checkForm.zipcode.focus() ;
-return false ;
-}
-else if(document.checkForm.user_name.value=="") {
-alert("<?echo _MEMBER_MOD_FORM_JAVA_USERNAME;?>") ;
-document.checkForm.user_name.focus() ;
-return false ;
+  alert("<?echo _MEMBER_MOD_FORM_JAVA_USER;?>") ;
+  document.checkForm.name.focus() ;
+  return false ;
 }
 else if(document.checkForm.pwd_name1.value=="") {
-alert("<?echo _MEMBER_MOD_FORM_JAVA_PASS;?>") ;
-document.checkForm.pwd_name1.focus() ;
-return false ;
+  alert("<?echo _MEMBER_MOD_FORM_JAVA_PASS;?>") ;
+  document.checkForm.pwd_name1.focus() ;
+  return false ;
 }
-else if(document.checkForm.pwd_name2.value=="") {
-alert("<?echo _MEMBER_MOD_FORM_JAVA_PASS_CONF;?>") ;
-document.checkForm.pwd_name2.focus() ;
-return false ;
+else if(document.checkForm.pwd_name1.value.length<4){
+  alert('<?php echo "Password must more than 4 characters.";?>') ;
+  document.checkForm.pwd_name1.focus() ;
+  return false ;
 }
-else if(document.checkForm.pwd_name1.value != document.checkForm.pwd_name2.value) {
-alert("<?echo _MEMBER_MOD_FORM_JAVA_PASS_NOTMATT;?>") ;
-document.checkForm.pwd_name2.focus() ;
-return false ;
+else if(document.checkForm.year.value=="") {
+  alert("<?echo _MEMBER_MOD_FORM_JAVA_BIRTH;?>") ;
+  document.checkForm.year.focus() ;
+  return false ;
+}
+else if(isNaN(document.checkForm.year.value)) {
+  alert("<?echo _MEMBER_MOD_FORM_JAVA_YEAR;?>") ;
+  document.checkForm.year.focus() ;
+  return false ;
+}
+else if(document.checkForm.age.value=="") {
+  alert("<?echo _MEMBER_MOD_FORM_JAVA_AGE;?>") ;
+  document.checkForm.age.focus() ;
+  return false ;
+}else if(isNaN(document.checkForm.age.value)) {
+  alert("<?echo _MEMBER_MOD_FORM_JAVA_AGE_NUM;?>") ;
+  document.checkForm.age.focus() ;
+  return false ;
+}
+else if(document.checkForm.province.selectedIndex==0) {
+  alert("<?echo _MEMBER_MOD_FORM_JAVA_PROV;?>") ;
+  return false ;
+}
+else if(isNaN(document.checkForm.zipcode.value)) {
+  alert("<?echo _MEMBER_MOD_FORM_JAVA_POST;?>") ;
+  document.checkForm.zipcode.focus() ;
+  return false ;
+}
+else if(document.checkForm.user_name.value=="") {
+  alert("<?echo _MEMBER_MOD_FORM_JAVA_USERNAME;?>") ;
+  document.checkForm.user_name.focus() ;
+  return false ;
 }
 else if(document.checkForm.email.value=="") {
-alert("<?echo _MEMBER_MOD_FORM_JAVA_EMAIL_NULL;?>") ;
-return false ;
+  alert("<?echo _MEMBER_MOD_FORM_JAVA_EMAIL_NULL;?>") ;
+  return false ;
+}else{
+  return true ;
 }
-
 }
-else 
-return true ;
-}
-
-    </SCRIPT>
+    </script>
                 <BR>
                 <BR>
                 <BR>

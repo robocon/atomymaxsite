@@ -1,9 +1,9 @@
 <?php
 //หากมีการเรียกไฟล์นี้โดยตรง
-if (preg_match("/class.calendar/i",$_SERVER['PHP_SELF'])) {
-    Header("Location: ../index.php");
-    die();
-}
+// if (preg_match("/class.calendar/i",$_SERVER['PHP_SELF'])) {
+//     Header("Location: ../index.php");
+//     die();
+// }
 // PHP Calendar Class Version 1.4 (5th March 2001)
 //  
 // Copyright David Wilkinson 2000 - 2001. All Rights reserved.

@@ -8,10 +8,6 @@ if(!$login_true) {
 echo "<meta http-equiv='refresh' content='0;url=?name=member&file=index'>" ; 
 } else {
 ?>
-
-<HTML>
-<HEAD>
-
 <!-- จาวา แถบสี -->
 <SCRIPT LANGUAGE="javascript"> 
 function mOvr(src,clrOver){ 
@@ -66,7 +62,7 @@ function mosMakePassword($length) {
               <FORM NAME="checkForm" ACTION="?name=member&file=member_edit_add" METHOD="post" onSubmit="return check2();" ENCTYPE="multipart/form-data" id="checkForm">
                 <TABLE WIDTH="100%" BORDER="0" CELLSPACING="5" CELLPADDING="0">
 				<tr>
-				<td ALIGN="right"><B><? echo _MEMBER_MOD_MEMEDIT_USERNAME;?> :</B></td><td><INPUT TYPE="text" NAME="USERNAME" size="30" VALUE="<?=$dbarr['user'];?>" readonly style="color: #FF0000">
+				<td ALIGN="right"><B><? echo _MEMBER_MOD_MEMEDIT_USERNAME;?> :</B></td><td><INPUT TYPE="text" NAME="USERNAME" size="30" VALUE="<?=$dbarr['user'];?>" style="color: #FF0000">
 				<INPUT TYPE="hidden" NAME="USERNAME_OLD" VALUE="<?=$dbarr['user'];?>" >
 				</td>
 				<td ALIGN="right"></td>

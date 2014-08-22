@@ -1,6 +1,8 @@
-php_value short_open_tag 1
-php_value session.save_path '/tmp'
-
+<IfModule mod_php5.c>
+    php_value short_open_tag 1
+    php_value session.save_path '/tmp'
+    php_value error_reporting 1
+</IfModule>
 <IfModule mod_rewrite.c>
     <IfModule mod_negotiation.c>
         Options -MultiViews
@@ -21,4 +23,6 @@ php_value session.save_path '/tmp'
     # RewriteRule ^ index.php [L]
 
     RewriteRule ^(.*)$ index.php/$1 [L]
+
+    RedirectMatch 403 /(attach|backup|data|icon|UserFiles|video|webboard_upload|images)/.*\.(php|html|htm|js|htaccess)$
 </IfModule>

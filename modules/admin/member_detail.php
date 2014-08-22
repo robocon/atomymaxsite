@@ -49,7 +49,16 @@ $dbarr = mysql_fetch_array($result) ;
 					<TD height="1" class="dotline" colspan="4"></TD>
 				</TR>
 				<tr><td  colspan="4">
+          <?php
+          $sql = sprintf("SELECT `id`,`member_id` FROM `".TB_MEMBER."` WHERE `user` = '%s'", $_SESSION['admin_user']);
+            $query = $db->select_query($sql);
+            $result = $db->fetch($query); 
 
+          echo "[&nbsp;<a href='index.php?name=admin&file=member_detail'>"._MEMBER_MOD_HEADER_TITLE."</a>&nbsp;]&nbsp;|&nbsp;"
+          ."[&nbsp;<a href='index.php?name=admin&file=member_edit&member_id=".$result['member_id']."'>"._MEMBER_MOD_HEADER_EDIT."</a>&nbsp;]&nbsp;|&nbsp;"
+          ."[&nbsp;<a href='index.php?name=admin&file=change_pwd'>"._MEMBER_CPASS."</a>&nbsp;]&nbsp;|&nbsp;"
+          ."[&nbsp;<a href='index.php?name=member&file=logout'> Logout </a>&nbsp;] ";
+          ?>
     </TD>
   </TR>
   <tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>

@@ -1,3 +1,9 @@
+body{
+	background-image: url('../images/bg.jpg');
+	background-size: 100%;
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+}
 BODY {
 	FONT-SIZE: 13px; MARGIN: 0px; COLOR: #58595b; FONT-FAMILY: Tahoma, Arial, Helvetica, sans-serif
 }
@@ -113,12 +119,12 @@ TEXTAREA {
 
 #outer1{
 	padding-left:0px;
-	background:url(../images/left.png) repeat-y left top;
+	/*background:url(../images/left.png) repeat-y left top;*/
 }
 
 #outer2{
 	padding-right:0px;
-	background:url(../images/right.png) repeat-y right top;
+	/*background:url(../images/right.png) repeat-y right top;*/
 }
 
 .titlecenter { 
@@ -148,3 +154,20 @@ TEXTAREA {
 .gray {
 	color:#666666;
 }	
+
+.errortxt{
+	color: #b94a48;
+	background-color: #f2dede;
+	border-color: #eed3d7;
+	font-size: 16px;
+	padding: 8px;
+	display: inline-block;
+}
+.successtxt{
+	color: #468847;
+	background-color: #dff0d8;
+	border-color: #d6e9c6;
+	font-size: 16px;
+	padding: 8px;
+	display: inline-block;
+}

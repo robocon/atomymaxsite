@@ -1,4 +1,4 @@
-<?
+<?php
 require_once("mainfile.php");
 $PHP_SELF = "popup.php";
 empty($_GET['name'])?$name="":$name=$_GET['name'];
@@ -51,7 +51,7 @@ function Confirm(link,text)
 </script>
 </head>
 
-<body  >
+<body style="background-image: none;">
 
 <!-- Content -->
 <?include ("".$MODPATHFILE."");?>

@@ -1,5 +1,5 @@
 <?include ("editor.php");?>
-<?
+<?php
 if ($_GET['s_page']){
 $s_pagex=$_GET['s_page'];
 } else {
@@ -17,7 +17,7 @@ $db->closedb ();
           <TD vAlign=top><img src="images/topfader.gif" border="0" /><br />
   &nbsp;&nbsp;<img src="images/menu/textmenu_webboard.gif" border="0" /><br> 
   &nbsp;&nbsp;&nbsp;&nbsp;<font size="2" color="red"><?=_WEBBOARD_FORM_EDIT_COMMENT_TITILE;?> &nbsp;&nbsp;[ <a href="?name=webboard&file=read&id=<?=$_GET['id'];?>"><?=_WEBBOARD_FORM_EDIT_BUTTON_BACK;?></a> ] </font><br>    <BR>
-<?
+<?php
 		if($login_true==$VIEWBOARD['post_name'] || $admin_user ){
 
 //$id=$_GET['id'];
@@ -172,7 +172,7 @@ function emoticon(theSmilie) {
 -->
 </style>
 
-            <?
+            <?php
 //echo $DETAIL;
 //áÊ´§¼Å¡ÒÃPost
 if($EditComplete){
@@ -193,7 +193,7 @@ echo "<meta http-equiv='refresh' content='0.5;url=?name=webboard&file=read&id=".
         </CENTER></TD>
     </TR>
   </TABLE><BR><BR>
-  <?
+  <?php
 }else{
 	//Not Complete
 
@@ -217,20 +217,20 @@ echo "<meta http-equiv='refresh' content='0.5;url=?name=webboard&file=read&id=".
         <TD width=150 align=right><IMG SRC="images/bullet.gif" BORDER="0" ALIGN="absmiddle"> <B><?=_WEBBOARD_TOPIC_TOP;?> : </B></TD>
 	    <TD width=400><input type="text" name="topic" size="50" style="width:300" class="inputform" value="<?=$arr['webboardtopic']['topic']?>" readonly></TD>
     </TR>
-      <?
+      <?php
 //¡Ã³Õ â¾ÊÃÙ»ä´é 
 if(_ENABLE_BOARD_UPLOAD){
 ?>
       <TR>
         <TD width=150 align=right><B><?=_WEBBOARD_FORM_ATT_PIC_TITLE;?> : </B></TD>
-	    <TD>	<?
+	    <TD>	<?php
 		if ($arr['webboard']['picture'])	{
 			echo "<input type='checkbox' name='chkdel' value='1'>&nbsp;"._WEBBOARD_FORM_DEL_PIC_TITLE."&nbsp;";
 			echo "<br><img src='webboard_upload/".$arr['webboard']['picture']."' border='0' align='top' width='150'>";
 		}
 		?>		<br><font color="red"><?=_WEBBOARD_FORM_UPLOAD_PIC_TITLE;?></font><br><input type="file" name="FILE" style="width:250" class="inputform"> Limit <?=(_WEBBOARD_LIMIT_UPLOAD/1024);?> kB  </TD>
     </TR>
-      <?
+      <?php
 }
 		if($login_true || $admin_user){
 ?>
@@ -239,7 +239,7 @@ if(_ENABLE_BOARD_UPLOAD){
 	<TD><input type="file" name="FILEATT" style="width:250" class="inputform"> Limit <?=(_WEBBOARD_LIMIT_UPLOADS/1024);?> kB</TD>
 </TR>
 <TR><TD colspan=2 height=1 class="dotline"></TD></TR>
-<?
+<?php
 }
 ?>
   <TR>
@@ -264,7 +264,7 @@ if(USE_CAPCHA){
 							};?>          </TD>
 						      <TD><input name="security_code" type="text" id="security_code" size="20" maxlength="6" style="width:80" > <?=_JAVA_CAPTCHA_ADD;?></TD>
 	        </TR>
-      <?
+      <?php
 }
 	}
 ?>
@@ -277,7 +277,7 @@ if(USE_CAPCHA){
 	    <TD><INPUT TYPE="submit" value="<?=_WEBBOARD_FORM_BUTTON_ADD_COM;?>"><INPUT TYPE="hidden" NAME="picture"  value="<?=$arr['webboard']['picture'];?>"><INPUT TYPE="hidden" NAME="fileuploadnew"  value="<?=$arr['webboard']['fileupload'];?>"><INPUT TYPE="hidden" NAME="id"  value="<?=$arr['webboard']['id'];?>"></TD>
     </TR>
       </TABLE>
-  </FORM><?
+  </FORM><?php
 }
 		}
 //¨º¡ÒÃáÊ´§¼Å¿ÍÃìÁ Post

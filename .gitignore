@@ -4,6 +4,7 @@
 install/*
 vendor/*
 includes/config.in.php
+composer.lock
 
 # Vim #
 ############

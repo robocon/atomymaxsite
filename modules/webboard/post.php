@@ -11,7 +11,7 @@
 <br />
 
 
-<?
+<?php
 if($_SESSION['login_true']){
 CheckWebboard($_SESSION['login_true'], $_SESSION['pwd_login'],$_GET['category']);
 } else if($_SESSION['admin_user']){
@@ -185,7 +185,7 @@ function emoticon(theSmilie) {
 -->
     </style>
 	<br />
-	 <?
+	 <?php
 $_GET['category'] = intval($_GET['category']);
 $db->connectdb(DB_NAME,DB_USERNAME,DB_PASSWORD);
 $res['BoardCat'] = $db->select_query("SELECT * FROM ".TB_WEBBOARD_CAT." ORDER BY sort ");
@@ -210,7 +210,7 @@ if($_GET['category']){
 }
 ?>
 
-<?
+<?php
 //áÊ´§¼Å¡ÒÃPost
 if($PostComplete){
 	//Complete
@@ -229,7 +229,7 @@ if($PostComplete){
 </TR>
 </TABLE><BR>
 <BR>
-<?
+<?php
 }else{
 	//Not Complete
 ?>
@@ -245,7 +245,7 @@ if($PostComplete){
 	<TD align=right width="100"><B><?=_WEBBOARD_TOPIC_TOP;?> : </B></TD>
 	<TD colspan="2"><INPUT NAME="topic" TYPE="text" class="inputform" style="width:400"></TD>
 </TR>
-<?
+<?php
 //¡Ã³Õ â¾ÊÃÙ»ä´é 
 if(_ENABLE_BOARD_UPLOAD){
 ?>
@@ -253,7 +253,7 @@ if(_ENABLE_BOARD_UPLOAD){
 	<TD align=right><B><?=_WEBBOARD_FORM_ATT_PIC_TITLE;?> : </B></TD>
 	<TD colspan="2"><input type="file" name="FILE" style="width:250" class="inputform"> Limit <?=(_WEBBOARD_LIMIT_UPLOAD/1024);?> kB</TD>
 </TR>
-<?
+<?php
 }
 
 if($login_true || $admin_user){
@@ -263,7 +263,7 @@ if($login_true || $admin_user){
 	<TD><input type="file" name="FILEATT" style="width:250" class="inputform"> Limit <?=(_WEBBOARD_LIMIT_UPLOADS/1024);?> kB</TD>
 </TR>
 <TR><TD colspan=2 height=1 class="dotline"></TD></TR>
-<?
+<?php
 }
 if($login_true || $admin_user){
 ?>
@@ -272,7 +272,7 @@ if($login_true || $admin_user){
 	<TD><input type=checkbox name=show  value=1><?=_WEBBOARD_FORM_TOPIC_MEMBER_ONLY_1;?>&nbsp;&nbsp;<input type=checkbox name=show  value=0><?=_WEBBOARD_FORM_TOPIC_MEMBER_ONLY_2;?></TD>
 </TR>
 <TR><TD colspan=2 height=1 class="dotline"></TD></TR>
-<?
+<?php
 }
 ?>
 <TR>
@@ -294,7 +294,7 @@ if(USE_CAPCHA){
 								echo "<img src=\"capcha/val_img.php?width=".CAPCHA_WIDTH."&height=".CAPCHA_HEIGHT."&characters=".CAPCHA_NUM."\" width=\"".CAPCHA_WIDTH."\" height=\"".CAPCHA_HEIGHT."\" align=\"absmiddle\" />";
 							};?></TD>
 						</TR>
-<?
+<?php
 }}
 ?>
 <TR>
@@ -307,7 +307,7 @@ if(USE_CAPCHA){
 </TR>
 </TABLE>
 </FORM>
-<?
+<?php
 }
 
 ?>

@@ -1,4 +1,4 @@
-<?
+<?php
 //templates
 define("_TEM_WEL","ยินดีต้อนรับคุณ");
 define("_TEM_WEL_GUEST","บุคคลทั่วไป");

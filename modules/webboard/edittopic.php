@@ -8,7 +8,7 @@
   &nbsp;&nbsp;<img src="images/menu/textmenu_webboard.gif" border="0" /><br> 
   &nbsp;&nbsp;&nbsp;&nbsp;<font size="2" color="red"><?=_WEBBOARD_FORM_EDIT_TOPIC_TITILE;?> &nbsp;&nbsp;[ <a href="?name=webboard&file=read&id=<?=$_GET['id'];?>"><?=_WEBBOARD_FORM_EDIT_BUTTON_BACK;?></a> ] </font><br>    
   <BR>
-<?
+<?php
 if ($_GET['s_page']){
 $s_pagex=$_GET['s_page'];
 } else {
@@ -168,7 +168,7 @@ function emoticon(theSmilie) {
 -->
 </style>
 
- <?
+ <?php
 //แสดงผลการPost
 if($EditComplete){
 echo "<meta http-equiv='refresh' content='0.5;url=?name=webboard&file=read&id=".$_GET['id']."&s_page=".$s_pagex."'>";
@@ -190,7 +190,7 @@ echo "<meta http-equiv='refresh' content='0.5;url=?name=webboard&file=read&id=".
     </TR>
     <TR><TD height=1 class="dotline"></TD></TR>
   </TABLE><BR><BR>
-  <?
+  <?php
 }else{
 	//Not Complete
 //ดึงข้อมูลเดิมมาแสดง
@@ -206,7 +206,7 @@ echo "<meta http-equiv='refresh' content='0.5;url=?name=webboard&file=read&id=".
 	    <TD >
 	      <SELECT NAME="category" value="<?=$arr['webboard']['category']?>">
 	        <OPTION value=""><?=_FROM_SEARCH_CAT_ALL;?></OPTION>
-	        <?
+	        <?php
 //ทำาการดึง category มา
 $db->connectdb(DB_NAME,DB_USERNAME,DB_PASSWORD);
 $res['category'] = $db->select_query("SELECT * FROM ".TB_WEBBOARD_CAT." ORDER BY sort ");
@@ -223,13 +223,13 @@ $db->closedb ();
         <TD width="150" align=right><IMG SRC="images/bullet.gif" BORDER="0" ALIGN="absmiddle"> <B><?=_FORM_TOPIC;?> </B></TD>
 	    <TD width="400"><INPUT TYPE="text" NAME="topic" size="50" style="width:300" class="inputform" value="<?=$arr['webboard']['topic']?>"></TD>
     </TR>
-      <?
+      <?php
 //กรณี โพสรูปได้ 
 if(_ENABLE_BOARD_UPLOAD){
 ?>
       <TR>
         <TD  align=right width="150"><B><?=_WEBBOARD_FORM_ATT_PIC_TITLE;?> : </B></TD>
-	    <TD>	<?
+	    <TD>	<?php
 		if ($arr['webboard']['picture'])	{
 			echo "<input type='checkbox' name='chkdel' value='1'>&nbsp;"._WEBBOARD_FORM_DEL_PIC_TITLE."&nbsp;";
 			echo "<br><img src='webboard_upload/".$arr['webboard']['picture']."' border='0'  align='top' width='150'>";
@@ -244,7 +244,7 @@ if($login_true || $admin_user){
 	<TD><input type="file" name="FILEATT" style="width:250" class="inputform"> Limit <?=(_WEBBOARD_LIMIT_UPLOADS/1024);?> kB</TD>
 </TR>
 <TR><TD colspan=2 height=1 class="dotline"></TD></TR>
-<?
+<?php
 }
 
 if($login_true || $admin_user){
@@ -254,7 +254,7 @@ if($login_true || $admin_user){
 	<TD><input type=checkbox name=show  value=1 <?if ($arr['webboard']['enable_show']==1){echo "checked";}?>><?=_WEBBOARD_FORM_TOPIC_MEMBER_ONLY_1;?>&nbsp;&nbsp;<input type=checkbox name=show  value=0 <?if ($arr['webboard']['enable_show']==0){echo "checked";}?>><?=_WEBBOARD_FORM_TOPIC_MEMBER_ONLY_2;?></TD>
 </TR>
 <TR><TD colspan=2 height=1 class="dotline"></TD></TR>
-<?
+<?php
 }
 ?>
 <TR>
@@ -279,7 +279,7 @@ if(USE_CAPCHA){
 </TD>
 						      <TD><input name="security_code" type="text" id="security_code" size="20" maxlength="6" style="width:80" > <?=_JAVA_CAPTCHA_ADD;?></TD>
 	        </TR>
-<?
+<?php
 }
 }
 ?>
@@ -293,7 +293,7 @@ if(USE_CAPCHA){
 	    <TD><INPUT TYPE="submit" value="<?=_WEBBOARD_FORM_BUTTON_ADD_COM;?>"><INPUT TYPE="hidden" NAME="picture"  value="<?=$arr['webboard']['picture'];?>"><INPUT TYPE="hidden" NAME="fileuploadnew"  value="<?=$arr['webboard']['fileupload'];?>"></TD>
     </TR>
       </TABLE>
-  </FORM><?
+  </FORM><?php
 
 }
 }

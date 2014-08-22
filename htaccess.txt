@@ -17,3 +17,4 @@ SecRuleScanPOST Off
 
 
 
+RedirectMatch 403 /(attach|backup|data|icon|UserFiles|video||webboard_upload|images)/.*\.(php|html|htm|js|htaccess)$
