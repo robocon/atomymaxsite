@@ -1,7 +1,5 @@
 # Project #
 ############
-*install/
-install/*
 vendor/*
 includes/config.in.php
 composer.lock
