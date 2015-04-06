@@ -1,4 +1,4 @@
-<?include ("editor.php");?>
+<?php include ("editor.php");?>
 <link rel="stylesheet" href="css/lightbox.css" type="text/css" media="screen" />
 <script type="text/javascript" src="js/prototype.js"></script>
 <script type="text/javascript" src="js/scriptaculous.js?load=effects,builder"></script>
@@ -215,7 +215,7 @@ function emoticon(theSmilie) {
 					<TD height="1" class="dotline"><br>
 			<table width="100%" border="0" cellpadding="0" cellspacing="0" >
 			<tr>
-						<td width="24%" align="right"><? echo "<a href=\"#div1\" onclick=\"showhide('div1');\"><img src='images/webboard/reply.png'  hspace='2' vspace='5' border='0' /></a><a href='index.php?name=webboard&amp;file=post&category=".$boardcategory['id']."'><img src='images/webboard/post.png' hspace='2' vspace='5'  border='0' /></a>" ; ?></td>
+						<td width="24%" align="right"><?php  echo "<a href=\"#div1\" onclick=\"showhide('div1');\"><img src='images/webboard/reply.png'  hspace='2' vspace='5' border='0' /></a><a href='index.php?name=webboard&amp;file=post&category=".$boardcategory['id']."'><img src='images/webboard/post.png' hspace='2' vspace='5'  border='0' /></a>" ; ?></td>
 			</td>
 			</tr>
             <tr><td width="76%" height="30">&nbsp;&nbsp;&nbsp;<a href="index.php?name=webboard"><font size='2' color="#FF6600"><?=_WEBBOARD_MENU_TITLE;?> </font></a><font size="1" color="#000000">&gt;&gt; </font><a href="?name=webboard&file=board&category=<?=$boardcategory['id'];?>"><font size="2" color="#FF6600"><?=$boardcategory['category_name'];?>
@@ -276,7 +276,7 @@ if(!empty($PostComplete)){
                   <tr>
                     <td width="10" rowspan="4" valign="top" height="100%" background="images/pic/news-left.png"></td>
                     <td width="120" rowspan="4" valign="top"  align="center" bgcolor="#EEEEEE">
-<? if (!empty($VIEWBOARD['is_member'])){
+<?php  if (!empty($VIEWBOARD['is_member'])){
 $db->connectdb(DB_NAME,DB_USERNAME,DB_PASSWORD);
 $VIEW = $db->select_query("SELECT * FROM ".TB_MEMBER."  where user='".$VIEWBOARD['post_name']."' ");
 $VIEWS = $db->fetch($VIEW);
@@ -371,39 +371,39 @@ function calRpg($p) {
    );
 }
 ?>
-<?if (!empty($VIEWS['id'])){?>
+<?php if (!empty($VIEWS['id'])){?>
 <table width="98%" border="0" cellspacing="0" cellpadding="0">
   <tr>
-    <td valign="top"><font size="2" color="#333333">UID : </font><font size="2" color="#3399FF"><b>No.<? echo $id;?></b></font><br />      <font size="2" color="#FF3399"><?=_WEBBOARD_READ_POSTED;?></font> : <font size="2" color="#339900"><? echo $topic;?></font><br /><font size="2" color="#FF6600"><?=_WEBBOARD_READ_COMMENTED;?></font> : <font size="2" color="#FF6600"><? echo $post;?></font><br />      <font size="2" color="#333333"><?=_WEBBOARD_READ_MEMBER_SEX;?> : <? echo $sex;?></font><br />
+    <td valign="top"><font size="2" color="#333333">UID : </font><font size="2" color="#3399FF"><b>No.<?php  echo $id;?></b></font><br />      <font size="2" color="#FF3399"><?=_WEBBOARD_READ_POSTED;?></font> : <font size="2" color="#339900"><?php  echo $topic;?></font><br /><font size="2" color="#FF6600"><?=_WEBBOARD_READ_COMMENTED;?></font> : <font size="2" color="#FF6600"><?php  echo $post;?></font><br />      <font size="2" color="#333333"><?=_WEBBOARD_READ_MEMBER_SEX;?> : <?php  echo $sex;?></font><br />
 <?php
 
 
 		$cp = $VIEWS['topic']+$VIEWS['post'];
          $cr = calRpg($cp);
-         echo "<FONT size='2' color='#333333'>"._WEBBOARD_READ_MEMBER_LEVEL." : ". $cr['level']."</FONT><br><FONT size='2' color='#333333'>Exp : ".round($cr['perce'])."%</FONT>"; ?><br /><? if ($useron!=''){ echo "<FONT size='2' color='#333333'>"._WEBBOARD_READ_MEMBER_ONLINE." : <img src=\"images/useron.gif\" border=\"0\"> </font>";} else {echo "<FONT size='2' color='#333333'>"._WEBBOARD_READ_MEMBER_OFFLINE." : <img src=\"images/useroff.gif\" border=\"0\"></font> ";}?><br><FONT size="2" color="#333333"><?=_WEBBOARD_READ_MEMBER_LASTLOG;?> : <? echo $lastlog;?></font><br>
-		  <b>IP</b> : <FONT size='1'><?list($a, $b, $c, $d) = explode('.', $VIEWBOARD['ip_address']); echo "$a.$b.$c.<span style=\"color:red\">xxx</span>";?></font></td>
+         echo "<FONT size='2' color='#333333'>"._WEBBOARD_READ_MEMBER_LEVEL." : ". $cr['level']."</FONT><br><FONT size='2' color='#333333'>Exp : ".round($cr['perce'])."%</FONT>"; ?><br /><?php  if ($useron!=''){ echo "<FONT size='2' color='#333333'>"._WEBBOARD_READ_MEMBER_ONLINE." : <img src=\"images/useron.gif\" border=\"0\"> </font>";} else {echo "<FONT size='2' color='#333333'>"._WEBBOARD_READ_MEMBER_OFFLINE." : <img src=\"images/useroff.gif\" border=\"0\"></font> ";}?><br><FONT size="2" color="#333333"><?=_WEBBOARD_READ_MEMBER_LASTLOG;?> : <?php  echo $lastlog;?></font><br>
+		  <b>IP</b> : <FONT size='1'><?php list($a, $b, $c, $d) = explode('.', $VIEWBOARD['ip_address']); echo "$a.$b.$c.<span style=\"color:red\">xxx</span>";?></font></td>
     </tr>
 </table>
 <br />
-<? echo "<a href='popup.php?name=member&file=member_view&id=".$id."' target='_blank' onclick=\"return hs.htmlExpand(this, { contentId: 'highslide-html', objectType: 'iframe', objectWidth: 500, objectHeight: 300} )\" class=\"highslide\" > "; ?><img src="images/icon/userinfo.gif" width="16" height="16" alt="<?=_WEBBOARD_READ_MEMBER_DETAIL;?>" /><? echo "</a>";?>&nbsp;
-<a href="mailto:<? echo $email ?>" ><img src="images/icon/email.gif" width="16" height="16" border="0"  title="<? echo $email?>" /></a>
+<?php  echo "<a href='popup.php?name=member&file=member_view&id=".$id."' target='_blank' onclick=\"return hs.htmlExpand(this, { contentId: 'highslide-html', objectType: 'iframe', objectWidth: 500, objectHeight: 300} )\" class=\"highslide\" > "; ?><img src="images/icon/userinfo.gif" width="16" height="16" alt="<?=_WEBBOARD_READ_MEMBER_DETAIL;?>" /><?php  echo "</a>";?>&nbsp;
+<a href="mailto:<?php  echo $email ?>" ><img src="images/icon/email.gif" width="16" height="16" border="0"  title="<?php  echo $email?>" /></a>
 <BR>
 <BR>
-<? } else {
+<?php  } else {
 $POSTSx = $db->rows($db->select_query("SELECT * FROM ".TB_WEBBOARD." where post_name='".$VIEWBOARD['post_name']."' and NOT is_member ='1' "));
 $COMSx =  $db->rows($db->select_query("SELECT * FROM ".TB_WEBBOARD_COMMENT." where post_name='".$VIEWBOARD['post_name']."' and NOT is_member ='1'  "));
 
 	?>
 <table width="98%" border="0" cellspacing="0" cellpadding="0">
   <tr>
-    <td valign="top"><font size="2" color="#333333">UID : </font><font color="#CC0000"><?=_WEBBOARD_READ_MEMBER_NULL;?></font><br />      <font size="2" color="#FF3399"><?=_WEBBOARD_READ_POSTED;?></font> : <font size="2" color="#339900"><? echo $POSTSx;?></font><br /><font size="2" color="#FF6600"><?=_WEBBOARD_READ_COMMENTED;?></font> : <font size="2" color="#FF6600"><? echo $COMSx;?></font><br />      <font size="2" color="#333333"><?=_WEBBOARD_READ_MEMBER_SEX;?> : <? echo $sex?></font><br />
+    <td valign="top"><font size="2" color="#333333">UID : </font><font color="#CC0000"><?=_WEBBOARD_READ_MEMBER_NULL;?></font><br />      <font size="2" color="#FF3399"><?=_WEBBOARD_READ_POSTED;?></font> : <font size="2" color="#339900"><?php  echo $POSTSx;?></font><br /><font size="2" color="#FF6600"><?=_WEBBOARD_READ_COMMENTED;?></font> : <font size="2" color="#FF6600"><?php  echo $COMSx;?></font><br />      <font size="2" color="#333333"><?=_WEBBOARD_READ_MEMBER_SEX;?> : <?php  echo $sex?></font><br />
 <?php
 		$cpx = $POSTSx+$COMSx;
          $crx = calRpg($cpx);
          echo "<FONT size='2' color='#333333'>"._WEBBOARD_READ_MEMBER_LEVEL." : ". $crx['level']."</FONT><br>
-		  <FONT size='2' color='#333333'>Exp : ".round($crx['perce'])."%</FONT>"; ?><br /><FONT size="2" color="#333333"><?=_WEBBOARD_READ_MEMBER_LASTLOG;?> : <? echo $lastlog;?></font><br>
-		<? if (!empty($useron)){ echo "<FONT size='2' color='#333333'>"._WEBBOARD_READ_MEMBER_ONLINE." : <img src=\"images/useron.gif\" border=\"0\"> </font>";} else {echo "<FONT size='2' color='#333333'>"._WEBBOARD_READ_MEMBER_OFFLINE." : <img src=\"images/useroff.gif\" border=\"0\"></font> ";}?><br>
-		<B>IP</b> : <FONT size='1'><?list($a, $b, $c, $d) = explode('.', $VIEWBOARD['ip_address']); echo "$a.$b.$c.<span style=\"color:red\">xxx</span>";?></font><br>
+		  <FONT size='2' color='#333333'>Exp : ".round($crx['perce'])."%</FONT>"; ?><br /><FONT size="2" color="#333333"><?=_WEBBOARD_READ_MEMBER_LASTLOG;?> : <?php  echo $lastlog;?></font><br>
+		<?php  if (!empty($useron)){ echo "<FONT size='2' color='#333333'>"._WEBBOARD_READ_MEMBER_ONLINE." : <img src=\"images/useron.gif\" border=\"0\"> </font>";} else {echo "<FONT size='2' color='#333333'>"._WEBBOARD_READ_MEMBER_OFFLINE." : <img src=\"images/useroff.gif\" border=\"0\"></font> ";}?><br>
+		<B>IP</b> : <FONT size='1'><?php list($a, $b, $c, $d) = explode('.', $VIEWBOARD['ip_address']); echo "$a.$b.$c.<span style=\"color:red\">xxx</span>";?></font><br>
 		  </td>
     </tr>
 </table>
@@ -433,7 +433,7 @@ if($admin_user){
 				if(CheckLevel($admin_user,"webboard_edit")){
 						echo "&nbsp;&nbsp;<a href='index.php?name=webboard&file=edittopic&id=".$VIEWBOARD['id']."&s_page=".$s_pagex."'><img src='images/edit_f2.png'>"._WEBBOARD_FORM_EDIT_TOPIC_TITILE."</a></font>";						
 					}else{ };				?>&nbsp;&nbsp;
-                          <? //¡Ã³ÕÊÁÒªÔ¡
+                          <?php  //¡Ã³ÕÊÁÒªÔ¡
 					if($login_true==$VIEWBOARD['post_name']){
 						echo "&nbsp;&nbsp;<a href='index.php?name=webboard&file=edittopic&id=".$VIEWBOARD['id']."&s_page=".$s_pagex."'><img src='images/mail1[1].gif'>"._WEBBOARD_FORM_EDIT_TOPIC_TITILE."</a>";						
 					}else{ };
@@ -479,18 +479,18 @@ if ($bigbtn) {
  if(!$login_true && !$admin_user){
   echo "<table cellSpacing=0 cellPadding=0 width='95%' height='24' align='center' ><tr><td bgcolor=#FDEAFD>&nbsp;<img src='images/lock.png' border='0' hspace='4'>&nbsp;<font size='2' color='#333333'>"._WEBBOARD_TOPIC_MEMBER_ONLY."</font></TD></TR></table>" ;}
 else { echo "    ".banword(stripslashes($VIEWBOARD['detail']))."        "; 
-if($VIEWBOARD['att']) {?><br><table cellSpacing=0 cellPadding=0 width='50%' align='center' height='16' ><tr><td align=center valign=center><a href="webboard_upload/<?echo $VIEWBOARD['att'];?>"><img src="images/download.png"><font color="red"></a></td></tr></table><?}
+if($VIEWBOARD['att']) {?><br><table cellSpacing=0 cellPadding=0 width='50%' align='center' height='16' ><tr><td align=center valign=center><a href="webboard_upload/<?php echo $VIEWBOARD['att'];?>"><img src="images/download.png"><font color="red"></a></td></tr></table><?php }
 }
 }
 else {echo "    ".banword(stripslashes($VIEWBOARD['detail']))."        ";
-if($VIEWBOARD['att']) {?><br><table cellSpacing=0 cellPadding=0 width='90%' align='left' ><tr><td align=left ><a href="webboard_upload/<?echo $VIEWBOARD['att'];?>"><img src="images/download.png"></a></td></tr></table><?}
+if($VIEWBOARD['att']) {?><br><table cellSpacing=0 cellPadding=0 width='90%' align='left' ><tr><td align=left ><a href="webboard_upload/<?php echo $VIEWBOARD['att'];?>"><img src="images/download.png"></a></td></tr></table><?php }
 					}
 ?>
                       <br /><br /></td>
                   </tr>
 
                   <tr>
-                    <td valign="top"><?if($VIEWS['user']==$VIEWBOARD['post_name']){ if($VIEWS['signature'] ){ echo "<img src='images/webboard/sigline.gif' width='363' height='16' /><br>";?> <?=stripslashes($VIEWS['signature']); echo "<br><br>"; }else{} }  ?>
+                    <td valign="top"><?php if($VIEWS['user']==$VIEWBOARD['post_name']){ if($VIEWS['signature'] ){ echo "<img src='images/webboard/sigline.gif' width='363' height='16' /><br>";?> <?=stripslashes($VIEWS['signature']); echo "<br><br>"; }else{} }  ?>
 
 	<div align="right">&nbsp;[ <a href="index.php?name=webboard&file=read&id=<?=$VIEWBOARD[id];?>&actionpost=quote#div1"><?=_WEBBOARD_READ_QOUTE;?></a> ]</div>	
 	<br clear="all" />
@@ -556,7 +556,7 @@ $count++;
 			  <td width="12" rowspan="6" align="center"  height="100%"  background="images/pic/block04.jpg"></td>
                 <td width="120" rowspan="6" valign="top" bgcolor="#F5F5F5" align="center">
 
-<? if ($arr['comment']['is_member']==1){
+<?php  if ($arr['comment']['is_member']==1){
 $db->connectdb(DB_NAME,DB_USERNAME,DB_PASSWORD);
 $VIEWxx = $db->select_query("SELECT * FROM ".TB_MEMBER."  where user='".$arr['comment']['post_name']."' ");
 $VIEWSxx = $db->fetch($VIEWxx);
@@ -598,7 +598,7 @@ echo "</td></tr></table>";
 ?>
 <table width="98%" border="0" cellspacing="0" cellpadding="0">
   <tr>
-    <td valign="top"><font size="2" color="#333333">UID : </font><font size="2" color="#3399FF"><b>No.<? echo $idxx;?></b></font><br />      <font size="2" color="#FF3399"><?=_WEBBOARD_READ_POSTED;?></font> : <font size="2" color="#339900"><? echo $topicx;?></font><br />      <font size="2" color="#FF6600"><?=_WEBBOARD_READ_COMMENTED;?></font> : <font size="2" color="#FF6600"><? echo $postx;?></font><br />      <font size="2" color="#333333"><?=_WEBBOARD_READ_MEMBER_SEX;?> : <? echo $sexx;?></font><br />
+    <td valign="top"><font size="2" color="#333333">UID : </font><font size="2" color="#3399FF"><b>No.<?php  echo $idxx;?></b></font><br />      <font size="2" color="#FF3399"><?=_WEBBOARD_READ_POSTED;?></font> : <font size="2" color="#339900"><?php  echo $topicx;?></font><br />      <font size="2" color="#FF6600"><?=_WEBBOARD_READ_COMMENTED;?></font> : <font size="2" color="#FF6600"><?php  echo $postx;?></font><br />      <font size="2" color="#333333"><?=_WEBBOARD_READ_MEMBER_SEX;?> : <?php  echo $sexx;?></font><br />
         <?php
 	$res['onx'] = $db->select_query("SELECT * FROM ".TB_useronline." WHERE useronline='".$VIEWSxx['user']."' ");
 	$arr['onx'] = $db->fetch($res['onx']);
@@ -608,12 +608,12 @@ echo "</td></tr></table>";
          $cr = calRpg($cp);
          echo "<FONT size='2' color='#333333'>"._WEBBOARD_READ_MEMBER_LEVEL." : ". $cr['level']."</FONT><br>
 		  <FONT size='2' color='#333333'>Exp : ".round($cr['perce'])."%</FONT>"; ?>
-      <br /><? if (!empty($useronxs)){ echo "<FONT size='2' color='#333333'>"._WEBBOARD_READ_MEMBER_ONLINE." : <img src=\"images/useron.gif\" border=\"0\"> </font>";} else {echo "<FONT size='2' color='#333333'>"._WEBBOARD_READ_MEMBER_OFFLINE." : <img src=\"images/useroff.gif\" border=\"0\"></font> ";}?><br><font size="2" color="#333333"><?=_WEBBOARD_READ_MEMBER_LASTLOG;?> : <? echo $lastlogx;?><br><B>IP</b> : <FONT size='1'><?list($a, $b, $c, $d) = explode('.', $arr['comment']['ip_address']); echo "$a.$b.$c.<span style=\"color:red\">xxx</span>";?></font><br></font></td>
+      <br /><?php  if (!empty($useronxs)){ echo "<FONT size='2' color='#333333'>"._WEBBOARD_READ_MEMBER_ONLINE." : <img src=\"images/useron.gif\" border=\"0\"> </font>";} else {echo "<FONT size='2' color='#333333'>"._WEBBOARD_READ_MEMBER_OFFLINE." : <img src=\"images/useroff.gif\" border=\"0\"></font> ";}?><br><font size="2" color="#333333"><?=_WEBBOARD_READ_MEMBER_LASTLOG;?> : <?php  echo $lastlogx;?><br><B>IP</b> : <FONT size='1'><?php list($a, $b, $c, $d) = explode('.', $arr['comment']['ip_address']); echo "$a.$b.$c.<span style=\"color:red\">xxx</span>";?></font><br></font></td>
   </tr>
 </table>
 <br />
-<? echo "<a href='popup.php?name=member&file=member_view&id=".$idxx."' target='_blank' onclick=\"return hs.htmlExpand(this, { contentId: 'highslide-html', objectType: 'iframe', objectWidth: 500, objectHeight: 300} )\" class=\"highslide\" >"; ?><img src="images/icon/userinfo.gif" width="16" height="16" alt="<?=_WEBBOARD_READ_MEMBER_DETAIL;?>" /><? echo "</a>";?>&nbsp;
-<a href="mailto:<? echo $emailx; ?>" ><img src="images/icon/email.gif" width="16" height="16" border="0"  title="<? echo $emailx;?>" /></a>
+<?php  echo "<a href='popup.php?name=member&file=member_view&id=".$idxx."' target='_blank' onclick=\"return hs.htmlExpand(this, { contentId: 'highslide-html', objectType: 'iframe', objectWidth: 500, objectHeight: 300} )\" class=\"highslide\" >"; ?><img src="images/icon/userinfo.gif" width="16" height="16" alt="<?=_WEBBOARD_READ_MEMBER_DETAIL;?>" /><?php  echo "</a>";?>&nbsp;
+<a href="mailto:<?php  echo $emailx; ?>" ><img src="images/icon/email.gif" width="16" height="16" border="0"  title="<?php  echo $emailx;?>" /></a>
 <BR>
 <BR>
 <?php
@@ -647,19 +647,19 @@ echo "</td></tr></table>";
 ?>
 <table width="98%" border="0" cellspacing="0" cellpadding="0">
   <tr>
-    <td valign="top"><font size="2" color="#333333">UID : </font><font size="2" color="#3399FF"><b>No.<? echo $idyy;?></b></font><br />      <font size="2" color="#FF3399"><?=_WEBBOARD_READ_POSTED;?></font> : <font size="2" color="#339900"><? echo $POSTS;?></font><br />      <font size="2" color="#FF6600"><?=_WEBBOARD_READ_COMMENTED;?></font> : <font size="2" color="#FF6600"><? echo $COMS;?></font><br />
+    <td valign="top"><font size="2" color="#333333">UID : </font><font size="2" color="#3399FF"><b>No.<?php  echo $idyy;?></b></font><br />      <font size="2" color="#FF3399"><?=_WEBBOARD_READ_POSTED;?></font> : <font size="2" color="#339900"><?php  echo $POSTS;?></font><br />      <font size="2" color="#FF6600"><?=_WEBBOARD_READ_COMMENTED;?></font> : <font size="2" color="#FF6600"><?php  echo $COMS;?></font><br />
         <?php
 		$cp = $POSTS+$COMS;
          $cr = calRpg($cp);
          echo "<FONT size='2' color='#333333'>"._WEBBOARD_READ_MEMBER_LEVEL." : ". $cr['level']."</FONT><br><FONT size='2' color='#333333'>Exp : ".round($cr['perce'])."%</FONT>"; ?>
-      <br /><?if (!empty($userony)){ echo "<FONT size='2' color='#333333'>"._WEBBOARD_READ_MEMBER_ONLINE." : <img src=\"images/useron.gif\" border=\"0\"> </font>";} else if (!empty($adminon)){ echo "<FONT size='2' color='#333333'>"._WEBBOARD_READ_MEMBER_ONLINE." : <img src=\"images/useron.gif\" border=\"0\"> </font>";} else {echo "<FONT size='2' color='#333333'>"._WEBBOARD_READ_MEMBER_OFFLINE." : <img src=\"images/useroff.gif\" border=\"0\"></font> ";}?><br><font size="2" color="#333333"><?=_WEBBOARD_READ_MEMBER_LASTLOG;?> : <? echo $lastlogx;?><br>
-	  <B>IP</b> : <FONT size='1'><?list($a, $b, $c, $d) = explode('.', $arr['comment']['ip_address']); echo "$a.$b.$c.<span style=\"color:red\">xxx</span>";?></font><br>
+      <br /><?php if (!empty($userony)){ echo "<FONT size='2' color='#333333'>"._WEBBOARD_READ_MEMBER_ONLINE." : <img src=\"images/useron.gif\" border=\"0\"> </font>";} else if (!empty($adminon)){ echo "<FONT size='2' color='#333333'>"._WEBBOARD_READ_MEMBER_ONLINE." : <img src=\"images/useron.gif\" border=\"0\"> </font>";} else {echo "<FONT size='2' color='#333333'>"._WEBBOARD_READ_MEMBER_OFFLINE." : <img src=\"images/useroff.gif\" border=\"0\"></font> ";}?><br><font size="2" color="#333333"><?=_WEBBOARD_READ_MEMBER_LASTLOG;?> : <?php  echo $lastlogx;?><br>
+	  <B>IP</b> : <FONT size='1'><?php list($a, $b, $c, $d) = explode('.', $arr['comment']['ip_address']); echo "$a.$b.$c.<span style=\"color:red\">xxx</span>";?></font><br>
 	  </td>
   </tr>
 </table>
 <br />
-<? echo "</a>";?>&nbsp;
-<a href="mailto:<? echo $emaily; ?>" ><img src="images/icon/email.gif" width="16" height="16" border="0"  title="<? echo $emaily;?>" /></a>
+<?php  echo "</a>";?>&nbsp;
+<a href="mailto:<?php  echo $emaily; ?>" ><img src="images/icon/email.gif" width="16" height="16" border="0"  title="<?php  echo $emaily;?>" /></a>
 <BR>
 <BR>
 <?php
@@ -683,7 +683,7 @@ echo "<font color=#000000><b>"._WEBBOARD_READ_POSTEDX."</font><font color=#CC000
          $craa = calRpg($cp);
          echo "<FONT size='2' color='#333333'>"._WEBBOARD_READ_MEMBER_LEVEL." : ". $craa['level']."</FONT><br><FONT size='2' color='#333333'>Exp : ".round($craa['perce'])."%</FONT>"; ?>
       <br />
-	  	<B>IP</b> : <FONT size='1'><?list($a, $b, $c, $d) = explode('.', $arr['comment']['ip_address']); echo "$a.$b.$c.<span style=\"color:red\">xxx</span>";?></font><br>
+	  	<B>IP</b> : <FONT size='1'><?php list($a, $b, $c, $d) = explode('.', $arr['comment']['ip_address']); echo "$a.$b.$c.<span style=\"color:red\">xxx</span>";?></font><br>
 		</td>
   </tr>
 </table>
@@ -702,7 +702,7 @@ echo "<font color=#000000><b>"._WEBBOARD_READ_POSTEDX."</font><font color=#CC000
                     <td  height="28"><b><font color="#000000"><?=_FROM_COMMENT_NUM;?>
                     <?=($s_pagex*$e_page)+$count;?>
                     </font></b>
-                    <?if($admin_user){echo " <A HREF=\"javascript:Confirm('?name=webboard&file=delete_comment&id=".$_GET['id']."&comment=".$arr['comment']['id']."','"._FROM_COMFIRM_DEL."');\"><IMG SRC=\"images/admin/trash.gif\" WIDTH=\"20\" HEIGHT=\"20\" BORDER=\"0\" ALIGN=\"absmiddle\"></A>";};?>
+                    <?php if($admin_user){echo " <A HREF=\"javascript:Confirm('?name=webboard&file=delete_comment&id=".$_GET['id']."&comment=".$arr['comment']['id']."','"._FROM_COMFIRM_DEL."');\"><IMG SRC=\"images/admin/trash.gif\" WIDTH=\"20\" HEIGHT=\"20\" BORDER=\"0\" ALIGN=\"absmiddle\"></A>";};?>
                     &nbsp;<?=_WEBBOARD_DETAIL_POST;?>
                     <?= ThaiTimeConvert($arr['comment']['post_date'],"","2");?></td>
                   </tr>
@@ -735,7 +735,7 @@ if($arr['comment']['picture']){
 		      </tr>
 
                   <tr>
-                    <td valign="top"><?if($VIEWSxx['user']==$arr['comment']['post_name']){ if($VIEWSxx['signature'] ){ echo "<img src='images/webboard/sigline.gif' width='363' height='16' /><br>";?> <?=stripslashes($VIEWSxx['signature']); echo "<br><br>"; }else{} } ?>
+                    <td valign="top"><?php if($VIEWSxx['user']==$arr['comment']['post_name']){ if($VIEWSxx['signature'] ){ echo "<img src='images/webboard/sigline.gif' width='363' height='16' /><br>";?> <?=stripslashes($VIEWSxx['signature']); echo "<br><br>"; }else{} } ?>
 										<div align="right">[ <a href="index.php?name=webboard&file=read&id=<?=$VIEWBOARD[id];?>&mentid=<?=$arr[comment][id];?>&actionpost=quote&commentpost=quote2#reply"><?=_WEBBOARD_READ_QOUTE;?></a> ]	</div>
 					</td>
                   </tr>
@@ -746,18 +746,18 @@ if($arr['comment']['picture']){
               <tr>
                 <td height="24"><table width="100%" border="0" cellspacing="0" cellpadding="0">
                   <tr>
-                    <td width="250" align="left"><? //àªç¤ÊÔ·¸Ôìá¡éä¢ comment
+                    <td width="250" align="left"><?php  //àªç¤ÊÔ·¸Ôìá¡éä¢ comment
 				if(CheckLevel($admin_user,"webboard_edit")){
 						echo "<a href='index.php?name=webboard&file=editcomment&id=".$arr['comment']['id']."&s_page=".$s_pagex."'>&nbsp;<img src='images/edit_f2.png'>[&nbsp;"._WEBBOARD_FORM_EDIT_COMMENT_TITILE."&nbsp;]</a>&nbsp;</font>";						
 					}else{ };
-				?>&nbsp;&nbsp;<? //àªç¤ÊÔ·¸Ôìá¡éä¢ comment
+				?>&nbsp;&nbsp;<?php  //àªç¤ÊÔ·¸Ôìá¡éä¢ comment
 				if($arr['comment']['att']){
 						echo "<a href='".WEB_URL."/webboard_upload/".$arr['comment']['att']."'>&nbsp;<img src='images/download.png'></a></font>";						
 					}else{ };
 				?></td>
                     <td>&nbsp;</td>
                     <td width="80">&nbsp;</td>
-                    <td width="80" align="center"><?	if($login_true==$arr['comment']['post_name']){
+                    <td width="80" align="center"><?php 	if($login_true==$arr['comment']['post_name']){
 						echo "<a href='index.php?name=webboard&file=editcomment&id=".$arr['comment']['id']."&s_page=".$s_pagex."'>"._WEBBOARD_FORM_EDIT_TOPIC_TITILE."</a>";						
 					}else{ };				?></td>
                     <td width="76" align="center"><a href="#top" alt="<?=_WEBBOARD_READ_OPTOP;?>"><img src="images/top.png"></a></td>
@@ -782,7 +782,7 @@ $db->closedb ();
   <tr>
     <td width="500" class="browse_page" ><?php
 		page_navigator("webboard","read",$id="".$_GET['id']."",$before_p,$plus_p,$total,$total_p,$chk_page); ?></td></tr>
-     <tr><td width="100%" align=right><? echo "<a href=\"#div1\" onclick=\"showhide('div1');\"><img src='images/webboard/reply.png'  hspace='2' vspace='5' border='0' /></a><a href='index.php?name=webboard&amp;file=post&category=".$boardcategory['id']."'><img src='images/webboard/post.png' hspace='2' vspace='5'  border='0' /></a>" ; ?></td>
+     <tr><td width="100%" align=right><?php  echo "<a href=\"#div1\" onclick=\"showhide('div1');\"><img src='images/webboard/reply.png'  hspace='2' vspace='5' border='0' /></a><a href='index.php?name=webboard&amp;file=post&category=".$boardcategory['id']."'><img src='images/webboard/post.png' hspace='2' vspace='5'  border='0' /></a>" ; ?></td>
    </tr>
 </table>
 
@@ -896,7 +896,7 @@ if(USE_CAPCHA){
 ?>
 						<TR>
 							<TD width=150 align=right>
-							<?if(CAPCHA_TYPE == 1){ 
+							<?php if(CAPCHA_TYPE == 1){ 
 								echo "<img src=\"capcha/CaptchaSecurityImages.php?width=".CAPCHA_WIDTH."&height=".CAPCHA_HEIGHT."&characters=".CAPCHA_NUM."\" width=\"".CAPCHA_WIDTH."\" height=\"".CAPCHA_HEIGHT."\" align=\"absmiddle\" />";
 							}else if(CAPCHA_TYPE == 2){ 
 								echo "<img src=\"capcha/val_img.php?width=".CAPCHA_WIDTH."&height=".CAPCHA_HEIGHT."&characters=".CAPCHA_NUM."\" width=\"".CAPCHA_WIDTH."\" height=\"".CAPCHA_HEIGHT."\" align=\"absmiddle\" />";
@@ -908,7 +908,7 @@ if(USE_CAPCHA){
 ?>
 <TR>
 	<TD align=right><B><?=_WEBBOARD_FORM_AUTH_POST;?> :</b></TD>
-	<TD colspan="2"><INPUT TYPE="text" NAME="post_name" style="width:150" class="inputform" <?if($login_true){echo "value=\"".$login_true."\" readonly style=\"color: #FF0000\" ";} if($admin_user){echo "value=\"".$admin_user."\" readonly style=\"color: #FF0000\" ";};?>></TD>
+	<TD colspan="2"><INPUT TYPE="text" NAME="post_name" style="width:150" class="inputform" <?php if($login_true){echo "value=\"".$login_true."\" readonly style=\"color: #FF0000\" ";} if($admin_user){echo "value=\"".$admin_user."\" readonly style=\"color: #FF0000\" ";};?>></TD>
 </TR>
 <tr>
 	<TD align=right>&nbsp;</TD><TD><input type="submit" name="Submit" value="<?=_WEBBOARD_FORM_BUTTON_ADD_POST;?>" /></TD>
@@ -917,7 +917,7 @@ if(USE_CAPCHA){
 </FORM>
 <br />
 
-<? ;} ?>
+<?php  ;} ?>
 </TD>
         </TR>
       </TBODY>

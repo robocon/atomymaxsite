@@ -13,7 +13,7 @@
 					<TD>
 					<BR><B><IMG SRC="images/icon/plus.gif" BORDER="0" ALIGN="absmiddle"> <A HREF="?name=admin&file=main"><?=_ADMIN_GOBACK;?></A> &nbsp;&nbsp;<BR><BR>
  <br>
-<?
+<?php 
 CheckAdmin($admin_user, $admin_pwd);
 
 include "modules/alumnus/form_search.php";
@@ -155,7 +155,7 @@ $ColorFill = 'class="odd"';
 		<td align=left vAlign=top >";
 		?>
 		<A HREF="popup.php?name=alumnus&file=view&id=<?=$arr[0];?>" onclick="return hs.htmlExpand(this, { contentId: 'highslide-html', objectType: 'iframe', objectWidth: 520, objectHeight: 480} )" class="highslide">
-		<?
+		<?php 
 		echo "$arr[2]  $arr[3] [$arr[4]]</a></td>
 		<td align=center vAlign=top >$sex</td>
 		<td  align=left vAlign=top >$arr[20]</td>
@@ -173,7 +173,7 @@ $count++;
 //mysql_close( $show_db );
 
 ?>
-<?
+<?php 
 
 // แสดงหน้า link ไปยังหน้าอื่นๆ
 echo "<table width='98%' border='0' cellspacing='0' cellpadding='0'><tr class=style >";

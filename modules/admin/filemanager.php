@@ -18,7 +18,7 @@ $ver=".024";
 				<TR>
 					<TD>
 					<BR><B><IMG SRC="images/icon/plus.gif" BORDER="0" ALIGN="absmiddle"> <A HREF="?name=admin&file=main"><?=_ADMIN_GOBACK;?></A> &nbsp;&nbsp;<BR><BR>
-<?
+<?php 
 /*
 Todo:
 BUG: cpmv with no available dirs to cpmv to .. error.

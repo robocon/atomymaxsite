@@ -1,7 +1,7 @@
 <?php
 CheckAdmin($admin_user, $admin_pwd);
 ?>
-<?include ("editor.php");?>
+<?php include ("editor.php");?>
 	<TABLE cellSpacing=0 cellPadding=0 width=820 border=0>
       <TBODY>
         <TR>

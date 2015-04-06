@@ -13,7 +13,7 @@ GETMODULE($_GET['name'],$_GET['file']);
 <html>
   <head>
     <title><?=WEB_TITILE;?></title>
-<meta http-equiv="Content-Type" content="text/html; charset=<?echo ISO;?>">
+<meta http-equiv="Content-Type" content="text/html; charset=<?php echo ISO;?>">
 
 <meta name="keywords" content="<?=WEB_TITILE;?>">
 <meta name="description" content="<?=WEB_TITILE;?>">

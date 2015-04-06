@@ -54,12 +54,12 @@ $ColorFill = 'class="odd"';
 ?>
     <tr <?php echo $ColorFill; ?> >
      <td width="44">
-      <a href="?name=admin&file=blog_editlevel&op=level_edit&id=<? echo $arr['blog']['level_id'];?>"><img src="images/admin/edit.gif" border="0" alt="<?=_ADMIN_BUTTON_EDIT;?>" ></a> 
-      <a href="javascript:Confirm('?name=admin&file=blog_editlevel&op=level_del&id=<? echo $arr['blog']['level_id'];?>','<?=_ADMIN_BUTTON_DEL_MESSAGE_CAT;?>');"><img src="images/admin/trash.gif"  border="0" alt="<?=_ADMIN_BUTTON_DEL;?>" ></a>
+      <a href="?name=admin&file=blog_editlevel&op=level_edit&id=<?php  echo $arr['blog']['level_id'];?>"><img src="images/admin/edit.gif" border="0" alt="<?=_ADMIN_BUTTON_EDIT;?>" ></a> 
+      <a href="javascript:Confirm('?name=admin&file=blog_editlevel&op=level_del&id=<?php  echo $arr['blog']['level_id'];?>','<?=_ADMIN_BUTTON_DEL_MESSAGE_CAT;?>');"><img src="images/admin/trash.gif"  border="0" alt="<?=_ADMIN_BUTTON_DEL;?>" ></a>
      </td> 
-     <td><?BlogLevel($arr['blog']['level_count']);?></td>
-     <td ><CENTER><?echo $arr['blog']['level_count'];?></CENTER></td>
-     <td valign="top" align="center" width="40"><input type="checkbox" name="list[']" value="<? echo $arr['blog']['level_id'];?>"></td>
+     <td><?php BlogLevel($arr['blog']['level_count']);?></td>
+     <td ><CENTER><?php echo $arr['blog']['level_count'];?></CENTER></td>
+     <td valign="top" align="center" width="40"><input type="checkbox" name="list[']" value="<?php  echo $arr['blog']['level_id'];?>"></td>
     </tr>
 
 <?php

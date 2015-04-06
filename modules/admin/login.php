@@ -1,31 +1,27 @@
-
 	<TABLE cellSpacing=0 cellPadding=0 width=720 border=0>
       <TBODY>
+<?php
+//var_dump($_POST);
+//var_dump($_SESSION);
+//exit;
 
-<?
-require_once("mainfile.php");
-		$classtext = array("", "");
-		$classbox = array("noborder2", "noborder2");
-		$username = "";
-		$password = "";
-//////////////////////		 à¾ÔèÁ  ÊÁÒªÔ¡ÍÍ¹äÅ¹ì   ////////////////////////////
-//			$db->connectdb(DB_NAME,DB_USERNAME,DB_PASSWORD);
-//			$db->add(TB_useronline," useronline='".$_SESSION['admin_user']."' "); 
-//			$db->closedb ();
-//echo "$_POST[username]<br>";
-//echo "$_POST[password]<br>";
-//echo "".md5($_POST[password])."<br>";
-//Check Admin
-$user_login = stripslashes( $_POST['username'] );
-$user_login = mysql_real_escape_string($_POST['username']);
-$pwd_login = stripslashes( $_POST['password'] );
-$pwd_login = mysql_real_escape_string( $_POST['password'] );
+//$classtext = array("", "");
+//$classbox = array("noborder2", "noborder2");
+//$username = "";
+//$password = "";
+
+//$user_login = stripslashes( $_POST['username'] );
+//$user_login = mysql_real_escape_string($_POST['username']);
+//$pwd_login = stripslashes( $_POST['password'] );
+//$pwd_login = mysql_real_escape_string( $_POST['password'] );
+$user_login = $_POST['username'];
+$pwd_login = $_POST['password'];
 
 if (is_valid($user_login) == true && is_valid($pwd_login) == true)
 {
 $Username = preg_replace ( '/"/i', '\"' , $user_login); 
 $Password= preg_replace ( "/'/i", "\'" , $pwd_login); 
-anti_injection($Username,$Password,$IPADDRESS);
+//anti_injection($Username,$Password,$IPADDRESS);
 $db->connectdb(DB_NAME,DB_USERNAME,DB_PASSWORD);
 $res['admin'] = $db->select_query("SELECT * FROM ".TB_ADMIN." WHERE username='".$Username."' AND password='".md5($Password)."'  "); 
 $rows['admin'] = $db->rows($res['admin']); 
@@ -33,8 +29,13 @@ if($rows['admin']){
 	$arr['admin'] = $db->fetch($res['admin']);
 }
 $db->closedb ();
+
+//var_dump($_SESSION);
+//var_dump($_POST);
+//
+//exit;
 if(USE_CAPCHA){
-	if($_SESSION['security_code'] != $_POST['security_code'] OR empty($_POST['security_code'])) {
+	if($_SESSION['captcha'] != $_POST['security_code'] OR empty($_POST['security_code'])) {
 		echo "<script language='javascript'>" ;
 		echo "alert('"._JAVA_CAPTCHA_NOACC."')" ;
 		echo "</script>" ;
@@ -46,7 +47,7 @@ if(USE_CAPCHA){
 //Can Login
 if($arr['admin']['id']){
 session_unset($login_true);
-	//Login ¼èÒ¹
+	//Login ï¿½ï¿½Ò¹
 	ob_start();
 	$_SESSION['admin_user'] = $Username ;
 	$_SESSION['admin_pwd'] = md5($Password) ;
@@ -59,7 +60,7 @@ session_unset($login_true);
 			$timeoutseconds=20*60*60;
 			$_SESSION['timestamp2']=time();
 			$timeout=$_SESSION['timestamp2'] + $timeoutseconds;
-	//////////////////////		 à¾ÔèÁ  ÊÁÒªÔ¡ÍÍ¹äÅ¹ì   ////////////////////////////
+	//////////////////////		 ï¿½ï¿½ï¿½ï¿½  ï¿½ï¿½ÒªÔ¡ï¿½Í¹ï¿½Å¹ï¿½   ////////////////////////////
 
 			$db->connectdb(DB_NAME,DB_USERNAME,DB_PASSWORD);
 			$res['user2'] = $db->select_query("SELECT * FROM ".TB_useronline." WHERE useronline='".$_SESSION['admin_user']."' ");
@@ -103,11 +104,11 @@ session_unset($login_true);
 <FONT COLOR="#336600"><B><?=_ADMIN_LOGIN_MESSAGE_ACC;?></B></FONT><BR><BR>
 <A HREF="?name=admin&file=main"><B><?=_ADMIN_GOBACK;?></B></A>
 </CENTER>
-<? echo "<meta http-equiv='refresh' content='1; url=?name=admin&file=main'>" ; ?>
+<?php  echo "<meta http-equiv='refresh' content='1; url=?name=admin&file=main'>" ; ?>
 <BR><BR>
-<?
+<?php 
 }else{
-	//Login äÁè¼èÒ¹
+	//Login ï¿½ï¿½ï¿½ï¿½Ò¹
 
 ?>
         <TR>
@@ -132,17 +133,17 @@ session_unset($login_true);
 				<input type="text" name="username" id="username" class="<?php echo $classbox[0]; ?>"  value="<?php echo $username; ?>"  onclick="this.value=''" /><br />
 				<?=_ADMIN_MOD_INDEX_PASS;?> : 
 				<input type="password" name="password" id="password" class="<?php echo $classbox[1]; ?>"  value="<?php echo $password; ?>"  onclick="this.value=''" /><br />
-		    	<div><?
+		    	<div><?php 
 if(USE_CAPCHA){
 ?>
-						<?if(CAPCHA_TYPE == 1){ 
+						<?php if(CAPCHA_TYPE == 1){ 
 							echo "<img src=\"capcha/CaptchaSecurityImages.php?width=".CAPCHA_WIDTH."&height=".CAPCHA_HEIGHT."&characters=".CAPCHA_NUM."\" width=\"".CAPCHA_WIDTH."\" height=\"".CAPCHA_HEIGHT."\" align=\"absmiddle\" />";
 						}else if(CAPCHA_TYPE == 2){ 
 							echo "<img src=\"capcha/val_img.php?width=".CAPCHA_WIDTH."&height=".CAPCHA_HEIGHT."&characters=".CAPCHA_NUM."\" width=\"".CAPCHA_WIDTH."\" height=\"".CAPCHA_HEIGHT."\" align=\"absmiddle\" />";
 						};?>&nbsp;
 						<input name="security_code" type="text" id="security_code" class="<?php echo $classbox[1]; ?>" onclick="this.value=''" maxlength="10" size="10">
 
-<?
+<?php 
 }
 ?></div><br>
 				<input type="hidden" name="action" id="action" value="login"> 
@@ -160,13 +161,13 @@ if(USE_CAPCHA){
 </td>
 </tr>
 </TABLE>
-<?
+<?php 
 }
 ?>
 					</TD>
 				</TR>
 			</TABLE>
-<?
+<?php 
 //login now
 } else {
 		/*$db->connectdb(DB_NAME,DB_USERNAME,DB_PASSWORD);
@@ -181,9 +182,9 @@ if(USE_CAPCHA){
 <FONT COLOR="#336600"><B><?=_ADMIN_IPBLOCK_MESSAGE_HACK;?> <?=WEB_EMAIL;?></B></FONT><BR><BR>
 <A HREF="?name=index"><B><?=_ADMIN_IPBLOCK_MESSAGE_HACK1;?></B></A>
 </CENTER>
-<? echo "<meta http-equiv='refresh' content='10; url=?name=index'>" ; ?>
+<?php  echo "<meta http-equiv='refresh' content='10; url=?name=index'>" ; ?>
 <BR><BR>
-<? */
+<?php  */
 echo '<meta http-equiv="refresh" content="0;url=index.php?name=admin">' ;
 }
 ?>

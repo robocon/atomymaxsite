@@ -7,10 +7,10 @@
 				<TR>
 					<TD height="1" ><br>
             <table width="95%" border="0" align="center" cellpadding="5" cellspacing="0">
-            <tr><td width="60%" height="30"><?echo "<a href='index.php?name=webboard&amp;file=post_cat'><img src='images/webboard/post.png' border='0' /></a>" ;  ?></td>
+            <tr><td width="60%" height="30"><?php echo "<a href='index.php?name=webboard&amp;file=post_cat'><img src='images/webboard/post.png' border='0' /></a>" ;  ?></td>
               <td width="40%" align="right" bgcolor="#E6E6E6"><form name="formboard" method="post" action="?name=webboard&file=getsearch" onsubmit="return checkboard();">
               <div align="left" width="50%">&nbsp; &nbsp; <strong><?=_WEBBOARD_MENU_TITLE_SEARCH;?> </strong>&nbsp;              
-                <input type="text" name="keyword" value="<?if(!empty($keyword)){ echo"$keyword"; } else {echo "";}?>" style="width:145px; padding:1px">
+                <input type="text" name="keyword" value="<?php if(!empty($keyword)){ echo"$keyword"; } else {echo "";}?>" style="width:145px; padding:1px">
                 <input type="submit" name="Submit" value="search">
               </div>
 			</form></td>
@@ -22,7 +22,7 @@
             </tr>
             <tr>
               <td>
-		    <?
+		    <?php 
 echo "<TABLE width=100% align=center border=\"0\" cellspacing=\"0\" cellpadding=\"0\" class=\"grids\">";
 $limit = _PERPAGE_BOARD ;
 $db->connectdb(DB_NAME,DB_USERNAME,DB_PASSWORD);
@@ -96,7 +96,7 @@ if(!empty($category)){
               <td width="5%" align="center"  height="26"><center><b><?=_WEBBOARD_TABLE_TITLE_POSTDATE;?></b></center></td>
               <td width="16%" align="center"  height="26"><center><b><?=_WEBBOARD_TABLE_TITLE_POSTDATE_LAST;?></b></center></td>
             </tr>
-            <?
+            <?php 
 
 //แสดงกระทู้ปักหมุด
 $db->connectdb(DB_NAME,DB_USERNAME,DB_PASSWORD);
@@ -236,7 +236,7 @@ $db->closedb();
 ?>
 </table>
 <table width="95%" border="0" align="center" cellpadding="0" cellspacing="0"  >
-<tr ><td colspan="6" class="browse_page" width=500><?page_navigator("webboard","index","",$before_p,$plus_p,$total,$total_p,$chk_page); ?></td></tr>
+<tr ><td colspan="6" class="browse_page" width=500><?php page_navigator("webboard","index","",$before_p,$plus_p,$total,$total_p,$chk_page); ?></td></tr>
 </table><br />
 <table width="95%" border="0" align="center" cellpadding="0" cellspacing="0"  class="grids">
   <tr class="odd">
@@ -250,7 +250,7 @@ $db->closedb();
 	  <option value="">...........................</option>
 	  <option value="index.php?name=webboard&file=board"><?=_WEBBOARD_JUM_ALLCAT;?></option>
 	  <option value="">...........................</option>
-	<?
+	<?php 
 $category = intval($category);
 $db->connectdb(DB_NAME,DB_USERNAME,DB_PASSWORD);
 $res['BoardCat'] = $db->select_query("SELECT * FROM ".TB_WEBBOARD_CAT." ORDER BY sort ");
@@ -271,7 +271,7 @@ while($arr['BoardCat'] = $db->fetch($res['BoardCat'])){
   <tr >
     <td width="10">&nbsp;</td>
 	<td height="26">
-	<?
+	<?php 
 	$db->connectdb(DB_NAME,DB_USERNAME,DB_PASSWORD);
 $BoardResult = $db->select_query("SELECT * FROM ".TB_WEBBOARD." $SQLwhere2 ORDER BY id DESC  LIMIT 1 ");
 while($WebBoard = $db->fetch($BoardResult)){

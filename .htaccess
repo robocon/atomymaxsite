@@ -10,10 +10,15 @@
 
     RewriteEngine On
 
-    RewriteBase /atomymaxsite/
+    RewriteBase /
 
     # Redirect Trailing Slashes...
     # RewriteRule ^(.*)/$ /$1 [L,R=301]
+
+    # Deny Access to Hidden Files and Directories
+    RewriteCond %{SCRIPT_FILENAME} -d [OR]
+    RewriteCond %{SCRIPT_FILENAME} -f
+    RewriteRule "(^|/)\." - [F]
 
     # Handle Front Controller...
     RewriteCond %{REQUEST_FILENAME} !-d
@@ -26,3 +31,7 @@
 
     RedirectMatch 403 /(attach|backup|data|icon|UserFiles|video|webboard_upload|images)/.*\.(php|html|htm|js|htaccess)$
 </IfModule>
+<IfModule mod_headers.c>
+    Header unset ETag
+</IfModule>
+FileETag None

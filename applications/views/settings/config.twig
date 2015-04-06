@@ -1,0 +1,31 @@
+{% extends "index.twig" %}
+{% block content %}
+    <div class="line">
+        <div class="box margin-bottom news-box">
+            <h1>Config</h1>
+            <div class="margin">
+                <fieldset class="s-12 l-6">
+                    <legend>Information</legend>
+                    <form class="customform" method="post" action="{{ base_url }}config/save">
+                        {% for item in items %}
+                        <input type="text" name="{{ item.posit }}" placeholder="{{ item.title }}" value="{{ item.name }}">
+                        {% endfor %}
+                        <button type="submit">Save</button>
+                    </form>
+                </fieldset>
+                <fieldset class="s-12 l-6">
+                    <legend>Template</legend>
+                    <form class="customform" method="post" action="{{ base_url }}config/save_template">
+                        <p>Background color</p>
+                        <input name="bg-top" class="form-control" type="color" value="#444">
+                        <p>Font color</p>
+                        <input name="font-top" class="form-control" type="color" value="#fff">
+                        <img src="{{ base_url }}images/template/{{ template.picname }}">
+                        <input type="file" name="top">
+                        <button type="submit" formenctype="multipart/form-data">Save</button>
+                    </form>
+                </fieldset>
+            </div>
+        </div>
+    </div>
+{% endblock %}

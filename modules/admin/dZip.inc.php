@@ -1,4 +1,4 @@
-<?
+<?php 
 class dZip{
 	var $filename;
 	var $overwrite;

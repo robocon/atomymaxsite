@@ -1,0 +1,29 @@
+{% extends "index.twig" %}
+{% block content %}
+    <div class="line">
+        <div class="box margin-bottom news-box">
+            <!-- CONTENT -->
+            <section>
+                <h1>{{ lang.news_header }}</h1>
+                {% for item in items %}
+                    <article class="line">
+                            <div class="s-12 l-12 margin-bottom">
+                                <h3><a href="{{ base_url }}news/details/{{ item.id }}">{{ item.topic }}</a></h3>
+                                <span class="submitted">{{ lang.post_on }} {{ item.post_date }} {{ lang.by }} {{ item.posted }}, {{ item.pageview }} {{ lang.views }}</span>
+                            </div>
+                            <div class="line">
+                                <div class="margin">
+                                    <img class="s-12 l-2" src="{{ base_url }}{{ item.thumb }}">
+                                    <p class="s-12 l-10">{{ item.detail }}</p>
+                                </div>
+                            </div>
+                            <hr>
+                    </article>
+                {% endfor %}
+            </section>
+            <div class="s-12 l-12">
+                {{ pagination | raw }}
+            </div>
+        </div>
+    </div>
+{% endblock %}

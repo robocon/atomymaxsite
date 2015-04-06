@@ -1,7 +1,7 @@
-<?
+<?php 
 CheckAdmin($admin_user, $admin_pwd);
 ?>
-<?include ("editor.php");?>
+<?php include ("editor.php");?>
 	<TABLE cellSpacing=0 cellPadding=0 width=820 border=0>
       <TBODY>
         <TR>
@@ -18,7 +18,7 @@ CheckAdmin($admin_user, $admin_pwd);
 					<BR><B><IMG SRC="images/icon/plus.gif" BORDER="0" ALIGN="absmiddle"> <A HREF="?name=admin&file=main"><?=_ADMIN_GOBACK;?></A> &nbsp;&nbsp;<IMG SRC="images/icon/arrow_wap.gif" BORDER="0" ALIGN="absmiddle">&nbsp;&nbsp; video </B>
 					<BR><BR>
 					<A HREF="?name=admin&file=video"><IMG SRC="images/admin/open.gif"  BORDER="0" align="absmiddle"> <?=_VIDEO_MOD_MENU_MAIN;?> </A> &nbsp;&nbsp;&nbsp;<A HREF="?name=admin&file=video&op=video_add"><IMG SRC="images/admin/book.gif"  BORDER="0" align="absmiddle"> <?=_ADMIN_VIDEO_MENU_ADD_NEW_FILE;?> </A>&nbsp;&nbsp;&nbsp;<A HREF="?name=admin&file=video_youtube"><IMG SRC="images/admin/7_40.gif"  BORDER="0" align="absmiddle"> <?=_ADMIN_VIDEO_MENU_ADD_NEW_YOUTUBE;?>  </A>&nbsp;&nbsp;&nbsp;<A HREF="?name=admin&file=video_category"><IMG SRC="images/admin/folders.gif"  BORDER="0" align="absmiddle"> <?=_ADMIN_MENU_DTAIL_CAT;?></A>  &nbsp;&nbsp;&nbsp;<A HREF="?name=admin&file=video_category&op=videocat_add"><IMG SRC="images/admin/opendir.gif"  BORDER="0" align="absmiddle"> <?=_ADMIN_MENU_ADD_CAT;?></A><BR><BR>
-<?
+<?php 
 //////////////////////////////////////////// แสดงรายการ
 if($op == ""){
 ?>
@@ -31,7 +31,7 @@ if($op == ""){
    <td align="center" width="50"><B><?=_ADMIN_FORM_CAT_ORDER;?></B></td>
    <td><B><CENTER>Check</CENTER></B></td>
   </tr>  
-<?
+<?php 
 $db->connectdb(DB_NAME,DB_USERNAME,DB_PASSWORD);
 $res['videocat'] = $db->select_query("SELECT * FROM ".TB_VIDEO_CAT." ORDER BY sort ");
 $rows['videocat'] = $db->rows($res['videocat']);
@@ -61,16 +61,16 @@ $ColorFill = 'class="odd"';
 ?>
     <tr <?php echo $ColorFill; ?> >
      <td width="44">
-      <a href="?name=admin&file=video_category&op=videocat_edit&id=<? echo $arr['videocat']['id'];?>"><img src="images/admin/edit.gif" border="0" alt="<?=_ADMIN_BUTTON_EDIT;?>" ></a> 
-      <a href="javascript:Confirm('?name=admin&file=video_category&op=videocat_del&id=<? echo $arr['videocat']['id'];?>','<?=_ADMIN_BUTTON_DEL_MESSAGE_CAT;?>');"><img src="images/admin/trash.gif"  border="0" alt="<?=_ADMIN_BUTTON_DEL;?>" ></a>
+      <a href="?name=admin&file=video_category&op=videocat_edit&id=<?php  echo $arr['videocat']['id'];?>"><img src="images/admin/edit.gif" border="0" alt="<?=_ADMIN_BUTTON_EDIT;?>" ></a> 
+      <a href="javascript:Confirm('?name=admin&file=video_category&op=videocat_del&id=<?php  echo $arr['videocat']['id'];?>','<?=_ADMIN_BUTTON_DEL_MESSAGE_CAT;?>');"><img src="images/admin/trash.gif"  border="0" alt="<?=_ADMIN_BUTTON_DEL;?>" ></a>
      </td> 
-     <td><?echo $arr['videocat']['category_name'];?></td>
-	 <td align="center" width="50" ><?echo $row['sumvideo'] ;?></td>
-     <td align="center" width="50"><A HREF="?name=admin&file=video_category&op=videocat_edit&action=sort&setsort=<?echo $SETSORT_UP ;?>&move=up&id=<? echo $arr['videocat']['id'];?>"><IMG SRC="images/icon/arrow_up.gif"  BORDER="0" ALT="<?=_ADMIN_ORDER_UP;?>"></A>&nbsp;&nbsp;&nbsp;<A HREF="?name=admin&file=video_category&op=videocat_edit&action=sort&setsort=<?echo $SETSORT_DOWN ;?>&move=down&id=<? echo $arr['videocat']['id'];?>"><IMG SRC="images/icon/arrow_down.gif"  BORDER="0" ALT="<?=_ADMIN_ORDER_DOWN;?>"></A></td>
-     <td valign="top" align="center" width="40"><input type="checkbox" name="list[']" value="<? echo $arr['videocat']['id'];?>"></td>
+     <td><?php echo $arr['videocat']['category_name'];?></td>
+	 <td align="center" width="50" ><?php echo $row['sumvideo'] ;?></td>
+     <td align="center" width="50"><A HREF="?name=admin&file=video_category&op=videocat_edit&action=sort&setsort=<?php echo $SETSORT_UP ;?>&move=up&id=<?php  echo $arr['videocat']['id'];?>"><IMG SRC="images/icon/arrow_up.gif"  BORDER="0" ALT="<?=_ADMIN_ORDER_UP;?>"></A>&nbsp;&nbsp;&nbsp;<A HREF="?name=admin&file=video_category&op=videocat_edit&action=sort&setsort=<?php echo $SETSORT_DOWN ;?>&move=down&id=<?php  echo $arr['videocat']['id'];?>"><IMG SRC="images/icon/arrow_down.gif"  BORDER="0" ALT="<?=_ADMIN_ORDER_DOWN;?>"></A></td>
+     <td valign="top" align="center" width="40"><input type="checkbox" name="list[']" value="<?php  echo $arr['videocat']['id'];?>"></td>
     </tr>
 
-<?
+<?php 
 	$count++;
  }
 $db->closedb ();
@@ -83,7 +83,7 @@ $db->closedb ();
  <input type="submit" value="Delete" onclick="return delConfirm(document.myform)">
  </div>
  </form>
-<?
+<?php 
 }
 else if($op == "videocat_add" AND $action == "add"){
 	//////////////////////////////////////////// กรณีเพิ่ม Database
@@ -131,7 +131,7 @@ else if($op == "videocat_add"){
 <BR><BR>
 <INPUT TYPE="submit" value="<?=_ADMIN_VIDEO_BUTTON_CAT_ADD;?>">
 </FORM>
-<?
+<?php 
 	}else{
 		//กรณีไม่ผ่าน
 		echo  $PermissionFalse ;
@@ -220,7 +220,7 @@ else if($op == "videocat_edit"){
 <BR><BR>
 <INPUT TYPE="submit" value="<?=_ADMIN_VIDEO_BUTTON_CAT_EDIT;?>">
 </FORM>
-<?
+<?php 
 	}else{
 		//กรณีไม่ผ่าน
 		$ProcessOutput = $PermissionFalse ;

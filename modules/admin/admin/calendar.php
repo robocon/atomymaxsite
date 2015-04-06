@@ -81,19 +81,19 @@ $ColorFill = 'class="odd"';
 
 ?>
     <tr <?php echo $ColorFill; ?> >
-			<TD  align="center"><?=$rank;?></td><TD   valign=top align="center">[ <? echo $arr['calendar']['date_event']; ?>]</td><TD valign=top><img src="images/a.gif" border="0"><? echo "<a href=\"".$link['link']."\" onclick=\"return hs.htmlExpand(this, { contentId: 'highslide-html', objectType: 'iframe', objectWidth: 700, objectHeight: 500} )\" )\">"; ?><font color="<?=$textfill; ?>"><b><? echo $arr['calendar']['subject']; ?></a>
+			<TD  align="center"><?=$rank;?></td><TD   valign=top align="center">[ <?php  echo $arr['calendar']['date_event']; ?>]</td><TD valign=top><img src="images/a.gif" border="0"><?php  echo "<a href=\"".$link['link']."\" onclick=\"return hs.htmlExpand(this, { contentId: 'highslide-html', objectType: 'iframe', objectWidth: 700, objectHeight: 500} )\" )\">"; ?><font color="<?=$textfill; ?>"><b><?php  echo $arr['calendar']['subject']; ?></a>
 <?php
 if($admin_user){
 	//Admin Login Show Icon
 ?>
-				  <a href="?name=admin&file=editevent&id=<? echo $arr['calendar']['id'];?>"><img src="images/admin/edit.gif" border="0" alt="<?=_FROM_IMG_EDIT;?>" ></a> 
-      <a href="javascript:Confirm('?name=admin&file=news&op=news_del&id=<? echo $arr['calendar']['id'];?>&pic=<? echo $arr['news']['pic'];?>&prefix=<? echo $arr['calendar']['post_date'];?>','<?=_ADMIN_BUTTON_DEL_MESSAGE;?>');">
+				  <a href="?name=admin&file=editevent&id=<?php  echo $arr['calendar']['id'];?>"><img src="images/admin/edit.gif" border="0" alt="<?=_FROM_IMG_EDIT;?>" ></a> 
+      <a href="javascript:Confirm('?name=admin&file=news&op=news_del&id=<?php  echo $arr['calendar']['id'];?>&pic=<?php  echo $arr['news']['pic'];?>&prefix=<?php  echo $arr['calendar']['post_date'];?>','<?=_ADMIN_BUTTON_DEL_MESSAGE;?>');">
 
-				  <a href="javascript:Confirm('?name=admin&file=delevent&id=<? echo $arr['calendar']['id'];?>&op=calendar_del','<?echo _FROM_COMFIRM_DEL;?>');"><img src="images/admin/trash.gif"  border="0" alt="<?=_FROM_IMG_DEL;?>" ></a>
+				  <a href="javascript:Confirm('?name=admin&file=delevent&id=<?php  echo $arr['calendar']['id'];?>&op=calendar_del','<?php echo _FROM_COMFIRM_DEL;?>');"><img src="images/admin/trash.gif"  border="0" alt="<?=_FROM_IMG_DEL;?>" ></a>
 <?php
 }
 ?>
-</td><TD >	<? echo $arr['calendar']['detail']; ?></td><TD  align="center"><? echo $arr['calendar']['timeout']; ?></td>
+</td><TD >	<?php  echo $arr['calendar']['detail']; ?></td><TD  align="center"><?php  echo $arr['calendar']['timeout']; ?></td>
 												</tr>
 
 <?php

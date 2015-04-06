@@ -1,9 +1,4 @@
-<?PHP
-//หากมีการเรียกไฟล์นี้โดยตรง
-if (preg_match("/class.resizepic.php/i",$PHP_SELF)) {
-    Header("Location: ../index.php");
-    die();
-}
+<?php 
 
 $ERR["UNABLE_TO_OUTPUT"] = "Unable to output: ";
 $ERR["FILE_DOESNOT_EXSIT"] = "This file does not exist: ";

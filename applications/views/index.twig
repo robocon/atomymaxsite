@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en-US">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width" />
+        <title>{{ config.title }}</title>
+        
+        {% if fb.app_id %}
+            <meta property="fb:app_id" content="{{ fb.app_id }}" />
+            <meta property="og:url" content="{{ fb.url }}" />
+            <meta property="og:site_name" content="{{ fb.site_name }}" />
+            <meta property="og:title" content="{{ fb.title }}" />
+            <meta property="og:description" content="{{ fb.description }}" />
+            <meta property="og:type" content="article" />
+        {% endif %}
+        
+        <link rel="stylesheet" href="{{ base_url }}public/css/components.css">
+        <link rel="stylesheet" href="{{ base_url }}public/css/responsee.css">
+        <link rel="stylesheet" href="{{ base_url }}public/owl-carousel/owl.carousel.css">
+        <link rel="stylesheet" href="{{ base_url }}public/owl-carousel/owl.theme.css">
+        <link rel="stylesheet" href="{{ base_url }}public/css/style.css">
+        <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700,800&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+        <script type="text/javascript" src="{{ base_url }}public/js/jquery-1.8.3.min.js"></script>
+        <script type="text/javascript" src="{{ base_url }}public/js/jquery-ui.min.js"></script>    
+        <script type="text/javascript" src="{{ base_url }}public/js/modernizr.js"></script>
+        <script type="text/javascript" src="{{ base_url }}public/js/responsee.js"></script>
+        <!--[if lt IE 9]>
+            <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+    </head>
+    <body class="size-960">
+        <!-- HEADER -->
+        <header>
+            <div class="line">
+                <div class="box">
+                    <div class="s-12 l-12">
+                        <img src="{{ base_url }}images/template/{{ template.picname }}">
+                    </div>
+                </div>
+            </div>
+            <!-- TOP NAV -->  
+            <div class="line">
+                <nav class="">
+                    <p class="nav-text">{{ lang.M_MENU }}</p>
+                    <div class="top-nav s-12 l-12">
+                        <ul class="chevron">
+                            <li><a href="{{ base_url }}">{{ lang.HOME }}</a></li>
+                            <li><a href="{{ base_url }}news/page">{{ lang.NEWS }}</a></li>
+                            <li><a href="{{ base_url }}gallery">{{ lang.GALLERY }}</a></li>
+                            <li><a href="{{ base_url }}contact">{{ lang.CONTACT }}</a></li>
+                            {% if user %}
+                            <li>
+                                <a>User</a>
+                                    <ul>
+                                        {% if user.level == '1' %}
+                                        <li><a href="{{ base_url }}config/">Config</a></li>
+                                        <li><a href="{{ base_url }}manage/news/">News Manager</a></li>
+                                        <li><a href="{{ base_url }}manage/gallery/">Gallery Manager</a></li>
+                                        {% endif %}
+                                        <li><a href="{{ base_url }}user/profile/">Profile</a></li>
+                                        <li><a href="{{ base_url }}login/logout">{{ lang.LOGOUT }}</a></li>
+                                    </ul>
+                            </li>
+                            {% else %}
+                            <li><a href="{{ base_url }}login">{{ lang.LOGIN }}</a></li>
+                            {% endif %}
+                        </ul>
+                    </div>
+                </nav>
+            </div>
+        </header>
+        <!-- MAIN CONTENT -->
+        <section>
+            {{ include('libs/message.twig') }}
+            {% block content %}{% endblock %}
+        </section>
+        <!-- FOOTER -->
+        <footer class="line">
+            <div class="box">
+                <div class="s-12 l-6">
+                    <i class="icon-facebook_circle icon2x left"></i>
+                    <i class="icon-twitter_circle icon2x left"></i>
+                    <i class="icon-google_plus_circle icon2x left"></i>
+                </div>
+                <div class="s-12 l-6">
+                    <a class="right" href="http://www.myresponsee.com" title="Responsee Template">Template by Responsee Team</a>
+                </div>
+            </div>
+        </footer>
+    </body>
+</html>

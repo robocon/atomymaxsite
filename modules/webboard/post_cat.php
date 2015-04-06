@@ -210,7 +210,7 @@ if($PostComplete){
 	<TD align=right width=100><B><?=_WEBBOARD_FORM_CAT_TITLE;?> : </B></TD>
 	<TD colspan="2">
 	<SELECT NAME="category">
-	<? /*<OPTION value="">-- กรุณาเลือกหมวดหมู่ --</OPTION>*/?>
+	<?php  /*<OPTION value="">-- กรุณาเลือกหมวดหมู่ --</OPTION>*/?>
 <?php
 $db->connectdb(DB_NAME,DB_USERNAME,DB_PASSWORD);
 $res['BoardCat'] = $db->select_query("SELECT * FROM ".TB_WEBBOARD_CAT." ORDER BY sort ");
@@ -263,13 +263,13 @@ if($_SESSION['login_true'] || $_SESSION['admin_user']){
 		<script type="text/javascript">CKEDITOR.replace ( 'editor1',{toolbar: 'Basic'});</script>
 	</TD>
 </TR>
-<? 	 if($_SESSION['login_true'] || $_SESSION['admin_user']){
+<?php  	 if($_SESSION['login_true'] || $_SESSION['admin_user']){
 } else {
 if(USE_CAPCHA){
 ?>
 						<TR>
 							<TD align=right><b><?=_WEBBOARD_CAPTCHA_ADD_TITLE;?> : </b></TD>
-						  <TD colspan="2"><input name="security_code" type="text" id="security_code" size="20" maxlength="6" style="width:80" > <?if(CAPCHA_TYPE == 1){ 
+						  <TD colspan="2"><input name="security_code" type="text" id="security_code" size="20" maxlength="6" style="width:80" > <?php if(CAPCHA_TYPE == 1){ 
 								echo "<img src=\"capcha/CaptchaSecurityImages.php?width=".CAPCHA_WIDTH."&height=".CAPCHA_HEIGHT."&characters=".CAPCHA_NUM."\" width=\"".CAPCHA_WIDTH."\" height=\"".CAPCHA_HEIGHT."\" align=\"absmiddle\" />";
 							}else if(CAPCHA_TYPE == 2){ 
 								echo "<img src=\"capcha/val_img.php?width=".CAPCHA_WIDTH."&height=".CAPCHA_HEIGHT."&characters=".CAPCHA_NUM."\" width=\"".CAPCHA_WIDTH."\" height=\"".CAPCHA_HEIGHT."\" align=\"absmiddle\" />";
@@ -280,7 +280,7 @@ if(USE_CAPCHA){
 ?>
 <TR>
 	<TD align=right><B><?=_WEBBOARD_FORM_AUTH_POST;?> :</b></TD>
-	<TD colspan="2"><INPUT TYPE="text" NAME="post_name" style="width:150" class="inputform" <?if($_SESSION['login_true']){echo "value=\"".$_SESSION['login_true']."\" readonly style=\"color: #FF0000\" ";} if($_SESSION['admin_user']){echo "value=\"".$_SESSION['admin_user']."\" readonly style=\"color: #FF0000\" ";};?>></TD>
+	<TD colspan="2"><INPUT TYPE="text" NAME="post_name" style="width:150" class="inputform" <?php if($_SESSION['login_true']){echo "value=\"".$_SESSION['login_true']."\" readonly style=\"color: #FF0000\" ";} if($_SESSION['admin_user']){echo "value=\"".$_SESSION['admin_user']."\" readonly style=\"color: #FF0000\" ";};?>></TD>
 </TR>
 <TR>
 	<TD align=right><B></B></TD>

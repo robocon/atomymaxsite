@@ -53,7 +53,7 @@ if($numrow1 !=0) {
                 <TD BGCOLOR="#FFFFFF" align="center"><FONT SIZE="4"><< <?=_RESET_MAIL_ADDCON_TITLE;?> >> <br><a href="?name=admin&file=index">[ login ]</a> </FONT></STRONG></FONT> </FONT></TD>
               </TR>
 				</table><br>
-<?
+<?php 
 } else if(!empty($_POST['forget'])) {
 
 $db->connectdb(DB_NAME,DB_USERNAME,DB_PASSWORD);

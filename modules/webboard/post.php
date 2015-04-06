@@ -282,13 +282,13 @@ if($login_true || $admin_user){
 		<script type="text/javascript">CKEDITOR.replace ( 'editor1',{toolbar: 'Basic'});</script>
 	</TD>
 </TR>
-<? 	 if($login_true || $admin_user){
+<?php  	 if($login_true || $admin_user){
 } else {
 if(USE_CAPCHA){
 ?>
 						<TR>
 							<TD align=right><b><?=_WEBBOARD_CAPTCHA_ADD_TITLE;?> : </b></TD>
-						  <TD colspan="2"><input name="security_code" type="text" id="security_code" size="20" maxlength="6" style="width:80" > <?if(CAPCHA_TYPE == 1){ 
+						  <TD colspan="2"><input name="security_code" type="text" id="security_code" size="20" maxlength="6" style="width:80" > <?php if(CAPCHA_TYPE == 1){ 
 								echo "<img src=\"capcha/CaptchaSecurityImages.php?width=".CAPCHA_WIDTH."&height=".CAPCHA_HEIGHT."&characters=".CAPCHA_NUM."\" width=\"".CAPCHA_WIDTH."\" height=\"".CAPCHA_HEIGHT."\" align=\"absmiddle\" />";
 							}else if(CAPCHA_TYPE == 2){ 
 								echo "<img src=\"capcha/val_img.php?width=".CAPCHA_WIDTH."&height=".CAPCHA_HEIGHT."&characters=".CAPCHA_NUM."\" width=\"".CAPCHA_WIDTH."\" height=\"".CAPCHA_HEIGHT."\" align=\"absmiddle\" />";
@@ -299,7 +299,7 @@ if(USE_CAPCHA){
 ?>
 <TR>
 	<TD align=right><B><?=_WEBBOARD_FORM_AUTH_POST;?> :</b></TD>
-	<TD colspan="2"><INPUT TYPE="text" NAME="post_name" style="width:150" class="inputform" <?if($login_true){echo "value=\"".$login_true."\" readonly style=\"color: #FF0000\" ";} if($admin_user){echo "value=\"".$admin_user."\" readonly style=\"color: #FF0000\" ";};?>></TD>
+	<TD colspan="2"><INPUT TYPE="text" NAME="post_name" style="width:150" class="inputform" <?php if($login_true){echo "value=\"".$login_true."\" readonly style=\"color: #FF0000\" ";} if($admin_user){echo "value=\"".$admin_user."\" readonly style=\"color: #FF0000\" ";};?>></TD>
 </TR>
 <TR>
 	<TD align=right><B></B></TD>

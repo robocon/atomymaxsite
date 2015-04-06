@@ -1,0 +1,41 @@
+{% extends "index.twig" %}
+{% block content %}
+
+    <div class="line">
+        <div class="box margin-bottom news-box">
+            <div class="margin gallery-lists">
+                <!-- CONTENT -->
+                <div class="s-12 l-12 margin-bottom">
+                    <h1>{{ category_name }}</h1>
+                    <p class="subtitle">{{ lang.post_on }} {{ post_date }}</p>
+                </div>
+                <article class="s-12 l-12">
+                    <div class="margin">
+                        {% for item in pictures %}
+                        <div class="s-12 l-4 margin-bottom">
+                            <a class="gallery-item" href="{{ base_url }}{{ item.picture }}">
+                                <img src="{{ base_url }}{{ item.picture }}">
+                            </a>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </article>
+            </div>
+        </div>
+    </div>
+    {{ include('libs/colorbox.twig') }}
+    <script type="text/javascript">
+        $(function(){
+            if($('a.gallery-item').length > 0){
+                $("a.gallery-item").colorbox({
+                    rel:'gallery-lists',
+                    transition:"fade",
+                    slideshow:true,
+                    slideshowAuto:false,
+                    slideshowStart:"Start Slideshow | ",
+                    slideshowStop:"Stop Slideshow | "
+                });
+            }
+        });
+    </script>
+{% endblock %}

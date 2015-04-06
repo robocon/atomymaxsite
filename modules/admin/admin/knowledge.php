@@ -75,17 +75,17 @@ $ColorFill = 'class="odd"';
 ?>
     <tr <?php echo $ColorFill; ?> >
      <td width="44">
-      <a href="?name=admin&file=knowledge&op=article_edit&id=<? echo $arr['knowledge']['id'];?>"><img src="images/admin/edit.gif" border="0" alt="<?=_ADMIN_BUTTON_EDIT;?>" ></a> 
-      <a href="javascript:Confirm('?name=admin&file=knowledge&op=article_del&id=<? echo $arr['knowledge']['id'];?>&pic=<? echo $arr['knowledge']['pic'];?>&prefix=<? echo $arr['knowledge']['post_date'];?>','<?=_ADMIN_BUTTON_DEL_MESSAGE;?>');"><img src="images/admin/trash.gif"  border="0" alt="<?=_ADMIN_BUTTON_DEL;?>" ></a>
+      <a href="?name=admin&file=knowledge&op=article_edit&id=<?php  echo $arr['knowledge']['id'];?>"><img src="images/admin/edit.gif" border="0" alt="<?=_ADMIN_BUTTON_EDIT;?>" ></a> 
+      <a href="javascript:Confirm('?name=admin&file=knowledge&op=article_del&id=<?php  echo $arr['knowledge']['id'];?>&pic=<?php  echo $arr['knowledge']['pic'];?>&prefix=<?php  echo $arr['knowledge']['post_date'];?>','<?=_ADMIN_BUTTON_DEL_MESSAGE;?>');"><img src="images/admin/trash.gif"  border="0" alt="<?=_ADMIN_BUTTON_DEL;?>" ></a>
      </td> 
-     <td><A HREF="?name=knowledge&file=readknowledge&id=<?echo $arr['knowledge']['id'];?>" target="_blank"><?echo $arr['knowledge']['topic'];?></A><?=$CommentIcon;?><?=$PicIcon;?><?=$AttIcon;?><?=NewsIcon(TIMESTAMP, $arr['knowledge']['post_date'], "images/icon_new.gif");?></td>
-     <td ><CENTER><?echo ThaiTimeConvert($arr['knowledge']['post_date'],'','');?></CENTER></td>
+     <td><A HREF="?name=knowledge&file=readknowledge&id=<?php echo $arr['knowledge']['id'];?>" target="_blank"><?php echo $arr['knowledge']['topic'];?></A><?=$CommentIcon;?><?=$PicIcon;?><?=$AttIcon;?><?=NewsIcon(TIMESTAMP, $arr['knowledge']['post_date'], "images/icon_new.gif");?></td>
+     <td ><CENTER><?php echo ThaiTimeConvert($arr['knowledge']['post_date'],'','');?></CENTER></td>
      <td align="center">
-	 <?if($arr['category']['category_name']){ //หากมีหมวดแสดงรูป ?>
-	 <A HREF="#"><IMG SRC="images/admin/folders.gif"  BORDER="0" align="absmiddle" alt="<?echo $arr['category']['category_name'];?>" onMouseOver="MM_displayStatusMsg('<?echo $arr['category']['category_name'];?>');return document.MM_returnValue"></A>
-	 <? } ?>
+	 <?php if($arr['category']['category_name']){ //หากมีหมวดแสดงรูป ?>
+	 <A HREF="#"><IMG SRC="images/admin/folders.gif"  BORDER="0" align="absmiddle" alt="<?php echo $arr['category']['category_name'];?>" onMouseOver="MM_displayStatusMsg('<?php echo $arr['category']['category_name'];?>');return document.MM_returnValue"></A>
+	 <?php  } ?>
 	 </td>
-     <td valign="top" align="center" width="40"><input type="checkbox" name="list[]" value="<? echo $arr['knowledge']['id'];?>"></td>
+     <td valign="top" align="center" width="40"><input type="checkbox" name="list[]" value="<?php  echo $arr['knowledge']['id'];?>"></td>
     </tr>
 
 <?php
@@ -211,9 +211,9 @@ $db->closedb ();
 </SELECT>
 <BR><BR>
 <B><?=_ADMIN_FORM_ICON;?> : </B><BR>
-<IMG name="view01" SRC="images/knowledge_blank.gif" <?echo " WIDTH=\""._IKNOW_W."\" HEIGHT=\""._IKNOW_H."\" ";?> BORDER="0" ><BR>
+<IMG name="view01" SRC="images/knowledge_blank.gif" <?php echo " WIDTH=\""._IKNOW_W."\" HEIGHT=\""._IKNOW_H."\" ";?> BORDER="0" ><BR>
 <input type="file" name="FILE" onpropertychange="view01.src=FILE.value;" style="width=250;"><BR>
-<?=_ADMIN_FORM_ICON_WIDTH;?> <?echo _IKNOW_W." x "._IKNOW_H ;?> <?=_ADMIN_FORM_ICON_WIDTH1;?>
+<?=_ADMIN_FORM_ICON_WIDTH;?> <?php echo _IKNOW_W." x "._IKNOW_H ;?> <?=_ADMIN_FORM_ICON_WIDTH1;?>
 <BR><BR>
 
 <B><?=_ADMIN_FORM_HEADLINE;?> :</B><BR>
@@ -361,16 +361,16 @@ $db->closedb ();
 <B><?=_ADMIN_FORM_ICON;?> : </B><BR>
 <?php
 	if ($arr['knowledge']['pic'] !=0){?>
-<IMG name="view01" SRC="icon/knowledge_<?=$arr['knowledge']['post_date'];?>.jpg" <?echo " WIDTH=\""._IKNOW_W."\" HEIGHT=\""._IKNOW_H."\" ";?> BORDER="0" >
-<?} else {?>
-<IMG name="view01" SRC="images/news_blank.gif" <?echo " WIDTH=\""._IKNOW_W."\" HEIGHT=\""._IKNOW_H."\" ";?> BORDER="0" >
+<IMG name="view01" SRC="icon/knowledge_<?=$arr['knowledge']['post_date'];?>.jpg" <?php echo " WIDTH=\""._IKNOW_W."\" HEIGHT=\""._IKNOW_H."\" ";?> BORDER="0" >
+<?php } else {?>
+<IMG name="view01" SRC="images/news_blank.gif" <?php echo " WIDTH=\""._IKNOW_W."\" HEIGHT=\""._IKNOW_H."\" ";?> BORDER="0" >
 <?php
 	}
 ?>
 <BR>
 
 <input type="file" name="FILE" onpropertychange="view01.src=FILE.value;" style="width=250;"><BR>
-<?=_ADMIN_FORM_ICON_WIDTH;?> <?echo _IKNOW_W." x "._IKNOW_H ;?> <?=_ADMIN_FORM_ICON_WIDTH1;?>
+<?=_ADMIN_FORM_ICON_WIDTH;?> <?php echo _IKNOW_W." x "._IKNOW_H ;?> <?=_ADMIN_FORM_ICON_WIDTH1;?>
 <BR><BR>
 <B><?=_ADMIN_FORM_HEADLINE;?> :</B><BR>
 <textarea cols="100"  rows="10"  name="HEADLINE" ><?=$HEADLINE;?></textarea>
@@ -380,7 +380,7 @@ $db->closedb ();
 <BR>
 <B><?=_ADMIN_FORM_FILE_ATT;?> : </B><BR>
 <input type="file" name="FILESS" onpropertychange="view01.src=FILESS.value;" style="width=250;"><br>
-<INPUT TYPE="checkbox" NAME="ENABLE_COMMENT" VALUE="1" <?if($arr['knowledge']['enable_comment']){echo " Checked";};?>> <?=_ADMIN_FORM_ALLOW_COMMENT;?>
+<INPUT TYPE="checkbox" NAME="ENABLE_COMMENT" VALUE="1" <?php if($arr['knowledge']['enable_comment']){echo " Checked";};?>> <?=_ADMIN_FORM_ALLOW_COMMENT;?>
 <BR>
 <input type="submit" value="<?=_ADMIN_KNOWLEDGE_BUTTON_EDIT;?>" name="submit"> <input type="reset" value="<?=_ADMIN_BUTTON_CLEAR;?>" name="reset">
 </FORM>

@@ -1,4 +1,4 @@
-<?include ("editor.php");?>
+<?php include ("editor.php");?>
 <link rel="stylesheet" href="css/lightbox.css" type="text/css" media="screen" />
 <script type="text/javascript" src="js/prototype.js"></script>
 <script type="text/javascript" src="js/scriptaculous.js?load=effects,builder"></script>
@@ -27,7 +27,7 @@ function emoticon(theSmilie) {
 		  <!-- gallery -->
 		  &nbsp;&nbsp;<IMG SRC="images/menu/textmenu_gallery.gif" BORDER="0"><BR><BR>
 				<TABLE width="740" align=center cellSpacing=2 cellPadding=2 border=0>
-<?
+<?php 
 empty($_GET['id'])?$id="":$id=$_GET['id'];
 //แสดง Gallery  
 $db->connectdb(DB_NAME,DB_USERNAME,DB_PASSWORD);
@@ -56,7 +56,7 @@ if(!$arr['gallery']['id']){
 	 			<table cellspacing=0 cellpadding=0 border=0 class='iconframe'>
 				<tr>
 				<td  border=0  align="center" class='imageframe'>
-					<a HREF="images/gallery/<? echo "gal_".$CAT."/".$arr['gallery']['pic'];?>" rel="lightbox"><img class="highslide-display-block" border=0 src="<?if($arr['gallery']['id']){ echo "images/gallery/gal_".$CAT."/thb_".$arr['gallery']['pic'].""; } else { echo "images/gallery_blank.gif";}?>" /></a>
+					<a HREF="images/gallery/<?php  echo "gal_".$CAT."/".$arr['gallery']['pic'];?>" rel="lightbox"><img class="highslide-display-block" border=0 src="<?php if($arr['gallery']['id']){ echo "images/gallery/gal_".$CAT."/thb_".$arr['gallery']['pic'].""; } else { echo "images/gallery_blank.gif";}?>" /></a>
 					</td><td class='shadow_right'><div class='shadow_top_right'></div></td>
 </tr>
 <tr>
@@ -84,13 +84,13 @@ if(!$arr['gallery']['id']){
 					<td bgcolor="#F7F7F7" valign="top"><?=_GALLERY_ALBUM_POSTED_DATE;?> </td><td bgcolor="#F7F7F7" valign="top">
 					<?= ThaiTimeConvert($arr['gallery']['post_date'],"1","");?>
 					
-<?
+<?php 
 if($admin_user){
 	//Admin Login Show Icon
 ?>
-				  <a href="?name=admin&file=gallery&op=gallery_edit&id=<? echo $arr['gallery']['id'];?>"><img src="images/admin/edit.gif" border="0" alt="<?=_FROM_IMG_EDIT;?>" ></a> 
-				  <a href="javascript:Confirm('?name=admin&file=gallery&op=gallery_del&id=<? echo $arr['gallery']['id'];?>&prefix=<? echo $arr['gallery']['post_date'];?>','<?echo _FROM_COMFIRM_DEL;?>');"><img src="images/admin/trash.gif"  border="0" alt="<?=_FROM_IMG_DEL;?>" ></a>
-<?
+				  <a href="?name=admin&file=gallery&op=gallery_edit&id=<?php  echo $arr['gallery']['id'];?>"><img src="images/admin/edit.gif" border="0" alt="<?=_FROM_IMG_EDIT;?>" ></a> 
+				  <a href="javascript:Confirm('?name=admin&file=gallery&op=gallery_del&id=<?php  echo $arr['gallery']['id'];?>&prefix=<?php  echo $arr['gallery']['post_date'];?>','<?php echo _FROM_COMFIRM_DEL;?>');"><img src="images/admin/trash.gif"  border="0" alt="<?=_FROM_IMG_DEL;?>" ></a>
+<?php 
 }
 ?>
 </td>
@@ -100,7 +100,7 @@ if($admin_user){
 <table  width="100%">
 <tr>
 <td >
-<?
+<?php 
 $rater_ids=$id;
 $rater_item_name='gallery';
 include("modules/rater/rater.php");
@@ -122,7 +122,7 @@ include("modules/rater/rater.php");
 					<tr>
 <tr>
 					<TD colspan=2><B><FONT COLOR="#990099">
-<?
+<?php 
 //แสดง Gallery  5 อันดับล่าสุดของหมวดหมู่ 
 $db->connectdb(DB_NAME,DB_USERNAME,DB_PASSWORD);
 $res['cat_gallery'] = $db->select_query("SELECT * FROM ".TB_GALLERY." WHERE category='".$arr['category']['id']."' ORDER BY id DESC LIMIT 5 ");
@@ -133,19 +133,19 @@ if(!$rows['cat_gallery']){
 while($arr['cat_gallery'] = $db->fetch($res['cat_gallery'])){
 ?>
 					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<IMG SRC="images/icon/suggest.gif" BORDER="0" ALIGN="absmiddle"> <B><A HREF="?name=gallery&file=readgal&id=<?=$arr['cat_gallery']['id'];?>" target="_blank"><?=$arr['cat_gallery']['pic'];?></A></B> <?= ThaiTimeConvert($arr['cat_gallery']['post_date'],"","");?><BR>
-<?
+<?php 
 }
 $db->closedb ();
 ?>
 					</TD>
 				</TR>
-<?
+<?php 
 }
 ?>
 			</TABLE>
 			<BR><BR>
 			
-<?
+<?php 
 if($arr['gallery']['enable_comment']){
 
 	//Check Comment
@@ -172,7 +172,7 @@ if($arr['gallery']['enable_comment']){
 <tr>
           <td bgcolor="#FFFFFF" valign="top" align="center" width="100"> 
 <br>
-<?
+<?php 
 	$Name=$arr['comment']['name'];
 $db->connectdb(DB_NAME,DB_USERNAME,DB_PASSWORD);
 $res['admin'] = $db->select_query("SELECT * FROM ".TB_ADMIN." ");
@@ -181,12 +181,12 @@ $arr['admin'] = $db->fetch($res['admin']);
 if ($arr['admin']['username']==$Name) {
  ?>
 <A HREF="?name=admin&file=user&id=<?=$arr['admin']['id']; ?>">
-	<? if($arr['admin']['picture']==""){ ?>
+	<?php  if($arr['admin']['picture']==""){ ?>
 	<IMG SRC="icon/member_nrr.gif" BORDER='1' ALIGN='center' class="membericon" style="filter:alpha(opacity=100)" onMouseover="makevisible(this,1)" onMouseout="makevisible(this,0)">
-	<? }else{  ?>
+	<?php  }else{  ?>
 	<IMG SRC="icon/<?=$arr['admin']['picture']; ?>" width='80' BORDER='1' ALIGN='center' class="membericon" style="filter:alpha(opacity=100)" onMouseover="makevisible(this,1)" onMouseout="makevisible(this,0)">
-	<? } 
- ?> </a><?
+	<?php  } 
+ ?> </a><?php 
 }else {
 
 $db->connectdb(DB_NAME,DB_USERNAME,DB_PASSWORD);
@@ -194,16 +194,16 @@ $res['member'] = $db->select_query("SELECT * FROM ".TB_MEMBER." where user='".$N
 $arr['member'] = $db->fetch($res['member']);
 
 ?>
-	<? if($arr['member']['id']==""){ ?>
+	<?php  if($arr['member']['id']==""){ ?>
 		<IMG SRC="icon/guest_nrr.gif" BORDER='1' ALIGN='center' class="membericon" style="filter:alpha(opacity=100)" onMouseover="makevisible(this,1)" onMouseout="makevisible(this,0)">
-	<? }else{  ?>
+	<?php  }else{  ?>
 <A HREF="?name=member&file=member_Message&id=<?=$arr['member']['id']; ?>">
-	<? if($arr['member']['member_pic']==""){ ?>
+	<?php  if($arr['member']['member_pic']==""){ ?>
 	<IMG SRC="icon/member_nrr.gif" BORDER='1' ALIGN='center' class="membericon" style="filter:alpha(opacity=100)" onMouseover="makevisible(this,1)" onMouseout="makevisible(this,0)">
-	<? }else{  ?>
+	<?php  }else{  ?>
 	<IMG SRC="icon/<?=$arr['member']['member_pic']; ?>" width='80' BORDER='1' ALIGN='center' class="membericon" style="filter:alpha(opacity=100)" onMouseover="makevisible(this,1)" onMouseout="makevisible(this,0)">
-	<? };?></a>
-<?  }; 
+	<?php  };?></a>
+<?php   }; 
 
 	};
 ?>
@@ -226,7 +226,7 @@ $arr['member'] = $db->fetch($res['member']);
 		<td >
 			<img src="images/com/b_04.jpg" width="23" alt=""></td>
 		<td bgcolor="#F5F5F5"  width="100%" alt=""><B><FONT COLOR="#990000"><?=_FROM_COMMENT_NUM;?> <?=$count;?></FONT></B>
-				<?if($admin_user){echo " <A HREF=\"?name=gallery&file=delete_comment&id=".$id."&comment=".$arr['comment']['id']."\"><IMG SRC=\"images/admin/trash.gif\" height=\"18\"  BORDER=\"0\" ALIGN=\"absmiddle\"></A>";};?>
+				<?php if($admin_user){echo " <A HREF=\"?name=gallery&file=delete_comment&id=".$id."&comment=".$arr['comment']['id']."\"><IMG SRC=\"images/admin/trash.gif\" height=\"18\"  BORDER=\"0\" ALIGN=\"absmiddle\"></A>";};?>
 				<?= ThaiTimeConvert($arr['comment']['post_date'],"1","1");?>
 		</td>
 		<td background="images/com/b_05.jpg" width="10" alt="" height="100%"></td>
@@ -243,7 +243,7 @@ $arr['member'] = $db->fetch($res['member']);
 	</tr>
 		<tr>
 		<td background="images/com/b_06.jpg" width="23" height="100%" alt=""></td>
-		<td width="100%" alt="" ><hr><FONT COLOR="#990000"><?=_BLOG_AUTH;?> </FONT></B> <?=$arr['comment']['name'];?> &nbsp;&nbsp; <FONT COLOR="#990000"><B><?=_FROM_COMMENT_IP;?> </B></FONT><?echo preg_replace('/([0-9]+\.[0-9]+)\.[0-9]+\.[0-9]+/', '\1<span style="color:red">.xxx.xxx</span>', $arr['comment']['ip']);?>
+		<td width="100%" alt="" ><hr><FONT COLOR="#990000"><?=_BLOG_AUTH;?> </FONT></B> <?=$arr['comment']['name'];?> &nbsp;&nbsp; <FONT COLOR="#990000"><B><?=_FROM_COMMENT_IP;?> </B></FONT><?php echo preg_replace('/([0-9]+\.[0-9]+)\.[0-9]+\.[0-9]+/', '\1<span style="color:red">.xxx.xxx</span>', $arr['comment']['ip']);?>
 			</td>
 		<td background="images/com/b_05.jpg" width="10" height="100%" alt=""></td>
 	</tr>
@@ -258,7 +258,7 @@ $arr['member'] = $db->fetch($res['member']);
 </td>
 </tr>
 </table>
-<?
+<?php 
 			$count  ++;
 	}
 	echo "<center>";
@@ -281,16 +281,16 @@ $arr['member'] = $db->fetch($res['member']);
 						<TABLE cellSpacing=5 cellPadding=0 width=550 border=0 align="center">
 						<TR>
 							<TD width="80" align="right"><B><?=_FROM_COMMENT_AUTH;?> </B></TD>
-							<TD><INPUT TYPE="text" NAME="NAME" style="width:300" <?if($login_true){echo "value=\"".$login_true."\" readonly style=\"color: #FF0000\" ";};?><?if($admin_user){echo "value=\"".$admin_user."\" readonly style=\"color: #FF0000\" ";};?>></TD>
+							<TD><INPUT TYPE="text" NAME="NAME" style="width:300" <?php if($login_true){echo "value=\"".$login_true."\" readonly style=\"color: #FF0000\" ";};?><?php if($admin_user){echo "value=\"".$admin_user."\" readonly style=\"color: #FF0000\" ";};?>></TD>
 						</TR>
-<?
+<?php 
  if($login_true || $admin_user){
 } else {
 if(USE_CAPCHA){
 ?>
 						<TR>
 							<TD width="80" align="right">
-							<?if(CAPCHA_TYPE == 1){ 
+							<?php if(CAPCHA_TYPE == 1){ 
 								echo "<img src=\"capcha/CaptchaSecurityImages.php?width=".CAPCHA_WIDTH."&height=".CAPCHA_HEIGHT."&characters=".CAPCHA_NUM."\" width=\"".CAPCHA_WIDTH."\" height=\"".CAPCHA_HEIGHT."\" align=\"absmiddle\" />";
 							}else if(CAPCHA_TYPE == 2){ 
 								echo "<img src=\"capcha/val_img.php?width=".CAPCHA_WIDTH."&height=".CAPCHA_HEIGHT."&characters=".CAPCHA_NUM."\" width=\"".CAPCHA_WIDTH."\" height=\"".CAPCHA_HEIGHT."\" align=\"absmiddle\" />";
@@ -298,7 +298,7 @@ if(USE_CAPCHA){
 							</TD>
 							<TD><input name="security_code" type="text" id="security_code" size="20" maxlength="6" style="width:80" > <?=_JAVA_CAPTCHA_ADD;?></TD>
 						</TR>
-<?
+<?php 
 }
 }
 ?>
@@ -324,7 +324,7 @@ if(USE_CAPCHA){
 			<?=_FROM_COMMENT_AGREE;?> <A HREF="mailto:<?=WEB_EMAIL;?>"><?=WEB_EMAIL;?></A> <?=_FROM_COMMENT_AGREE2;?>
 			<BR><BR>
 			<!-- End Enable Comment -->
-<?
+<?php 
 }
 ?>
 

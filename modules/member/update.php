@@ -1,4 +1,4 @@
-<?
+<?php 
 require_once("mainfile.php");
 $db->connectdb(DB_NAME,DB_USERNAME,DB_PASSWORD);
 

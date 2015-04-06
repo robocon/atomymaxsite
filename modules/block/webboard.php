@@ -1,4 +1,4 @@
-	<?
+	<?php 
 	//แสดงข่าวสาร
 	?>
 
@@ -7,7 +7,7 @@
       <TBODY>
         <TR>
           <TD width="<?=$widthSUMC;?>" vAlign=top align="center"> 
-<?
+<?php 
 
 $db->connectdb(DB_NAME,DB_USERNAME,DB_PASSWORD);
 $res['BoardCat'] = $db->select_query("SELECT * FROM ".TB_WEBBOARD_CAT." ORDER BY sort ");
@@ -38,7 +38,7 @@ while($arr['BoardCat'] = $db->fetch($res['BoardCat'])){
 	<td width="25%"><CENTER><B><?=_WEBBOARD_TABLE_DATE;?></B></CENTER></td>
 </tr>
 
-<?
+<?php 
 //แสดงกระทู้ปักหมุด
 $res['Pin'] = $db->select_query("SELECT * FROM ".TB_WEBBOARD." $SQLwherePin ORDER BY pin_date desc  LIMIT "._SHOW_BOARD_PIN." ");
 

@@ -1,4 +1,4 @@
-<?
+<?php 
 
 if(!$login_true) {
 echo "<meta http-equiv=refresh content=2;URL=?name=member>" ; 
@@ -31,6 +31,6 @@ echo "<meta http-equiv=refresh content=2;URL=?name=member>" ;
     </TABLE></TD>
   </TR>
 </TABLE>
-<? 
+<?php  
 exit();	
 } ?>

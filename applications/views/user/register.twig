@@ -1,0 +1,22 @@
+{% extends "index.twig" %}
+{% block content %}
+    <div class="line">
+        <div class="box">
+            <div class="s-12 l-4 center">
+                <form class="customform" method="post" action="{{ base_url }}user/register">
+                    <input name="username" placeholder="{{ lang.regis_user }}" title="{{ lang.regis_user }}" type="text">
+                    <input name="email" placeholder="{{ lang.regis_email }}" title="{{ lang.regis_email }}" type="text">
+                    <input name="password" placeholder="{{ lang.regis_pass }}" title="{{ lang.regis_pass }}" type="password">
+                    <input name="confirm_password" placeholder="{{ lang.regis_confirm_pass }}" title="{{ lang.regis_confirm_pass }}" type="password">
+                    <div class="line">
+                        <div class="margin">
+                            <img class="s-12 l-4" src="{{ base_url }}capcha/val_img.php">
+                            <input class="s-12 l-8" type="text" name="verify" placeholder="{{ lang.verify }}">
+                        </div>
+                    </div>
+                    <button type="submit">{{ lang.regis_btn }}</button>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

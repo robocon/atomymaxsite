@@ -1,10 +1,8 @@
 {
-	"require": {
-        "corneltek/pux": "~1.5"
-    },
-    "autoload": {
-        "psr-0": {
-            "Gregwar\\Captcha": ""
-        }
+    "require": {
+        "catfan/medoo": "dev-master",
+        "twig/twig": "~1.0",
+        "eventviva/php-image-resize": "dev-master",
+        "vlucas/valitron": "dev-master"
     }
 }

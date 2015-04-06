@@ -1,4 +1,4 @@
-<?
+<?php 
 CheckAdmin($admin_user, $admin_pwd);
 ?>
 
@@ -18,7 +18,7 @@ CheckAdmin($admin_user, $admin_pwd);
 					<BR><B><IMG SRC="images/icon/plus.gif" BORDER="0" ALIGN="absmiddle"> <A HREF="?name=admin&file=main"><?=_ADMIN_GOBACK;?></A></b>
 					<BR><BR>
 					<A HREF="?name=admin&file=config"><IMG SRC="images/admin/open.gif"  BORDER="0" align="absmiddle"> <?=_ADMIN_CONFIG_MENU_INDEX;?></A> <BR><BR>
-<?
+<?php 
 //////////////////////////////////////////// แสดงรายการข่าวสาร / ประชาสัมพันธ์ 
 if($op == ""){
 	$db->connectdb(DB_NAME,DB_USERNAME,DB_PASSWORD);
@@ -33,7 +33,7 @@ if($op == ""){
    <td width="90" scope="col"><CENTER><B>height (px)</B></CENTER></td>
    <td width="80" scope="col"><CENTER><B><?=_ADMIN_CONFIG_TABLE_CAT;?></B></CENTER></td>
   </tr>  
-<?
+<?php 
 $res['config'] = $db->select_query("SELECT * FROM ".TB_CONFIG.",".TB_TEMPLATES." where  name=temname and sort between 1 and 3 ");
  $i=1;
  $count=0;
@@ -49,10 +49,10 @@ $ColorFill = 'class="odd"';
 ?>
     <tr <?php echo $ColorFill; ?>>
      <td valign="top" align="center">
-      <a href="javascript:Confirm('?name=admin&file=config&op=config_del&tem=<?=$arr['config']['name'];?>&id=<? echo $arr['config']['sort'];?>','<?=_ADMIN_BUTTON_DEL_MESSAGE;?>');"><img src="images/admin/trash.gif"  border="0" alt="<?=_ADMIN_BUTTON_DEL;?>" ></a><br><font color="#CC0000"><b>
-     <?echo $arr['category']['category_name'];?></b></font></td> 
+      <a href="javascript:Confirm('?name=admin&file=config&op=config_del&tem=<?=$arr['config']['name'];?>&id=<?php  echo $arr['config']['sort'];?>','<?=_ADMIN_BUTTON_DEL_MESSAGE;?>');"><img src="images/admin/trash.gif"  border="0" alt="<?=_ADMIN_BUTTON_DEL;?>" ></a><br><font color="#CC0000"><b>
+     <?php echo $arr['category']['category_name'];?></b></font></td> 
      <td valign="top">
-<?
+<?php 
  $types=$arr['config']['type'];
  if ($types="application/x-shockwave-flash" ) {
 ?>
@@ -66,26 +66,26 @@ $ColorFill = 'class="odd"';
       height="<?=($arr['config']['height'])/2;?>"
       pluginspage="http://www.macromedia.com/go/getflashplayer" />
 </object>
-<?
+<?php 
 	} else {
 		  ?>
 <img src="images/config/<?=$arr['config']['picname'];?>"  width="50%" height="50%" border="0">
 
-<?
+<?php 
 }
 ?></td>
-     <td align="center" valign="top"><?echo $arr['config']['width'];?></td>
-	 <td align="center" valign="top"><?echo $arr['config']['height'];?></td>
-     <td align="center" valign="top"><?echo $arr['config']['type'];?></td>
+     <td align="center" valign="top"><?php echo $arr['config']['width'];?></td>
+	 <td align="center" valign="top"><?php echo $arr['config']['height'];?></td>
+     <td align="center" valign="top"><?php echo $arr['config']['type'];?></td>
     </tr>
 
-<?
+<?php 
 	$count++;
 	$i++;
  } 
 ?>
  </table><br>
-<?
+<?php 
 	$paths="".WEB_PATH."/templates/".WEB_TEMPLATES."/images/config/";
 //////////////////////////////////////////// แสดงรายการข่าวสาร / ประชาสัมพันธ์ 
 $db->connectdb(DB_NAME,DB_USERNAME,DB_PASSWORD);
@@ -129,7 +129,7 @@ $arr['configs'] = $db->fetch($res['configs']);
     <td align="right"  width="120"><?=_ADMIN_CONFIG_FORM_MESSAGE_EMAIL_ADMIN;?>:</td><td><input type="input" name="EMAIL" size="60" value="<?=$emailx;?>"></td></tr>
     <td align="right"  width="120" valign=top>Templates :</td><td valign=top>
 	<SELECT name="picture"  id="picture" onChange="showimage()" />
-<?
+<?php 
 
   if ($handle = opendir("templates")) {
     while (false !== ($item = readdir($handle))) {
@@ -168,7 +168,7 @@ document.images.pictures.src="templates/"+document.form.picture.options[document
 </table>
 
 </form>
-<?
+<?php 
 }
 else if($op == "config_add" AND $action == "add"){
 	//////////////////////////////////////////// กรณีเพิ่ม Database

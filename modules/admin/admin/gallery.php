@@ -83,15 +83,15 @@ while($arr['gallery'] = $db->fetch($res['gallery'])){
 	 <tr>
 	 <td width="<?=_IGALLERYT_W;?>" valign="top">
 	 			  						<table cellspacing=0 cellpadding=0 border=0 ><tr><td  height=14 border=0 background= "images/border/TL.gif"></td><td  height=14 border=0 background="images/border/TT.gif"></td><td height=14  border=0 background= "images/border/TR.gif"></td></tr>
-<tr><td width=30 border=0 background= "images/border/LL.gif"></td><td  border=0><a href="?name=admin&file=gallery&op=gallery_detail&id=<? echo $arr['gallery']['id'];?>">
-                <img class="highslide-display-block" width="<?=(_IGALLERYT_W-35);?>" src="<?if($arr['category']['id']){ echo "images/gallery/gal_".$arr['gallery']['post_date']."/thb_".$arr['category']['pic'].""; } else { echo "images/news_blank.gif";}?>" />
+<tr><td width=30 border=0 background= "images/border/LL.gif"></td><td  border=0><a href="?name=admin&file=gallery&op=gallery_detail&id=<?php  echo $arr['gallery']['id'];?>">
+                <img class="highslide-display-block" width="<?=(_IGALLERYT_W-35);?>" src="<?php if($arr['category']['id']){ echo "images/gallery/gal_".$arr['gallery']['post_date']."/thb_".$arr['category']['pic'].""; } else { echo "images/news_blank.gif";}?>" />
               </a></td><td width=14 border=0 background= "images/border/RR.gif"></td></tr>
 			  <tr><td  height=15 border=0 background= images/border/BL.gif></td><td  height=15 border=0 background= "images/border/BB.gif"></td><td height=15 border=0 background= "images/border/BR.gif"></td></tr></table><br>
-      <a href="?name=admin&file=gallery_category&op=gallerycat_edit&id=<? echo $arr['gallery']['id'];?>"><img src="images/admin/edit.gif" border="0" alt="<?=_ADMIN_BUTTON_EDIT;?>" ></a> 
-      <a href="javascript:Confirm('?name=admin&file=gallery_category&op=gallerycat_del&id=<? echo $arr['gallery']['id'];?>','<?=_ADMIN_BUTTON_DEL_MESSAGE;?>');"><img src="images/admin/trash.gif"  border="0" alt="<?=_ADMIN_BUTTON_DEL;?>" ></a>
+      <a href="?name=admin&file=gallery_category&op=gallerycat_edit&id=<?php  echo $arr['gallery']['id'];?>"><img src="images/admin/edit.gif" border="0" alt="<?=_ADMIN_BUTTON_EDIT;?>" ></a> 
+      <a href="javascript:Confirm('?name=admin&file=gallery_category&op=gallerycat_del&id=<?php  echo $arr['gallery']['id'];?>','<?=_ADMIN_BUTTON_DEL_MESSAGE;?>');"><img src="images/admin/trash.gif"  border="0" alt="<?=_ADMIN_BUTTON_DEL;?>" ></a>
 </td>
 <td valign="top">
-<font color="#990000"><b><a href="?name=admin&file=gallery&op=gallery_detail&id=<? echo $arr['gallery']['id'];?>"><? echo $arr['gallery']['category_name'];?></b></font></a>  <?=NewsIcon(TIMESTAMP, $arr['gallery']['post_date'], "images/icon_new.gif");?><br> ( <?echo ThaiTimeConvert($arr['gallery']['post_date'],'','');?> )<br><? echo $arr['gallery']['category_detail'];?>
+<font color="#990000"><b><a href="?name=admin&file=gallery&op=gallery_detail&id=<?php  echo $arr['gallery']['id'];?>"><?php  echo $arr['gallery']['category_name'];?></b></font></a>  <?=NewsIcon(TIMESTAMP, $arr['gallery']['post_date'], "images/icon_new.gif");?><br> ( <?php echo ThaiTimeConvert($arr['gallery']['post_date'],'','');?> )<br><?php  echo $arr['gallery']['category_detail'];?>
 </td>
 </tr>
 </table>
@@ -357,7 +357,7 @@ $CAT=$arr['cat']['post_date'];
 ?>
  <table width="100%" cellspacing="2" cellpadding="1" >
 <tr>
-<td bgcolor="#F7F7F7" colspan="<?=_GALLERY_ADMIN_COL;?>"><font color="#990000" size="4"><b> >> <? echo $arr['cat']['category_name'];?></b></font></a>  <?=NewsIcon(TIMESTAMP, $arr['cat']['post_date'], "images/icon_new.gif");?> ( <?echo ThaiTimeConvert($arr['cat']['post_date'],'','');?> ) <br><font size="3" color="#0066CC">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[ <?=_ADMIN_GALLERY_SHOW_TOTAL_PIC;?> <font color="#990000" size="3"><?=$SUMPAGE;?></font> <?=_ADMIN_GALLERY_SHOW_TOTAL_NUM;?> ] <br><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</font><font size="2"><? echo $arr['cat']['category_detail'];?>
+<td bgcolor="#F7F7F7" colspan="<?=_GALLERY_ADMIN_COL;?>"><font color="#990000" size="4"><b> >> <?php  echo $arr['cat']['category_name'];?></b></font></a>  <?=NewsIcon(TIMESTAMP, $arr['cat']['post_date'], "images/icon_new.gif");?> ( <?php echo ThaiTimeConvert($arr['cat']['post_date'],'','');?> ) <br><font size="3" color="#0066CC">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[ <?=_ADMIN_GALLERY_SHOW_TOTAL_PIC;?> <font color="#990000" size="3"><?=$SUMPAGE;?></font> <?=_ADMIN_GALLERY_SHOW_TOTAL_NUM;?> ] <br><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</font><font size="2"><?php  echo $arr['cat']['category_detail'];?>
 </font></td>
 </tr>
 <tr>
@@ -375,8 +375,8 @@ while($arr['gallery'] = $db->fetch($res['gallery'])){
 	 <table cellpadding="0" cellspacing="0" border="0">
 	 <tr>
 	 <td width="<?=_IGALLERYT_W+35;?>" colspan="2" >
-	 			  						<table cellspacing=0 cellpadding=0 border=0 class='iconframe' ><tr><td  border=0  align="center"><a HREF="images/gallery/<? echo "gal_".$CAT."/".$arr['gallery']['pic'];?>" rel="lightbox">
-                <img class="highslide-display-block" border=0 src="<?if($arr['gallery']['id']){ echo "images/gallery/gal_".$CAT."/thb_".$arr['gallery']['pic'].""; } else { echo "images/news_blank.gif";}?>" />
+	 			  						<table cellspacing=0 cellpadding=0 border=0 class='iconframe' ><tr><td  border=0  align="center"><a HREF="images/gallery/<?php  echo "gal_".$CAT."/".$arr['gallery']['pic'];?>" rel="lightbox">
+                <img class="highslide-display-block" border=0 src="<?php if($arr['gallery']['id']){ echo "images/gallery/gal_".$CAT."/thb_".$arr['gallery']['pic'].""; } else { echo "images/news_blank.gif";}?>" />
               </a></td><td class='shadow_right'><div class='shadow_top_right'></div></td>
 </tr>
 <tr>
@@ -388,7 +388,7 @@ while($arr['gallery'] = $db->fetch($res['gallery'])){
 </tr>
 <tr>
 <td align="right">
-<a HREF="index.php?name=gallery&file=readgal&id=<?=$arr['gallery']['id'];?>" ><img src="images/icon-view.gif" border="0"></a> <? if($admin_user){?><a href="javascript:Confirm('?name=admin&file=gallery&op=gallery_del&cat=<? echo $CAT;?>&id=<? echo $arr['gallery']['id'];?>&pic=<? echo $arr['gallery']['pic'];?>&cats=<? echo $arr['cat']['id'];?>&prefix=<? echo $arr['gallery']['post_date'];?>','<?=_ADMIN_BUTTON_DEL_MESSAGE;?>');"><img src="images/admin/trash.gif"  border="0" alt="<?=_ADMIN_BUTTON_DEL;?>" ></a><?}?>
+<a HREF="index.php?name=gallery&file=readgal&id=<?=$arr['gallery']['id'];?>" ><img src="images/icon-view.gif" border="0"></a> <?php  if($admin_user){?><a href="javascript:Confirm('?name=admin&file=gallery&op=gallery_del&cat=<?php  echo $CAT;?>&id=<?php  echo $arr['gallery']['id'];?>&pic=<?php  echo $arr['gallery']['pic'];?>&cats=<?php  echo $arr['cat']['id'];?>&prefix=<?php  echo $arr['gallery']['post_date'];?>','<?=_ADMIN_BUTTON_DEL_MESSAGE;?>');"><img src="images/admin/trash.gif"  border="0" alt="<?=_ADMIN_BUTTON_DEL;?>" ></a><?php }?>
 </td>
 </tr>
 <tr>

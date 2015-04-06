@@ -24,7 +24,7 @@ include ("editor.php");
     <td> 
 
 
-            <? 
+            <?php  
 	if($op == ""){
 	$db->connectdb(DB_NAME,DB_USERNAME,DB_PASSWORD);
 	$limit = 20 ;
@@ -69,15 +69,15 @@ $ColorFill = 'class="odd"';
 ?>
     <tr <?php echo $ColorFill; ?> >
      <td width="44">
-      <a href="?name=admin&file=gbook&op=gbook_edit&id=<? echo $No ;?>"><img src="images/admin/edit.gif" border="0" alt="<?=_ADMIN_BUTTON_EDIT;?>" ></a> 
-      <a href="javascript:Confirm('?name=admin&file=gbook&op=gbook_del&id=<? echo $No ;?>','<?=_ADMIN_BUTTON_DEL_MESSAGE;?>');"><img src="images/admin/trash.gif"  border="0" alt="<?=_ADMIN_BUTTON_DEL;?>" ></a>
+      <a href="?name=admin&file=gbook&op=gbook_edit&id=<?php  echo $No ;?>"><img src="images/admin/edit.gif" border="0" alt="<?=_ADMIN_BUTTON_EDIT;?>" ></a> 
+      <a href="javascript:Confirm('?name=admin&file=gbook&op=gbook_del&id=<?php  echo $No ;?>','<?=_ADMIN_BUTTON_DEL_MESSAGE;?>');"><img src="images/admin/trash.gif"  border="0" alt="<?=_ADMIN_BUTTON_DEL;?>" ></a>
      </td> 
-     <td><?echo $Message;?> ( <?echo "$Date";?> )</td>
-     <td ><CENTER><?echo $Name;?></CENTER></td>
+     <td><?php echo $Message;?> ( <?php echo "$Date";?> )</td>
+     <td ><CENTER><?php echo $Name;?></CENTER></td>
      <td align="center"><?=$IP;?></td>
      <td align="center"><?=$Email;?></td>
      <td align="center"><?=$Url;?></td>
-     <td valign="top" align="center" width="40"><input type="checkbox" name="list[]" value="<? echo $No;?>"></td>
+     <td valign="top" align="center" width="40"><input type="checkbox" name="list[]" value="<?php  echo $No;?>"></td>
     </tr>
 
 <?php
@@ -145,11 +145,11 @@ else if($op == "gbook_edit"){
             <!--
             function  checkfrm(){
 if (document.frm_gbook.Message.value.length < 1){
-			alert("<? echo _ADMIN_GBOOK_JAVA_CHECK_DETAIL;?>");
+			alert("<?php  echo _ADMIN_GBOOK_JAVA_CHECK_DETAIL;?>");
 			return false;
 }
 else if (document.frm_gbook.Name.value.length < 1 ){
-			alert("<? echo _ADMIN_GBOOK_JAVA_CHECK_USER;?>");
+			alert("<?php  echo _ADMIN_GBOOK_JAVA_CHECK_USER;?>");
 			return false;
 }
 	}
@@ -165,7 +165,7 @@ else if (document.frm_gbook.Name.value.length < 1 ){
                     <td width="10" valign="top" height="100%" background="images/pic/news-left.png"></td>
                     <td width="150" valign="top"  align="right" bgcolor="#FFFFFF">*<?=_ADMIN_GBOOK_FORM_MESSAGE;?> :</font></td>
                   <td width="350" align="left"> 
-				  <TEXTAREA NAME="Messages" ROWS="10" COLS="150" style="width:500" id="editor1"><?echo $arr['news']['Message'];?></TEXTAREA>
+				  <TEXTAREA NAME="Messages" ROWS="10" COLS="150" style="width:500" id="editor1"><?php echo $arr['news']['Message'];?></TEXTAREA>
 					<script type="text/javascript">CKEDITOR.replace ( 'editor1',{toolbar: 'Basic'});</script>
 </td>
                     <td width="10" align="center"  height="100%"  background="images/pic/news-right.png"></td>
@@ -174,7 +174,7 @@ else if (document.frm_gbook.Name.value.length < 1 ){
                     <td width="10" valign="top" height="100%" background="images/pic/news-left.png"></td>
                     <td width="120" valign="top"  align="right" bgcolor="#FFFFFF">URL :</font></td>
                   <td width="400" align="left"> 
-                    <input type="text" name="Url" size="40" maxlength="40" value="<?echo $arr['news']['URL'];?>">
+                    <input type="text" name="Url" size="40" maxlength="40" value="<?php echo $arr['news']['URL'];?>">
                   </td>
                     <td width="10" align="center"  height="100%"  background="images/pic/news-right.png"></td>
                 </tr>
@@ -182,7 +182,7 @@ else if (document.frm_gbook.Name.value.length < 1 ){
                     <td width="10" valign="top" height="100%" background="images/pic/news-left.png"></td>
                     <td width="120" valign="top"  align="right" bgcolor="#FFFFFF">Email :</font></td>
                   <td width="400" align="left">
-                    <input type="text" name="Email" size="40" maxlength="35" value="<?echo $arr['news']['Email'];?>">
+                    <input type="text" name="Email" size="40" maxlength="35" value="<?php echo $arr['news']['Email'];?>">
                   </td>
                     <td width="10" align="center"  height="100%"  background="images/pic/news-right.png"></td>
                 </tr>
@@ -190,7 +190,7 @@ else if (document.frm_gbook.Name.value.length < 1 ){
                     <td width="10" valign="top" height="100%" background="images/pic/news-left.png"></td>
                     <td width="120" valign="top"  align="right" bgcolor="#FFFFFF"><?=_ADMIN_GBOOK_FORM_DATE;?> :</font></td>
                   <td width="400" align="left"> 
-                    <input type="text" name="Date" size="40" maxlength="35" value="<?echo $arr['news']['Date'];?>">
+                    <input type="text" name="Date" size="40" maxlength="35" value="<?php echo $arr['news']['Date'];?>">
                  </td>
                     <td width="10" align="center"  height="100%"  background="images/pic/news-right.png"></td>
 						</TR>
@@ -198,7 +198,7 @@ else if (document.frm_gbook.Name.value.length < 1 ){
                     <td width="10" valign="top" height="100%" background="images/pic/news-left.png"></td>
                     <td width="120" valign="top"  align="right" bgcolor="#FFFFFF">IP :</font></td>
                   <td width="400" align="left"> 
-                    <input type="text" name="IP" size="40" maxlength="35" value="<?echo $arr['news']['IP'];?>">
+                    <input type="text" name="IP" size="40" maxlength="35" value="<?php echo $arr['news']['IP'];?>">
                   </td>
                     <td width="10" align="center"  height="100%"  background="images/pic/news-right.png"></td>
 						</TR>
@@ -206,7 +206,7 @@ else if (document.frm_gbook.Name.value.length < 1 ){
                     <td width="10" valign="top" height="100%" background="images/pic/news-left.png"></td>
                     <td width="120" valign="top"  align="right" bgcolor="#FFFFFF">*<?=_ADMIN_GBOOK_FORM_POSTED;?> :</font></td>
                   <td width="400" align="left"> 
-                    <input type="text" name="Name" size="40" maxlength="35" value="<?echo $arr['news']['Name'];?>">
+                    <input type="text" name="Name" size="40" maxlength="35" value="<?php echo $arr['news']['Name'];?>">
                   </td>
                     <td width="10" align="center"  height="100%"  background="images/pic/news-right.png"></td>
 						</TR>

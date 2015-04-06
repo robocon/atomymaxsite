@@ -1,9 +1,4 @@
 <?php
-if(ISO =='utf-8'){
-	require_once("lang/thai_utf8.php");
-} else {
-	require_once("lang/thai_tis620.php");
-}
 
 $db = New DB();
 

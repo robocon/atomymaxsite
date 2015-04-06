@@ -13,7 +13,7 @@
                 <BR>
 				<table width="98%" border="0" align="center" cellpadding="0" cellspacing="0" >
                   <tr ><td>
-<?
+<?php 
 if($op == ""){
 
 	$db->connectdb(DB_NAME,DB_USERNAME,DB_PASSWORD);
@@ -39,7 +39,7 @@ if($op == ""){
    <td width="50"><CENTER><B>date</B></td>
    <td width="40"><CENTER><B>Check</B></CENTER></td>
   </tr>  
-<?
+<?php 
 $db->connectdb(DB_NAME,DB_USERNAME,DB_PASSWORD);
 
 $res['log'] = $db->select_query("SELECT * FROM ".TB_MEMBERLOG." ORDER BY id  DESC LIMIT $goto, $limit ");
@@ -56,19 +56,19 @@ $ColorFill = 'class="odd"';
 ?>
     <tr <?php echo $ColorFill; ?> >
      <td width="44">
-      <a href="?name=admin&file=ipblock&op=ipblock_add&action=add&IP=<? echo $arr['log']['visitor_ip'];?>"><img src="images/noip015mini.png" border="0" alt="<?=_ADMIN_BUTTON_EDIT;?>" ></a> 
-      <a href="javascript:Confirm('?name=admin&file=member_log&op=log_del&page=<? echo $page;?>&id=<? echo $arr['log']['id'];?>&prefix=<? echo $arr['log']['post_date'];?>','<?=_ADMIN_BUTTON_DEL_MESSAGE;?>');"><img src="images/admin/trash.gif"  border="0" alt="<?=_ADMIN_BUTTON_DEL;?>" ></a>
+      <a href="?name=admin&file=ipblock&op=ipblock_add&action=add&IP=<?php  echo $arr['log']['visitor_ip'];?>"><img src="images/noip015mini.png" border="0" alt="<?=_ADMIN_BUTTON_EDIT;?>" ></a> 
+      <a href="javascript:Confirm('?name=admin&file=member_log&op=log_del&page=<?php  echo $page;?>&id=<?php  echo $arr['log']['id'];?>&prefix=<?php  echo $arr['log']['post_date'];?>','<?=_ADMIN_BUTTON_DEL_MESSAGE;?>');"><img src="images/admin/trash.gif"  border="0" alt="<?=_ADMIN_BUTTON_DEL;?>" ></a>
      </td> 
-     <td align="center" width="50"><a href="?name=admin&file=member_log&op=log_map&id=<? echo $arr['log']['id'];?>"><? echo $arr['log']['visitor_ip'];?></a></td>
-	 <td align="center" width="50"><? echo $arr['log']['user'];?></td>
-	 <td align="center" width="50"><? echo $arr['log']['email'];?></td>
-	 <td align="center" width="50"><? echo $arr['log']['location'];?></td>
-	 <td align="center" width="80"><? echo $arr['log']['city'];?></td>
-	<td align="center"  width="120"><? echo DateThaiNew($arr['log']['visitor_date']);?></td>
-     <td valign="top" align="center" width="40"><input type="checkbox" name="list[]" value="<? echo $arr['log']['id'];?>"></td>
+     <td align="center" width="50"><a href="?name=admin&file=member_log&op=log_map&id=<?php  echo $arr['log']['id'];?>"><?php  echo $arr['log']['visitor_ip'];?></a></td>
+	 <td align="center" width="50"><?php  echo $arr['log']['user'];?></td>
+	 <td align="center" width="50"><?php  echo $arr['log']['email'];?></td>
+	 <td align="center" width="50"><?php  echo $arr['log']['location'];?></td>
+	 <td align="center" width="80"><?php  echo $arr['log']['city'];?></td>
+	<td align="center"  width="120"><?php  echo DateThaiNew($arr['log']['visitor_date']);?></td>
+     <td valign="top" align="center" width="40"><input type="checkbox" name="list[]" value="<?php  echo $arr['log']['id'];?>"></td>
     </tr>
 
-<?
+<?php 
 		 $count++;
  } 
 ?>
@@ -80,7 +80,7 @@ $ColorFill = 'class="odd"';
  <input type="submit" value="Delete" onclick="return delConfirm(document.myform)">
  </div>
  </form><BR><BR>
-<?
+<?php 
 		SplitPage($page,$totalpage,"?name=admin&file=member_log");
 	echo $ShowSumPages ;
 	echo "<BR>";
@@ -201,7 +201,7 @@ $city = $row['city'];
     </script>  
     </body>  
     </html>  
-<?
+<?php 
 }
 	?>
 

@@ -1,0 +1,16 @@
+{% extends "index.twig" %}
+{% block content %}
+    <div class="line">
+        <div class="box">
+            <div class="s-12 l-4 center">
+                <form class="customform" method="post" action="{{ base_url }}user/login">
+                    <input name="email" placeholder="{{ lang.login_email }}" title="{{ lang.login_email }}" type="text">
+                    <input name="password" placeholder="{{ lang.login_password }}" title="{{ lang.login_password }}" type="password">
+                    <button type="submit">{{ lang.login }}</button>
+                    <p><a href="{{ base_url }}login/register">{{ lang.create_account }}</a></p>
+                    <p><a href="#">{{ lang.forgot_password }}</a></p>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

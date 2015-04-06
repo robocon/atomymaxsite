@@ -1,4 +1,4 @@
-<?
+<?php 
 CheckAdmin($admin_user, $admin_pwd);
 include ("editor.php");
 ?>
@@ -18,7 +18,7 @@ include ("editor.php");
 					<BR><B><IMG SRC="images/icon/plus.gif" BORDER="0" ALIGN="absmiddle"> <A HREF="?name=admin&file=main"><?=_ADMIN_GOBACK;?></A> &nbsp;&nbsp;<IMG SRC="images/icon/arrow_wap.gif" BORDER="0" ALIGN="absmiddle">&nbsp;&nbsp; video </B>
 					<BR><BR>
 					<A HREF="?name=admin&file=video"><IMG SRC="images/admin/open.gif"  BORDER="0" align="absmiddle"> <?=_VIDEO_MOD_MENU_MAIN;?> </A> &nbsp;&nbsp;&nbsp;<A HREF="?name=admin&file=video&op=video_add"><IMG SRC="images/admin/book.gif"  BORDER="0" align="absmiddle"> <?=_ADMIN_VIDEO_MENU_ADD_NEW_FILE;?> </A>&nbsp;&nbsp;&nbsp;<A HREF="?name=admin&file=video_youtube"><IMG SRC="images/admin/7_40.gif"  BORDER="0" align="absmiddle"> <?=_ADMIN_VIDEO_MENU_ADD_NEW_YOUTUBE;?>  </A>&nbsp;&nbsp;&nbsp;<A HREF="?name=admin&file=video_category"><IMG SRC="images/admin/folders.gif"  BORDER="0" align="absmiddle"> <?=_ADMIN_MENU_DTAIL_CAT;?></A>  &nbsp;&nbsp;&nbsp;<A HREF="?name=admin&file=video_category&op=videocat_add"><IMG SRC="images/admin/opendir.gif"  BORDER="0" align="absmiddle"> <?=_ADMIN_MENU_ADD_CAT;?></A><BR><BR>
-<?
+<?php 
 
 //////////////////////////////////////////// แสดงรายการvideo 
 if($op == ""){
@@ -26,7 +26,7 @@ if($op == ""){
 <FORM NAME="myform" METHOD=POST enctype="multipart/form-data" ACTION="?name=admin&file=video_youtube&op=video_add&action=add">
 <center><table border=1 bgcolor=#F7F7F7 bordercolor=#FFFFFF width=700 class="grids"><tr><td  align="right" width="140"><?=_ADMIN_VIDEO_FORM_SELECT_CAT;?></td><td>
 <SELECT id="CATEGORY" NAME="CATEGORY" >
-<?
+<?php 
 $db->connectdb(DB_NAME,DB_USERNAME,DB_PASSWORD);
 $res['category'] = $db->select_query("SELECT * FROM ".TB_VIDEO_CAT." ORDER BY sort ");
 while ($arr['category'] = $db->fetch($res['category'])){
@@ -49,7 +49,7 @@ $db->closedb ();
 <input type="submit" value="<?=_ADMIN_VIDEO_YOUTUBE_BUTTON_ADD;?>" name="submit"> <input type="reset" value="<?=_ADMIN_BUTTON_CLEAR;?>" name="reset">
 </FORM>
 
-<?
+<?php 
 }
 else if($op == "video_add" AND $action == "add"){
 	//////////////////////////////////////////// กรณีเพิ่ม Database
@@ -176,10 +176,10 @@ $posted=utf8_to_tis620($json->data->uploader);
 }
 else if($op == "video_edit" ){
 ?>
-<FORM NAME="myform" METHOD=POST enctype="multipart/form-data" ACTION="?name=admin&file=video_youtube&op=video_edit&action=edit&id=<?echo $_GET['id'];?>">
+<FORM NAME="myform" METHOD=POST enctype="multipart/form-data" ACTION="?name=admin&file=video_youtube&op=video_edit&action=edit&id=<?php echo $_GET['id'];?>">
 <center><table border=1 bgcolor=#F7F7F7 bordercolor=#FFFFFF width=700><tr><td  align="right" width="140"><?=_ADMIN_VIDEO_FORM_SELECT_CAT;?></td><td>
 <SELECT id="CATEGORY" NAME="CATEGORY" >
-<?
+<?php 
 $db->connectdb(DB_NAME,DB_USERNAME,DB_PASSWORD);
 $res['video'] = $db->select_query("SELECT * FROM ".TB_VIDEO." WHERE id='".$_GET['id']."' ");
 $arr['video'] = $db->fetch($res['video']);
@@ -196,7 +196,7 @@ $db->closedb ();
 </SELECT>
 </td></tr>
 <tr><td align="right" width="140"  valign="top"><?=_ADMIN_VIDEO_YOUTUBE_FROM_JAK;?> </td><td>
-    	<input id="youtube" name="youtube" type="text" size="60" value="<?echo "http://www.youtube.com/watch?v=".$arr['video']['video']."";?>"><br><font color="#990000">[ <?=_ADMIN_VIDEO_YOUTUBE_FROM_URL_COM;?> ]</font>
+    	<input id="youtube" name="youtube" type="text" size="60" value="<?php echo "http://www.youtube.com/watch?v=".$arr['video']['video']."";?>"><br><font color="#990000">[ <?=_ADMIN_VIDEO_YOUTUBE_FROM_URL_COM;?> ]</font>
 </td>
 </tr>
 <tr><td></td><td ><INPUT TYPE="checkbox" NAME="ENABLE_COMMENT" VALUE="1"> <?=_ADMIN_LINK_ALLOW_COMMENT;?>
@@ -206,7 +206,7 @@ $db->closedb ();
 <input type="submit" value="<?=_ADMIN_VIDEO_BUTTON_EDIT;?>" name="submit"> <input type="reset" value="<?=_ADMIN_BUTTON_CLEAR;?>" name="reset">
 </FORM>
 
-<?
+<?php 
 
 }
 else if($op == "video_del" ){

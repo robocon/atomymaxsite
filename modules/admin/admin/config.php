@@ -49,8 +49,8 @@ $ColorFill = 'class="odd"';
 ?>
     <tr <?php echo $ColorFill; ?>>
      <td valign="top" align="center">
-      <a href="javascript:Confirm('?name=admin&file=config&op=config_del&tem=<?=$arr['config']['name'];?>&id=<? echo $arr['config']['sort'];?>','<?=_ADMIN_BUTTON_DEL_MESSAGE;?>');"><img src="images/admin/trash.gif"  border="0" alt="<?=_ADMIN_BUTTON_DEL;?>" ></a><br><font color="#CC0000"><b>
-     <?echo $arr['category']['category_name'];?></b></font></td> 
+      <a href="javascript:Confirm('?name=admin&file=config&op=config_del&tem=<?=$arr['config']['name'];?>&id=<?php  echo $arr['config']['sort'];?>','<?=_ADMIN_BUTTON_DEL_MESSAGE;?>');"><img src="images/admin/trash.gif"  border="0" alt="<?=_ADMIN_BUTTON_DEL;?>" ></a><br><font color="#CC0000"><b>
+     <?php echo $arr['category']['category_name'];?></b></font></td> 
      <td valign="top">
 <?php
  $types=$arr['config']['type'];
@@ -74,9 +74,9 @@ $ColorFill = 'class="odd"';
 <?php
 }
 ?></td>
-     <td align="center" valign="top"><?echo $arr['config']['width'];?></td>
-	 <td align="center" valign="top"><?echo $arr['config']['height'];?></td>
-     <td align="center" valign="top"><?echo $arr['config']['type'];?></td>
+     <td align="center" valign="top"><?php echo $arr['config']['width'];?></td>
+	 <td align="center" valign="top"><?php echo $arr['config']['height'];?></td>
+     <td align="center" valign="top"><?php echo $arr['config']['type'];?></td>
     </tr>
 
 <?php

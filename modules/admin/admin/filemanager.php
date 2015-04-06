@@ -195,7 +195,7 @@ $sortKey=0;
 
 /** Globals OFF 4.2+ Support - thanks to apz for this patch **/
 if (ini_get('register_globals') < 1) {
-    $PHP_SELF = $_SERVER['PHP_SELF'];
+    $PHP_SELF = index.php;
     if (isset($_REQUEST['u'])) { $u = $_REQUEST['u']; }
     else { $u = ""; }
     if (isset($_REQUEST['login'])) { $login = $_REQUEST['login']; }

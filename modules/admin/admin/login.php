@@ -103,7 +103,7 @@ session_unset($login_true);
 <FONT COLOR="#336600"><B><?=_ADMIN_LOGIN_MESSAGE_ACC;?></B></FONT><BR><BR>
 <A HREF="?name=admin&file=main"><B><?=_ADMIN_GOBACK;?></B></A>
 </CENTER>
-<? echo "<meta http-equiv='refresh' content='1; url=?name=admin&file=main'>" ; ?>
+<?php  echo "<meta http-equiv='refresh' content='1; url=?name=admin&file=main'>" ; ?>
 <BR><BR>
 <?php
 }else{
@@ -135,7 +135,7 @@ session_unset($login_true);
 		    	<div><?php
 if(USE_CAPCHA){
 ?>
-						<?if(CAPCHA_TYPE == 1){ 
+						<?php if(CAPCHA_TYPE == 1){ 
 							echo "<img src=\"capcha/CaptchaSecurityImages.php?width=".CAPCHA_WIDTH."&height=".CAPCHA_HEIGHT."&characters=".CAPCHA_NUM."\" width=\"".CAPCHA_WIDTH."\" height=\"".CAPCHA_HEIGHT."\" align=\"absmiddle\" />";
 						}else if(CAPCHA_TYPE == 2){ 
 							echo "<img src=\"capcha/val_img.php?width=".CAPCHA_WIDTH."&height=".CAPCHA_HEIGHT."&characters=".CAPCHA_NUM."\" width=\"".CAPCHA_WIDTH."\" height=\"".CAPCHA_HEIGHT."\" align=\"absmiddle\" />";
@@ -182,7 +182,7 @@ if(USE_CAPCHA){
 <FONT COLOR="#336600"><B><?=_ADMIN_IPBLOCK_MESSAGE_HACK;?> <?=WEB_EMAIL;?></B></FONT><BR><BR>
 <A HREF="?name=index"><B><?=_ADMIN_IPBLOCK_MESSAGE_HACK1;?></B></A>
 </CENTER>
-<? echo "<meta http-equiv='refresh' content='10; url=?name=index'>" ; ?>
+<?php  echo "<meta http-equiv='refresh' content='10; url=?name=index'>" ; ?>
 <BR><BR>
 <?php
 */

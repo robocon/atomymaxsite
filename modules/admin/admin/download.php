@@ -66,12 +66,12 @@ $ColorFill = 'class="odd"';
 ?>
     <tr <?php echo $ColorFill; ?> >
      <td width="44" >
-      <a href="?name=admin&file=download&op=download_edit&id=<? echo $arr['download']['id'];?>"><img src="images/admin/edit.gif" border="0" alt="<?=_ADMIN_BUTTON_EDIT;?>" ></a> 
-      <a href="javascript:Confirm('?name=admin&file=download&op=download_del&id=<? echo $arr['download']['id'];?>&prefix=<? echo $arr['download']['post_date'];?>','<?=_ADMIN_BUTTON_DEL_MESSAGE;?>');"><img src="images/admin/trash.gif"  border="0" alt="<?=_ADMIN_BUTTON_DEL;?>" ></a>
+      <a href="?name=admin&file=download&op=download_edit&id=<?php  echo $arr['download']['id'];?>"><img src="images/admin/edit.gif" border="0" alt="<?=_ADMIN_BUTTON_EDIT;?>" ></a> 
+      <a href="javascript:Confirm('?name=admin&file=download&op=download_del&id=<?php  echo $arr['download']['id'];?>&prefix=<?php  echo $arr['download']['post_date'];?>','<?=_ADMIN_BUTTON_DEL_MESSAGE;?>');"><img src="images/admin/trash.gif"  border="0" alt="<?=_ADMIN_BUTTON_DEL;?>" ></a>
      </td> 
-     <td  valign="top"><A HREF="?name=download&file=readdownload&id=<?echo $arr['download']['id'];?>" target="_blank"><?echo $arr['download']['topic'];?></A><?=$CommentIcon;?><?=NewsIcon(TIMESTAMP, $arr['download']['post_date'], "images/icon_new.gif");?><font color="#CC3300">(<?echo ThaiTimeConvert($arr['download']['post_date'],'','');?> || <?=_FORM_MOD_READX;?> : <?=$arr['download']['pageview'];?>  ) <?=_FORM_MOD_POSTED;?> <?=$arr['download']['posted'];?></font></td>
+     <td  valign="top"><A HREF="?name=download&file=readdownload&id=<?php echo $arr['download']['id'];?>" target="_blank"><?php echo $arr['download']['topic'];?></A><?=$CommentIcon;?><?=NewsIcon(TIMESTAMP, $arr['download']['post_date'], "images/icon_new.gif");?><font color="#CC3300">(<?php echo ThaiTimeConvert($arr['download']['post_date'],'','');?> || <?=_FORM_MOD_READX;?> : <?=$arr['download']['pageview'];?>  ) <?=_FORM_MOD_POSTED;?> <?=$arr['download']['posted'];?></font></td>
 	      <td align="center"  valign="top">
-<?	
+<?php 	
 	$bytes=$arr['download']['size'];
 	echo getfilesize($bytes) ;?> 
 		  </td>
@@ -79,13 +79,13 @@ $ColorFill = 'class="odd"';
 				  <?=$arr['download']['rate'];?>
 				  </td>
      <td align="center"  valign="top">
-	 <?if($arr['category']['category_name']){ //หากมีหมวดแสดงรูป ?>
-	 <A HREF="#"><?echo $arr['category']['category_name'];?></A>
-	 <? } ?>
+	 <?php if($arr['category']['category_name']){ //หากมีหมวดแสดงรูป ?>
+	 <A HREF="#"><?php echo $arr['category']['category_name'];?></A>
+	 <?php  } ?>
 	 </td>
      <td align="center"  valign="top">
 		  <A HREF="popup.php?name=download&file=rate&id=<?=$arr['download']['id']; ?>" onclick="return hs.htmlExpand(this, { contentId: 'highslide-html', objectType: 'iframe', objectWidth: 500, objectHeight: 300} )" class="highslide">
-		  <? 
+		  <?php  
 	 if ($arr['download']['type']=="application/pdf") {
 		 ?>
 		  <img src="modules/download/images/pdf.gif" border="0" >
@@ -121,9 +121,9 @@ $ColorFill = 'class="odd"';
 		  </a>
 	 </td>
 		  	      <td align="center"  valign="top">
-				  <? if($arr['download']['status']=='0') { echo "<a HREF=?name=admin&file=download&op=download_update&action=update&id=".$arr['download']['id']."&status=1><img src=images/publish_x.png alt='"._ADMIN_BLOCK_ORDER_PUBLISH_OFF."'></a>"; } else { echo "<a HREF=?name=admin&file=download&op=download_update&action=update&id=".$arr['download']['id']."&status=0><img src=images/tick.png alt='่"._ADMIN_BLOCK_ORDER_PUBLISH_ON."'></a>"; };?>
+				  <?php  if($arr['download']['status']=='0') { echo "<a HREF=?name=admin&file=download&op=download_update&action=update&id=".$arr['download']['id']."&status=1><img src=images/publish_x.png alt='"._ADMIN_BLOCK_ORDER_PUBLISH_OFF."'></a>"; } else { echo "<a HREF=?name=admin&file=download&op=download_update&action=update&id=".$arr['download']['id']."&status=0><img src=images/tick.png alt='่"._ADMIN_BLOCK_ORDER_PUBLISH_ON."'></a>"; };?>
 				  </td>
-	     <td valign="top" align="center" width="40"><input type="checkbox" name="list[]" value="<? echo $arr['download']['id'];?>"></td>
+	     <td valign="top" align="center" width="40"><input type="checkbox" name="list[]" value="<?php  echo $arr['download']['id'];?>"></td>
     </tr>
 
 <?php
@@ -251,9 +251,9 @@ $db->closedb ();
 </SELECT>
 <BR><BR>
 <B><?=_ADMIN_DOWNLOAD_FORM_SAMPLE_PIC;?> : </B><BR>
-<IMG name="view01" SRC="images/news_blank.gif" <?echo " WIDTH=\""._Idownload_W."\" HEIGHT=\""._Idownload_H."\" ";?> BORDER="0" ><BR>
+<IMG name="view01" SRC="images/news_blank.gif" <?php echo " WIDTH=\""._Idownload_W."\" HEIGHT=\""._Idownload_H."\" ";?> BORDER="0" ><BR>
 <input type="file" name="FILE" onpropertychange="view01.src=FILE.value;" style="width=250;"><BR>
-<?=_ADMIN_FORM_ICON_WIDTH;?> <?echo _Idownload_W." x "._Idownload_H ;?> <?=_ADMIN_FORM_CAT_ICON_WIDTH;?>
+<?=_ADMIN_FORM_ICON_WIDTH;?> <?php echo _Idownload_W." x "._Idownload_H ;?> <?=_ADMIN_FORM_CAT_ICON_WIDTH;?>
 <BR><BR>
 <B><?=_ADMIN_FORM_HEADLINE;?> :</B><BR>
 <textarea cols="100"  rows="10"  name="HEADLINE" ></textarea>
@@ -395,9 +395,9 @@ $db->closedb ();
 </SELECT>
 <BR><BR>
 <B><?=_ADMIN_DOWNLOAD_FORM_SAMPLE_PIC;?> :</B><BR>
-<IMG name="view01" SRC="icon/download_<?=$arr['download']['post_date'];?>.jpg" <?echo " WIDTH=\""._Idownload_W."\" HEIGHT=\""._Idownload_H."\" ";?> BORDER="0" ><BR>
+<IMG name="view01" SRC="icon/download_<?=$arr['download']['post_date'];?>.jpg" <?php echo " WIDTH=\""._Idownload_W."\" HEIGHT=\""._Idownload_H."\" ";?> BORDER="0" ><BR>
 <input type="file" name="FILE" onpropertychange="view01.src=FILE.value;" style="width=250;"><BR>
-<?=_ADMIN_FORM_ICON_WIDTH;?> <?echo _Idownload_W." x "._Idownload_H ;?> <?=_ADMIN_FORM_CAT_ICON_WIDTH;?>
+<?=_ADMIN_FORM_ICON_WIDTH;?> <?php echo _Idownload_W." x "._Idownload_H ;?> <?=_ADMIN_FORM_CAT_ICON_WIDTH;?>
 <BR><BR>
 <B><?=_ADMIN_FORM_HEADLINE;?> :</B><BR>
 <textarea cols="100"  rows="10"  name="HEADLINE" ><?=$HEADLINE;?></textarea>
@@ -406,7 +406,7 @@ $db->closedb ();
 <textarea cols="100" id="DETAIL" rows="50" class="ckeditor"  name="DETAIL" ><?=$TextContent;?></textarea>
 <BR>
 <br><font face="MS Sans serif" ><b><?=_ADMIN_LINK_FILE_ATT;?>  : <input type="file" name="filesw" maxlength ="50" size="50"><font face="MS Sans serif"><br>
-<INPUT TYPE="checkbox" NAME="ENABLE_COMMENT" VALUE="1" <?if($arr['download']['enable_comment']==1){echo 'checked="Checked"';};?>> <?=_ADMIN_FORM_ALLOW_COMMENT;?>
+<INPUT TYPE="checkbox" NAME="ENABLE_COMMENT" VALUE="1" <?php if($arr['download']['enable_comment']==1){echo 'checked="Checked"';};?>> <?=_ADMIN_FORM_ALLOW_COMMENT;?>
 <BR>
 <input type="submit" value=" <?=_ADMIN_DOWNLOAD_FORM_BUTTON_EDIT;?> " name="submit"> <input type="reset" value="<?=_ADMIN_BUTTON_CLEAR;?>" name="reset">
 </FORM>

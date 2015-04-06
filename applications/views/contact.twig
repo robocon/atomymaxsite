@@ -1,0 +1,39 @@
+{% extends "index.twig" %}
+{% block content %}
+    <div class="line">
+        <div class="box">
+            <div class="line">
+                <div class="s-12 l-12 margin-bottom">
+                    <h1>{{ lang.contact_header }}</h1>
+                    <h3>{{ lang.contact_address_title }}</h3>
+                    {% for item in items %}
+                        <p><b>{{ item.alias }}:</b> {{ item.value }}</p>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="line">
+                <div class="margin">
+                    <div class="s-12 l-6">
+                        <h3>{{ lang.contact_form_title }}</h3>
+                        <form class="customform" action="{{ base_url }}contact/send" method="post">
+                            <input type="text" name="name" placeholder="{{ lang.contact_name }}">
+                            <input type="text" name="email" placeholder="{{ lang.contact_email }}">
+                            <input type="text" name="phone" placeholder="{{ lang.contact_phone }}">
+                            <textarea name="address" placeholder="{{ lang.contact_address }}"></textarea>
+                            <textarea name="detail" placeholder="{{ lang.contact_detail }}"></textarea>
+                            <div class="line">
+                                <div class="margin">
+                                    <img class="s-12 l-3" src="{{ base_url }}capcha/val_img.php">
+                                    <input class="s-12 l-9" type="text" name="verify" placeholder="{{ lang.verify }}">
+                                </div>
+                            </div>
+                            <button type="submit">{{ lang.contact_button }}</button>
+                        </form>
+                    </div>
+                    <div class="s-12 l-6">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

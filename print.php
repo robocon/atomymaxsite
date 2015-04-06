@@ -1,4 +1,4 @@
-<?
+<?php 
 ob_start();
 session_start();
 
@@ -22,6 +22,6 @@ GETMODULE($_GET['name'],$_GET['file']);
 <link href="css/template_css.css" rel="stylesheet" type="text/css">
 <link href="templates/<?=WEB_TEMPLATES;?>/css/<?=WEB_TEMPLATES;?>.css" rel="stylesheet" type="text/css">
 
-<?
+<?php 
 include ("".$MODPATHFILE."");
 ?>

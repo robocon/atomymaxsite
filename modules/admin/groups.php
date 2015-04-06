@@ -1,4 +1,4 @@
-<?
+<?php 
 CheckAdmin($admin_user, $admin_pwd);
 ?>
 
@@ -20,7 +20,7 @@ CheckAdmin($admin_user, $admin_pwd);
 <A HREF="?name=admin&file=user"><IMG SRC="images/admin/admins.gif"  BORDER="0" align="absmiddle"> <?=_ADMIN_GROUP_MENU_INDEX;?></A> &nbsp;&nbsp;&nbsp;<A HREF="?name=admin&file=user&op=admin_add"><IMG SRC="images/admin/user.gif"  BORDER="0" align="absmiddle"> <?=_ADMIN_GROUP_MENU_ADD_ADMIN;?></A> &nbsp;&nbsp;&nbsp;<A HREF="?name=admin&file=groups"><IMG SRC="images/admin/keys.gif"  BORDER="0" align="absmiddle"> <?=_ADMIN_GROUP_MENU_ADMIN_LEVEL;?></A> &nbsp;&nbsp;&nbsp;<A HREF="?name=admin&file=groups&op=group_add"><IMG SRC="images/admin/share.gif"  BORDER="0" align="absmiddle"> <?=_ADMIN_GROUP_MENU_ADMIN_ADD_LEVEL;?></A>
 <BR><BR>
 <!-- แสดงผลรายการกลุ่มผู้ดูแลระบบ -->
-<?
+<?php 
 //////////////////////////////////////////// แสดงรายชื่อกลุ่มผู้ดูแลระบบ
 if($op == ""){
 $db->connectdb(DB_NAME,DB_USERNAME,DB_PASSWORD);
@@ -41,7 +41,7 @@ $goto = ($page-1)*$limit ;
    <td scope="col"><CENTER><B><?=_ADMIN_FORM_CAT_COUNT;?></B></CENTER></td>
    <td scope="col"><B><CENTER>Check</CENTER></B></td>
   </tr>  
-<?
+<?php 
 $res['groups'] = $db->select_query("SELECT * FROM ".TB_ADMIN_GROUP." ORDER BY id LIMIT $goto, $limit ");
 $count=0;
 while($arr['groups'] = $db->fetch($res['groups'])){
@@ -55,15 +55,15 @@ $ColorFill = 'class="odd"';
 ?>
     <tr <?php echo $ColorFill; ?> >
      <td width="10%" align="center" scope="col">
-      <a href="?name=admin&file=groups&op=group_edit&id=<? echo $arr['groups']['id'];?>"><img src="images/admin/edit.gif" border="0" alt="<?=_ADMIN_BUTTON_EDIT;?>" ></a> 
-      <a href="javascript:Confirm('?name=admin&file=groups&op=group_del&id=<? echo $arr['groups']['id'];?>&level=<?echo $arr['groups']['name'];?>','<?=_ADMIN_GROUP_BUTTON_DEL_ADMIN;?> : <?echo $arr['groups']['name'];?>');"><img src="images/admin/trash.gif"  border="0" alt="<?=_ADMIN_BUTTON_DEL;?>" ></a>
+      <a href="?name=admin&file=groups&op=group_edit&id=<?php  echo $arr['groups']['id'];?>"><img src="images/admin/edit.gif" border="0" alt="<?=_ADMIN_BUTTON_EDIT;?>" ></a> 
+      <a href="javascript:Confirm('?name=admin&file=groups&op=group_del&id=<?php  echo $arr['groups']['id'];?>&level=<?php echo $arr['groups']['name'];?>','<?=_ADMIN_GROUP_BUTTON_DEL_ADMIN;?> : <?php echo $arr['groups']['name'];?>');"><img src="images/admin/trash.gif"  border="0" alt="<?=_ADMIN_BUTTON_DEL;?>" ></a>
      </td> 
-     <td scope="col" align="left"><? echo $arr['groups']['name'];?></td>
-     <td scope="col" width="20%"><CENTER><? echo $row['user'];?></CENTER></td>
-     <td align="center" width="40" scope="col"><input type="checkbox" name="list[]" value="<? echo $arr['groups']['id'];?>"></td>
+     <td scope="col" align="left"><?php  echo $arr['groups']['name'];?></td>
+     <td scope="col" width="20%"><CENTER><?php  echo $row['user'];?></CENTER></td>
+     <td align="center" width="40" scope="col"><input type="checkbox" name="list[]" value="<?php  echo $arr['groups']['id'];?>"></td>
     </tr>
 
-<?
+<?php 
 	$count++;
  } 
 ?>
@@ -74,7 +74,7 @@ $ColorFill = 'class="odd"';
  <input type="submit" value="Delete" >
  </div>
  </form><BR><BR>
-<?
+<?php 
 	SplitPage($page,$totalpage,"?name=admin&file=groups");
 	echo $ShowSumPages ;
 	echo "<BR>";
@@ -135,7 +135,7 @@ else if($op == "group_add"){
         <input type="text" name="GROUP_DESC"  size="40"><br>
         <br>
         <B><?=_ADMIN_GROUP_FORM_GR_SELECT;?> :</B><br>
-<?
+<?php 
 	 $m = 0;
 	 $fnum = 3;
 	$db->connectdb(DB_NAME,DB_USERNAME,DB_PASSWORD);
@@ -180,7 +180,7 @@ $db->closedb ();
         <br><br>
         <input type="submit" value="<?=_ADMIN_GROUP_BUTTON_ADD_LEVEL;?>" >
 </FORM>
-<?
+<?php 
 	}else{
 		//กรณีไม่ผ่าน
 		echo  $PermissionFalse ;
@@ -226,12 +226,12 @@ else if($op == "group_edit"){
 ?>
 <form action="?name=admin&file=groups&op=group_edit&action=edit&id=<?=$_GET['id'];?>" name="groups" method="post">
      <B><?=_ADMIN_GROUP_FORM_GR_NAME;?> :</B><br>
-        <input type="text"  name="GROUP_NAME" size="40" value="<?echo $arr['group']['name'];?>"><br>
+        <input type="text"  name="GROUP_NAME" size="40" value="<?php echo $arr['group']['name'];?>"><br>
         <B><?=_ADMIN_GROUP_FORM_GR_DETAIL;?> :</B><br>
-        <input type="text" name="GROUP_DESC"  size="40" value="<?echo $arr['group']['description'];?>"><br>
+        <input type="text" name="GROUP_DESC"  size="40" value="<?php echo $arr['group']['description'];?>"><br>
         <br>
         <B><?=_ADMIN_GROUP_FORM_GR_SELECT;?> :</B><br>
-<?
+<?php 
 	 $m = 0;
 	 $fnum = 3;
 	$db->connectdb(DB_NAME,DB_USERNAME,DB_PASSWORD);
@@ -279,7 +279,7 @@ $db->closedb ();
         <br><br>
         <input type="submit" value="<?=_ADMIN_GROUP_BUTTON_EDIT_LEVEL;?>" >
         </form>
-<?
+<?php 
 	}else{
 		//กรณีไม่ผ่าน
 		$ProcessOutput = $PermissionFalse ;

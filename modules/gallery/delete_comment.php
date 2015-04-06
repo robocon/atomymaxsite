@@ -1,4 +1,4 @@
-<?
+<?php 
 CheckAdmin($admin_user, $admin_pwd);
 ?>
 	<TABLE cellSpacing=0 cellPadding=0 width=750 border=0>
@@ -9,7 +9,7 @@ CheckAdmin($admin_user, $admin_pwd);
 		  <!-- gallery -->
 		  &nbsp;&nbsp;<IMG SRC="images/menu/textmenu_gallery.gif" BORDER="0"><BR><BR>
 				<BR><BR>
-<?
+<?php 
 	$_GET['id'] = intval($_GET['id']);
 	$_GET['comment'] = intval($_GET['comment']);
 	if(CheckLevel($admin_user,"gallery_del")){

@@ -62,14 +62,14 @@ $ColorFill = 'class="odd"';
 ?>
     <tr <?php echo $ColorFill; ?> >
      <td width="44">
-      <a href="?name=admin&file=knowledge_category&op=articlecat_edit&id=<? echo $arr['knowledgecat']['id'];?>"><img src="images/admin/edit.gif" border="0" alt="<?=_ADMIN_BUTTON_EDIT;?>" ></a> 
-      <a href="javascript:Confirm('?name=admin&file=knowledge_category&op=articlecat_del&id=<? echo $arr['knowledgecat']['id'];?>','<?=_ADMIN_BUTTON_DEL_MESSAGE_CAT;?>');"><img src="images/admin/trash.gif"  border="0" alt="<?=_ADMIN_BUTTON_DEL;?>" ></a>
+      <a href="?name=admin&file=knowledge_category&op=articlecat_edit&id=<?php  echo $arr['knowledgecat']['id'];?>"><img src="images/admin/edit.gif" border="0" alt="<?=_ADMIN_BUTTON_EDIT;?>" ></a> 
+      <a href="javascript:Confirm('?name=admin&file=knowledge_category&op=articlecat_del&id=<?php  echo $arr['knowledgecat']['id'];?>','<?=_ADMIN_BUTTON_DEL_MESSAGE_CAT;?>');"><img src="images/admin/trash.gif"  border="0" alt="<?=_ADMIN_BUTTON_DEL;?>" ></a>
      </td> 
-     <td><?echo $arr['knowledgecat']['category_name'];?></td>
-	 <td align="center" width="50" ><img src="images/icon/<?echo  $arr['knowledgecat']['icon'] ;?>" border="0" width="40" height="30"></td>
-	 <td align="center" width="50" ><?echo $row['sumknowledge'] ;?></td>
-     <td align="center" width="50"><A HREF="?name=admin&file=knowledge_category&op=articlecat_edit&action=sort&setsort=<?echo $SETSORT_UP ;?>&move=up&id=<? echo $arr['knowledgecat']['id'];?>"><IMG SRC="images/icon/arrow_up.gif"  BORDER="0" ALT="<?=_ADMIN_ORDER_UP;?>"></A>&nbsp;&nbsp;&nbsp;<A HREF="?name=admin&file=knowledge_category&op=articlecat_edit&action=sort&setsort=<?echo $SETSORT_DOWN ;?>&move=down&id=<? echo $arr['knowledgecat']['id'];?>"><IMG SRC="images/icon/arrow_down.gif"  BORDER="0" ALT="<?=_ADMIN_ORDER_DOWN;?>"></A></td>
-     <td valign="top" align="center" width="40"><input type="checkbox" name="list[]" value="<? echo $arr['knowledgecat']['id'];?>"></td>
+     <td><?php echo $arr['knowledgecat']['category_name'];?></td>
+	 <td align="center" width="50" ><img src="images/icon/<?php echo  $arr['knowledgecat']['icon'] ;?>" border="0" width="40" height="30"></td>
+	 <td align="center" width="50" ><?php echo $row['sumknowledge'] ;?></td>
+     <td align="center" width="50"><A HREF="?name=admin&file=knowledge_category&op=articlecat_edit&action=sort&setsort=<?php echo $SETSORT_UP ;?>&move=up&id=<?php  echo $arr['knowledgecat']['id'];?>"><IMG SRC="images/icon/arrow_up.gif"  BORDER="0" ALT="<?=_ADMIN_ORDER_UP;?>"></A>&nbsp;&nbsp;&nbsp;<A HREF="?name=admin&file=knowledge_category&op=articlecat_edit&action=sort&setsort=<?php echo $SETSORT_DOWN ;?>&move=down&id=<?php  echo $arr['knowledgecat']['id'];?>"><IMG SRC="images/icon/arrow_down.gif"  BORDER="0" ALT="<?=_ADMIN_ORDER_DOWN;?>"></A></td>
+     <td valign="top" align="center" width="40"><input type="checkbox" name="list[]" value="<?php  echo $arr['knowledgecat']['id'];?>"></td>
     </tr>
 
 <?php
@@ -152,7 +152,7 @@ else if($op == "articlecat_add"){
 <BR><BR>
 <B><?=_ADMIN_FORM_CAT_ICON;?> :</B><BR>
 <input type="file" name="FILE" onpropertychange="view01.src=FILE.value;" style="width=250;"><BR>
-<?=_ADMIN_FORM_ICON_WIDTH;?> <?echo _IKNOW_W." x "._IKNOW_H ;?> <?=_ADMIN_FORM_CAT_ICON_WIDTH;?>
+<?=_ADMIN_FORM_ICON_WIDTH;?> <?php echo _IKNOW_W." x "._IKNOW_H ;?> <?=_ADMIN_FORM_CAT_ICON_WIDTH;?>
 <BR><BR>
 <INPUT TYPE="submit" value="<?=_ADMIN_KNOWLEDGE_BUTTON_CAT_ADD;?>">
 </FORM>
@@ -269,9 +269,9 @@ else if($op == "articlecat_edit"){
 <INPUT TYPE="text" NAME="CATEGORY" size="40" value="<?=$arr['knowledgecat']['category_name'];?>">
 <BR><BR>
 <B><?=_ADMIN_FORM_CAT_ICON;?> :</B><BR>
-<IMG name="view01" SRC="images/icon/<? echo $arr['knowledgecat']['icon'];?>" <?echo " WIDTH=\""._IKNOW_W."\" HEIGHT=\""._IKNOW_H."\" ";?> BORDER="0" ><BR>
+<IMG name="view01" SRC="images/icon/<?php  echo $arr['knowledgecat']['icon'];?>" <?php echo " WIDTH=\""._IKNOW_W."\" HEIGHT=\""._IKNOW_H."\" ";?> BORDER="0" ><BR>
 <input type="file" name="FILE" onpropertychange="view01.src=FILE.value;" style="width=350;"><BR>
-<?=_ADMIN_FORM_ICON_WIDTH;?> <?echo _IKNOW_W." x "._IKNOW_H ;?> <?=_ADMIN_FORM_CAT_ICON_WIDTH;?>
+<?=_ADMIN_FORM_ICON_WIDTH;?> <?php echo _IKNOW_W." x "._IKNOW_H ;?> <?=_ADMIN_FORM_CAT_ICON_WIDTH;?>
 <BR><BR>
 <INPUT TYPE="submit" value="<?=_ADMIN_KNOWLEDGE_BUTTON_CAT_EDIT;?>">
 </FORM>

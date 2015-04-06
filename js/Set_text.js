@@ -1,1 +1,0 @@
-dw_Event.add( window, 'load', dw_fontSizerDX.init );

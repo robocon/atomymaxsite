@@ -74,17 +74,17 @@ $ColorFill = 'class="odd"';
 ?>
     <tr <?php echo $ColorFill; ?> >
      <td width="44">
-      <a href="?name=admin&file=blog&op=article_edit&id=<? echo $arr['blog']['id'];?>"><img src="images/admin/edit.gif" border="0" alt="<?=_ADMIN_BUTTON_EDIT;?>" ></a> 
-      <a href="javascript:Confirm('?name=admin&file=blog&op=article_del&id=<? echo $arr['blog']['id'];?>&prefix=<? echo $arr['blog']['post_date'];?>','<? echo _ADMIN_BUTTON_DEL_MESSAGE;?>');"><img src="images/admin/trash.gif"  border="0" alt="<?=_ADMIN_BUTTON_DEL;?>" ></a>
+      <a href="?name=admin&file=blog&op=article_edit&id=<?php  echo $arr['blog']['id'];?>"><img src="images/admin/edit.gif" border="0" alt="<?=_ADMIN_BUTTON_EDIT;?>" ></a> 
+      <a href="javascript:Confirm('?name=admin&file=blog&op=article_del&id=<?php  echo $arr['blog']['id'];?>&prefix=<?php  echo $arr['blog']['post_date'];?>','<?php  echo _ADMIN_BUTTON_DEL_MESSAGE;?>');"><img src="images/admin/trash.gif"  border="0" alt="<?=_ADMIN_BUTTON_DEL;?>" ></a>
      </td> 
-     <td><A HREF="?name=blog&file=readblog&id=<?echo $arr['blog']['id'];?>" target="_blank"><?echo $arr['blog']['topic'];?></A><?=$CommentIcon;?><?=$PicIcon;?><?=$AttIcon;?><?=NewsIcon(TIMESTAMP, $arr['blog']['post_date'], "images/icon_new.gif");?></td>
-     <td ><CENTER><?echo ThaiTimeConvert($arr['blog']['post_date'],'','');?></CENTER></td>
+     <td><A HREF="?name=blog&file=readblog&id=<?php echo $arr['blog']['id'];?>" target="_blank"><?php echo $arr['blog']['topic'];?></A><?=$CommentIcon;?><?=$PicIcon;?><?=$AttIcon;?><?=NewsIcon(TIMESTAMP, $arr['blog']['post_date'], "images/icon_new.gif");?></td>
+     <td ><CENTER><?php echo ThaiTimeConvert($arr['blog']['post_date'],'','');?></CENTER></td>
      <td align="center">
-	 <?if($arr['category']['category_name']){ //หากมีหมวดแสดงรูป ?>
-	 <A HREF="#"><IMG SRC="images/admin/folders.gif"  BORDER="0" align="absmiddle" alt="<?echo $arr['category']['category_name'];?>" onMouseOver="MM_displayStatusMsg('<?echo $arr['category']['category_name'];?>');return document.MM_returnValue"></A>
-	 <? } ?>
+	 <?php if($arr['category']['category_name']){ //หากมีหมวดแสดงรูป ?>
+	 <A HREF="#"><IMG SRC="images/admin/folders.gif"  BORDER="0" align="absmiddle" alt="<?php echo $arr['category']['category_name'];?>" onMouseOver="MM_displayStatusMsg('<?php echo $arr['category']['category_name'];?>');return document.MM_returnValue"></A>
+	 <?php  } ?>
 	 </td>
-     <td valign="top" align="center" width="40"><input type="checkbox" name="list[]" value="<? echo $arr['blog']['id'];?>"></td>
+     <td valign="top" align="center" width="40"><input type="checkbox" name="list[]" value="<?php  echo $arr['blog']['id'];?>"></td>
     </tr>
 
 <?php
@@ -229,15 +229,15 @@ $db->closedb ();
 <B><?=_ADMIN_FORM_ICON;?> : </B><BR>
 <?php
 	if ($arr['blog']['pic'] !=0){?>
-<IMG name="view01" SRC="icon/blog_<?=$arr['blog']['post_date'];?>_<?=$arr['blog']['posted'];?>.jpg" <?echo " WIDTH=\""._Iblog_W."\" HEIGHT=\""._Iblog_H."\" ";?> BORDER="0" >
-<?} else {?>
-<IMG name="view01" SRC="images/news_blank.gif" <?echo " WIDTH=\""._Iblog_W."\" HEIGHT=\""._Iblog_H."\" ";?> BORDER="0" >
+<IMG name="view01" SRC="icon/blog_<?=$arr['blog']['post_date'];?>_<?=$arr['blog']['posted'];?>.jpg" <?php echo " WIDTH=\""._Iblog_W."\" HEIGHT=\""._Iblog_H."\" ";?> BORDER="0" >
+<?php } else {?>
+<IMG name="view01" SRC="images/news_blank.gif" <?php echo " WIDTH=\""._Iblog_W."\" HEIGHT=\""._Iblog_H."\" ";?> BORDER="0" >
 <?php
 	}
 ?>
 <BR>
 <input type="file" name="FILE" onpropertychange="view01.src=FILE.value;" style="width=250;"><BR>
-<?=_ADMIN_FORM_ICON_WIDTH;?> <?echo _Iblog_W." x "._Iblog_H ;?> <?=_ADMIN_FORM_ICON_WIDTH1;?>
+<?=_ADMIN_FORM_ICON_WIDTH;?> <?php echo _Iblog_W." x "._Iblog_H ;?> <?=_ADMIN_FORM_ICON_WIDTH1;?>
 <BR><BR>
 <B><?=_ADMIN_FORM_HEADLINE;?> :</B><BR>
 <textarea cols="100"  rows="10"  name="HEADLINE" ><?=$HEADLINE;?></textarea>
@@ -248,7 +248,7 @@ $db->closedb ();
 <br>
 <B><?=_ADMIN_FORM_FILE_ATT;?> : </B><BR>
 <input type="file" name="FILESS" onpropertychange="view01.src=FILESS.value;" style="width=250;"><br>
-<INPUT TYPE="checkbox" NAME="ENABLE_COMMENT" VALUE="1" <?if($arr['blog']['enable_comment']){echo " Checked";};?>> <?=_ADMIN_FORM_ALLOW_COMMENT;?>
+<INPUT TYPE="checkbox" NAME="ENABLE_COMMENT" VALUE="1" <?php if($arr['blog']['enable_comment']){echo " Checked";};?>> <?=_ADMIN_FORM_ALLOW_COMMENT;?>
 <BR>
 <input type="submit" value="<?=_ADMIN_BUTTON_EDIT;?>" name="submit"> <input type="reset" value="<?=_ADMIN_BUTTON_CLEAR;?>" name="reset">
 </FORM>
@@ -369,15 +369,15 @@ $ColorFill = 'class="odd"';
 ?>
     <tr <?php echo $ColorFill; ?> >
      <td width="44">
- <a href="?name=admin&file=member_edit&member_id=<?=$arr['user']['member_id'];?>"><img src="images/admin/edit.gif" border="0" alt="<? echo _ADMIN_BUTTON_EDIT;?>" ></a> 
-      <a href="javascript:Confirm('?name=admin&file=member_delete&member_id=<?=$arr['user']['member_id'];?>&prefix=<? echo $arr['block']['post_date'];?>','<? echo _ADMIN_BUTTON_DEL_MESSAGE;?>');"><img src="images/admin/trash.gif"  border="0" alt="<?echo _ADMIN_BUTTON_DEL;?>" ></a>
+ <a href="?name=admin&file=member_edit&member_id=<?=$arr['user']['member_id'];?>"><img src="images/admin/edit.gif" border="0" alt="<?php  echo _ADMIN_BUTTON_EDIT;?>" ></a> 
+      <a href="javascript:Confirm('?name=admin&file=member_delete&member_id=<?=$arr['user']['member_id'];?>&prefix=<?php  echo $arr['block']['post_date'];?>','<?php  echo _ADMIN_BUTTON_DEL_MESSAGE;?>');"><img src="images/admin/trash.gif"  border="0" alt="<?php echo _ADMIN_BUTTON_DEL;?>" ></a>
      </td> 
 	<td><?php echo $arr['user']['name'] ; ?></td>
 	<td><?php echo $arr['user']['email'] ; ?></td>
 	<td><?php echo $arr['user']['work'] ; ?></td>
 	<td><?php echo $arr['user']['phone'] ; ?></td>
 	<td align="center">
-				  <? if($arr['user']['blog']=='0') { echo "<a HREF=?name=admin&file=blog&op=edit_add&action=edit&id=".$arr['user']['member_id']."&status=1><img src=images/publish_x.png alt='"._ADMIN_BLOCK_ORDER_PUBLISH_OFF."'></a>"; } else { echo "<a HREF=?name=admin&file=blog&op=edit_add&action=edit&id=".$arr['user']['member_id']."&status=0><img src=images/tick.png alt='่"._ADMIN_BLOCK_ORDER_PUBLISH_ON."'></a>"; };?>
+				  <?php  if($arr['user']['blog']=='0') { echo "<a HREF=?name=admin&file=blog&op=edit_add&action=edit&id=".$arr['user']['member_id']."&status=1><img src=images/publish_x.png alt='"._ADMIN_BLOCK_ORDER_PUBLISH_OFF."'></a>"; } else { echo "<a HREF=?name=admin&file=blog&op=edit_add&action=edit&id=".$arr['user']['member_id']."&status=0><img src=images/tick.png alt='่"._ADMIN_BLOCK_ORDER_PUBLISH_ON."'></a>"; };?>
 </td>
     </tr>
 

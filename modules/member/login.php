@@ -1,11 +1,11 @@
 				<script language='JavaScript'>
 					function check_Form_login() {
 						if(document.checkForm2.user_login.value=='') {
-						alert('<? echo _SHOP_MOD_JAVA_CHECK_NAME;?>') ;
+						alert('<?php  echo _SHOP_MOD_JAVA_CHECK_NAME;?>') ;
 						document.checkForm2.user_login.focus() ;
 						return false ;
 						} else if(document.checkForm2.pwd_login.value=='') {
-							alert('<? echo _JAVA_FORM_CONF_NEWPASS;?>') ;
+							alert('<?php  echo _JAVA_FORM_CONF_NEWPASS;?>') ;
 							document.checkForm2.pwd_login.focus() ;
 							return false ;
 						} else {
@@ -13,7 +13,7 @@
 						}
 						}
                       </script>
-<?
+<?php 
 empty($_SESSION['login_true'])?$login_true="":$login_true=$_SESSION['login_true'];
 empty($_SESSION['pwd_login'])?$pwd_login="":$pwd_login=$_SESSION['pwd_login'];
 if ($login_true==''){?>
@@ -30,11 +30,11 @@ if ($login_true==''){?>
 				<TD width='100' align='right'  valign='top'>Password : </TD>
 				<TD><input name='pwd_login' type='password' id='pwd_login' size='15' value="<?=$pwd_login;?>"></TD>
 				</TR>
-				<?
+				<?php 
 				if(USE_CAPCHA){
 				?>
                  <tr>
-                 <td width='100' align='right' ><?if(CAPCHA_TYPE == 1){
+                 <td width='100' align='right' ><?php if(CAPCHA_TYPE == 1){
 							echo "<img src=\"capcha/CaptchaSecurityImages.php?path=".WEB_PATH."&width=".CAPCHA_WIDTH."&height=".CAPCHA_HEIGHT."&characters=".CAPCHA_NUM."\" width=\"".CAPCHA_WIDTH."\" height=\"".CAPCHA_HEIGHT."\" align=\"absmiddle\" />";
 						}else if(CAPCHA_TYPE == 2){ 
 							echo "<img src=\"capcha/val_img.php?width=".CAPCHA_WIDTH."&height=".CAPCHA_HEIGHT."&characters=".CAPCHA_NUM."\" width=\"".CAPCHA_WIDTH."\" height=\"".CAPCHA_HEIGHT."\" align=\"absmiddle\" />";
@@ -42,7 +42,7 @@ if ($login_true==''){?>
                     </td>
                     <td><input name="security_code" type="text" id="security_code" maxlength="6" size='15'/></td>
                     </tr>
-                    <? } ?>
+                    <?php  } ?>
 					<TR align='right' valign='top'>
 					<TD colspan='2' align='center' valign='middle'><input name='submit' type='submit' value='<?=_WEBBOARD_READ_MEMBER_LASTLOG;?>'></TD>
 					</TR>
@@ -52,7 +52,7 @@ if ($login_true==''){?>
 				</tr>
 				</table><br>
 
-<?} else {
+<?php } else {
 			$db->connectdb(DB_NAME,DB_USERNAME,DB_PASSWORD);
 			$res['user'] = $db->select_query("SELECT * FROM ".TB_MEMBER." WHERE user='".$login_true."' ");
 			$rows['user'] = $db->rows($res['user']);
@@ -83,7 +83,7 @@ echo "<meta http-equiv=refresh content='3;URL=?name=member&file=login_check'>" ;
 </td>
 </tr>
 </table>
-<?
+<?php 
 		  }
 }
 ?>

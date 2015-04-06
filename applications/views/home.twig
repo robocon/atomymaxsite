@@ -1,0 +1,53 @@
+{% extends "index.twig" %}
+{% block content %}
+    
+    {% if picture_count > 0%}
+        <!-- CAROUSEL -->  
+        <div class="line">
+            <div id="owl-demo" class="owl-carousel owl-theme  margin-bottom">
+                {% for picture in pictures %}
+                    <div class="item s-12 l-12"><img src="{{ base_url }}{{ picture.path }}" alt=""></div>
+                {% endfor %}
+            </div>
+        </div>
+    {% endif %}
+
+    <div class="line">
+        <div class="box margin-bottom news-box">
+            
+            <!-- CONTENT -->
+            <section>
+                <h1>{{ lang.news_header }}</h1>
+                {% for news in newses %}
+                    <article class="line">
+                        <div class="s-12 l-12 margin-bottom">
+                            <h3><a href="{{ base_url }}news/details/{{ news.id }}">{{ news.topic }}</a></h3>
+                            <span class="submitted">{{ lang.post_on }} {{ news.post_date }} {{ lang.by }} {{ news.posted }}, {{ news.pageview }} {{ lang.views }}</span>
+                        </div>
+                        <div class="line">
+                            <div class="margin">
+                                <img class="s-12 l-2" src="{{ base_url }}{{ news.thumb }}">
+                                <p class="s-12 l-10">{{ news.detail }}</p>
+                            </div>
+                        </div>
+                        <hr>
+                    </article>
+                {% endfor %}
+            </section>
+            
+        </div>
+    </div>
+    <script type="text/javascript" src="{{ base_url }}public/owl-carousel/owl.carousel.js"></script>  
+    <script type="text/javascript">
+        jQuery(document).ready(function($) {	  
+            $("#owl-demo").owlCarousel({		
+                navigation : true,
+                slideSpeed : 300,
+                paginationSpeed : 400,
+                autoPlay : true,
+                singleItem:true,
+                autoHeight : true
+            });
+        });	 
+    </script>
+{% endblock %}

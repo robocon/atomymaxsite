@@ -1,4 +1,4 @@
-<?
+<?php 
 CheckAdmin($_SESSION['admin_user'], $_SESSION['admin_pwd']);
 
 $_GET['no'] = intval($_GET['no']);
@@ -24,7 +24,7 @@ function emoticon(theSmilie) {
 </script>
 
 
-<?
+<?php 
  if($_GET[op] == "gbook_edit" AND $_GET[action] == "edit"){
 	//////////////////////////////////////////// กรณีแก้ไข Database Edit
 	if(CheckLevel($_SESSION['admin_user'])){
@@ -151,7 +151,7 @@ else if($_GET[op] == "gbook_edit"){
 		  
 			  </FORM>
 <BR><BR>
-<?
+<?php 
 	}else{
 		//กรณีไม่ผ่าน
 		$ProcessOutput = $PermissionFalse ;

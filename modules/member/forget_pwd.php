@@ -94,7 +94,7 @@ if ($EditMem){
 	
 </FORM>
 
-<?
+<?php 
 	}
 ?>
 	</TD>

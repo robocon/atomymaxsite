@@ -1,4 +1,4 @@
-<?
+<?php 
 CheckAdmin($admin_user, $admin_pwd);
 ?>
 	<TABLE cellSpacing=0 cellPadding=0 width=750 border=0 bgcolor=#FFFFFF>
@@ -9,7 +9,7 @@ CheckAdmin($admin_user, $admin_pwd);
 		  <!-- News -->
 		  &nbsp;&nbsp;<IMG SRC="images/menu/textmenu_webboard.gif" BORDER="0"><BR><BR>
 				<BR><BR>
-<?
+<?php 
 	$_GET['id'] = intval($_GET['id']);
 	if(CheckLevel($admin_user,"webboard_del")){
 		$db->connectdb(DB_NAME,DB_USERNAME,DB_PASSWORD);

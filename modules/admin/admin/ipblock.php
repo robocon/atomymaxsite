@@ -58,13 +58,13 @@ $ColorFill = 'class="odd"';
 ?>
     <tr <?php echo $ColorFill; ?> >
      <td width="44">
-      <a href="?name=admin&file=ipblock&op=ipblock_edit&id=<? echo $arr['ipblock']['id'];?>&page=<? echo $page;?>"><img src="images/admin/edit.gif" border="0" alt="<?=_ADMIN_BUTTON_EDIT;?>" ></a> 
-      <a href="javascript:Confirm('?name=admin&file=ipblock&op=ipblock_del&page=<? echo $page;?>&id=<? echo $arr['ipblock']['id'];?>&prefix=<? echo $arr['ipblock']['post_date'];?>','<?=_ADMIN_BUTTON_DEL_MESSAGE;?>');"><img src="images/admin/trash.gif"  border="0" alt="<?=_ADMIN_BUTTON_DEL;?>" ></a>
+      <a href="?name=admin&file=ipblock&op=ipblock_edit&id=<?php  echo $arr['ipblock']['id'];?>&page=<?php  echo $page;?>"><img src="images/admin/edit.gif" border="0" alt="<?=_ADMIN_BUTTON_EDIT;?>" ></a> 
+      <a href="javascript:Confirm('?name=admin&file=ipblock&op=ipblock_del&page=<?php  echo $page;?>&id=<?php  echo $arr['ipblock']['id'];?>&prefix=<?php  echo $arr['ipblock']['post_date'];?>','<?=_ADMIN_BUTTON_DEL_MESSAGE;?>');"><img src="images/admin/trash.gif"  border="0" alt="<?=_ADMIN_BUTTON_DEL;?>" ></a>
      </td> 
-     <td align="center" width="50"><? echo $arr['ipblock']['ip'];?></td>
-	<td align="center"  ><? echo ThaiTimeConvert($arr['ipblock']['post_date'],"","1");?></td>
+     <td align="center" width="50"><?php  echo $arr['ipblock']['ip'];?></td>
+	<td align="center"  ><?php  echo ThaiTimeConvert($arr['ipblock']['post_date'],"","1");?></td>
 
-     <td valign="top" align="center" width="40"><input type="checkbox" name="list[]" value="<? echo $arr['ipblock']['id'];?>"></td>
+     <td valign="top" align="center" width="40"><input type="checkbox" name="list[]" value="<?php  echo $arr['ipblock']['id'];?>"></td>
     </tr>
 
 <?php

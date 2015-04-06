@@ -9,7 +9,7 @@
 					<TD height="1" class="dotline" ></TD>
 				</TR>
       <TR><td>
-<?
+<?php 
 
 $user_login = stripslashes( $_POST['user_login'] );
 $user_login = mysql_real_escape_string($_POST['user_login']);
@@ -95,9 +95,9 @@ session_unset($login_true);
 </td>
 </tr>
 </table>
-<? echo "<meta http-equiv='refresh' content='1; url=?name=admin&file=main'>" ; ?>
+<?php  echo "<meta http-equiv='refresh' content='1; url=?name=admin&file=main'>" ; ?>
 <BR><BR>
-<?
+<?php 
 } else {
 //	echo md5($Password);
 $result = mysql_query("select user,password from ".TB_MEMBER." where user='".$Username."' and password='".md5($Password)."'") ;
@@ -171,7 +171,7 @@ echo "<meta http-equiv=refresh content='3;URL=?name=member&file=member_detail'>"
 </td>
 </tr>
 </table>
-<?
+<?php 
 //login now
 } else {
 		/*
@@ -187,9 +187,9 @@ echo "<meta http-equiv=refresh content='3;URL=?name=member&file=member_detail'>"
 <FONT COLOR="#336600"><B><?=_ADMIN_IPBLOCK_MESSAGE_HACK;?> <?=WEB_EMAIL;?></B></FONT><BR><BR>
 <A HREF="?name=index"><B><?=_ADMIN_IPBLOCK_MESSAGE_HACK1;?></B></A>
 </CENTER>
-<? echo "<meta http-equiv='refresh' content='10; url=?name=index'>" ; ?>
+<?php  echo "<meta http-equiv='refresh' content='10; url=?name=index'>" ; ?>
 <BR><BR>
-<?
+<?php 
 */
 echo '<meta http-equiv="refresh" content="0;url=index.php">' ;
 }

@@ -1,60 +1,32 @@
 <?php
-/*
-	ชื่อไฟล์					class.mysql.php
-	การใช้งาน				ใช้ในการเชื่อมต่อฐานข้อมูล MySQL
-	ผู้เขียน					อัษฎา อินต๊ะ
-	ติดต่อ					webmaster@mocyc.com
-*/
-if (preg_match("/class.mysql.php/i",$_SERVER['PHP_SELF'])) {
-    Header("Location: ../index.php");
-    die();
-}
 
 class DB{
-	//ส่วนของการเชื่อมต่อ
-	var $host = DB_HOST ;
-	var $database ;
-	var $connect_db ;
-	var $selectdb ;
-	var $db ;
-	var $sql ;
-	var $table ;
-	var $where; 
-	////////////////////// ฟังก์ชั่นต่างๆ //////////////////////
-	//เชื่อมต่อดาต้าเบส
-	function connectdb($db_name="database",$user="username",$pwd="password"){
-		if(ISO=='tis-620'){
-		$isox='TIS620';
-		$resultsx='tis620';
-		$langset='tis620_thai_ci';
-		} else if(ISO=='utf-8'){
-		$isox='UTF8';
-		$resultsx='utf8';
-		$langset='utf8_general_ci';
-		} else {
-		$iso='';
-		$resultsx='';
-		$langset='';
-		}
-		$this->database = $db_name;
-		$this->username = $user;
-		$this->password = $pwd;
-		$this->connect_db = mysql_connect ( $this->host, $this->username, $this->password ) or $this->_error();
-		//$this->connect_db = mysql_pconnect ( $this->host, $this->username, $this->password ) or $this->_error();
-		$this->db = mysql_select_db ( $this->database, $this->connect_db) or $this->_error();
-//		mysql_query("SET NAMES ".$resultsx." collation_connection=".$langset." collation_database=".$langset." collation_server=".$langset.""); 
-		mysql_query("SET character_set_results=".$resultsx.""); 
-		mysql_query("SET character_set_client=".$resultsx."");
-		mysql_query("SET character_set_connection=".$resultsx."");
-		return true; 
-	}
+	
+    public $host = null ;
+    public $database = null;
+    public $connect_db = null;
+    public $selectdb = null;
+    public $db = null;
+    public $sql = null;
+    public $table = null;
+    public $where = null; 
+	
+    public function __construct() {
+        if($this->connect_db === null){
+            $this->connect_db = mysql_connect ( DB_HOST, DB_USERNAME, DB_PASSWORD ) or $this->_error();
+            $this->db = mysql_select_db ( DB_NAME, $this->connect_db) or $this->_error();
+            mysql_query("SET NAMES UTF8", $this->connect_db);
+        }
+    }
+    
+    public function connectdb($db_host=null, $db_name=null, $user=null, $pwd=null){
+        return true; 
+    }
 
-	//ปิดการเชื่อมต่อดาต้าเบส
 	function closedb( ){
-		mysql_close ( $this->connect_db ) or $this->_error();
+            mysql_close ( $this->connect_db ) or $this->_error();
 	}
 
-	//เพิ่มข้อมูล
 	//$db->add_db("table",array("field"=>"value")); 
 	function add_db($table="table", $data="data"){
 		$key = array_keys($data); 
@@ -86,7 +58,6 @@ class DB{
         } 
 	}
 
-	//แก้ไขข้อมูลแบบหลายฟิลล์ 
 	//$db->update_db("tabel",array("field"=>"value"),"where"); 
     function update_db($table="table",$data="data",$where="where"){ 
         $key = array_keys($data); 
@@ -109,7 +80,6 @@ class DB{
         } 
     } 
 
-	//แก้ไขข้อมูลแบบฟิลล์เดียว
 	//$db->update("table","set","where");
 	function update($table="table",$set="set",$where="where"){ 
         $sql="UPDATE ".$table." SET ".$set." WHERE ".$where; 
@@ -121,7 +91,6 @@ class DB{
         } 
     } 
 
-	//ลบข้อมูล
 	//$db->del("table","where"); 
     function del($table="table",$where="where"){ 
         $sql="DELETE FROM ".$table." WHERE ".$where; 
@@ -133,7 +102,6 @@ class DB{
         } 
     } 
 
-	//นับจำนวนแถวข้อมูล
 	//$db->num_rows("table","field","where"); 
     function num_rows($table="table",$field="field",$where="where") { 
         if ($where=="") { 
@@ -150,7 +118,6 @@ class DB{
         } 
     } 
 
-	//Query ข้อมูล
 	//$res = $db->select_query('SELECT field FROM table WHERE where'); 
     function select_query($sql="sql"){ 
         if ($res = mysql_query($sql)){ 
@@ -161,7 +128,6 @@ class DB{
         } 
     } 
 
-	//นับจำนวนแถวข้อมูล
 	//$res = $db->select_query('SELECT field FROM table WHERE where'); 
 	//$rows = $db->rows($res); 
     function rows($sql="sql"){ 
@@ -173,7 +139,6 @@ class DB{
         } 
     } 
 
-	//ดึงค่า array
 	//$res = $db->select_query('SELECT field FROM table WHERE where'); 
 	//while ($arr = $db->fetch($res)) { 
 	//		echo $arr['a']." - ".$arr['c']."<br>\n"; 
@@ -204,7 +169,6 @@ class DB{
 		}
 	}
 
-	//แสดงข้อความผิดพลาด
     function _error(){ 
         $this->error[]=mysql_errno(); 
     } 
@@ -214,4 +178,3 @@ class DB{
 	}
 
 }
-?>

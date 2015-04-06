@@ -1,4 +1,4 @@
- <?
+ <?php 
  //CheckWebboard($_SESSION['login_true'], $_SESSION['pwd_login'] ,$_GET['catrgory']);
 if($_SESSION['login_true']){
 CheckWebboard($login_true, $pwd_login,$_GET['category']);
@@ -41,10 +41,10 @@ if($category){
   <hr width="95%" color="#999999" align="center" />
 <br />
 <table width="95%" border="0" align="center" cellpadding="0" cellspacing="2">
-            <tr><td width="60%" height="30"><? echo "<a href='index.php?name=webboard&file=post&category=".$category."'><img src='images/webboard/post.png' border='0' /></a>" ; ?>              &nbsp;&nbsp;</td>
+            <tr><td width="60%" height="30"><?php  echo "<a href='index.php?name=webboard&file=post&category=".$category."'><img src='images/webboard/post.png' border='0' /></a>" ; ?>              &nbsp;&nbsp;</td>
             <td width="40%" align="right" bgcolor="#E6E6E6"><form name="formboard" method="post" action="?name=webboard&file=getsearch" onsubmit="return checkboard();">
               <div align="left">&nbsp; &nbsp; <strong><?=_WEBBOARD_MENU_TITLE_SEARCH;?> </strong>&nbsp;              
-                <input type="text" name="keyword" value="<? if (!empty($keyword)){echo"$keyword";} ?>" style="width:145px; padding:1px">
+                <input type="text" name="keyword" value="<?php  if (!empty($keyword)){echo"$keyword";} ?>" style="width:145px; padding:1px">
                 <input type="submit" name="Submit" value="search">
               </div>
 			</form></td>
@@ -61,7 +61,7 @@ if($category){
               <td width="5%" align="center"  height="26"><b><?=_WEBBOARD_TABLE_TITLE_POSTDATE;?></b></font></td>
               <td width="15%" align="center"  height="26"><b><?=_WEBBOARD_TABLE_TITLE_POSTDATE_LAST;?></b></font></td>
             </tr>
-            <?
+            <?php 
 //แสดงกระทู้ปักหมุด
 $res['Pin'] = $db->select_query("SELECT * FROM ".TB_WEBBOARD." $SQLwherePin ORDER BY pin_date DESC ");
 while($arr['Pin'] = $db->fetch($res['Pin'])){
@@ -194,7 +194,7 @@ $db->closedb();
 ?>
 </table>
 <table width="95%" border="0" align="center" cellpadding="0" cellspacing="0"  >
-<tr ><td colspan="6" class="browse_page" width="500"><?page_navigator("webboard","board","".$category."&category=".$category."",$before_p,$plus_p,$total,$total_p,$chk_page); ?></td></tr>
+<tr ><td colspan="6" class="browse_page" width="500"><?php page_navigator("webboard","board","".$category."&category=".$category."",$before_p,$plus_p,$total,$total_p,$chk_page); ?></td></tr>
 
 </table>
 </td></tr></table>
@@ -211,7 +211,7 @@ $db->closedb();
 	  <option value="">...........................</option>
 	  <option value="index.php?name=webboard&file=board"><?=_WEBBOARD_JUM_ALLCAT;?></option>
 	  <option value="">...........................</option>
-	<?
+	<?php 
 $category = intval($category);
 $db->connectdb(DB_NAME,DB_USERNAME,DB_PASSWORD);
 $res['BoardCat'] = $db->select_query("SELECT * FROM ".TB_WEBBOARD_CAT." ORDER BY sort ");
