@@ -75,4 +75,10 @@ $l = [
     'config_url' => 'Url',
     'config_email' => 'Email',
     'config_lang' => 'Language',
+    
+    // User menu
+    'user_config' => 'Config',
+    'user_news' => 'News Manager',
+    'user_gallery' => 'Gallery Manager',
+    'user_profile' => 'Profile',
 ];

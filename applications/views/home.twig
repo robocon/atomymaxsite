@@ -1,8 +1,8 @@
 {% extends "index.twig" %}
 {% block content %}
-    
+
     {% if picture_count > 0%}
-        <!-- CAROUSEL -->  
+        <!-- CAROUSEL -->
         <div class="line">
             <div id="owl-demo" class="owl-carousel owl-theme  margin-bottom">
                 {% for picture in pictures %}
@@ -13,34 +13,32 @@
     {% endif %}
 
     <div class="line">
-        <div class="box margin-bottom news-box">
-            
-            <!-- CONTENT -->
-            <section>
-                <h1>{{ lang.news_header }}</h1>
-                {% for news in newses %}
-                    <article class="line">
-                        <div class="s-12 l-12 margin-bottom">
-                            <h3><a href="{{ base_url }}news/details/{{ news.id }}">{{ news.topic }}</a></h3>
+        <div class="box margin-bottom">
+            <div class="margin">
+                <div class="s-12 l-3">
+                    <aside>
+                        {{ include('left_column.twig') }}
+                    </aside>
+                </div>
+                <div class="s-12 l-9">
+                    <h1>{{ lang.news_header }}</h1>
+                    <div class="margin">
+                        {% for news in newses %}
+                        <div class="s-12 l-4" style="min-height: 240px;">
+                            <img class="s-12 l-12" src="{{ base_url }}{{ news.thumb }}">
+                            <h4><a href="{{ base_url }}news/details/{{ news.id }}">{{ news.topic }}</a></h4>
                             <span class="submitted">{{ lang.post_on }} {{ news.post_date }} {{ lang.by }} {{ news.posted }}, {{ news.pageview }} {{ lang.views }}</span>
                         </div>
-                        <div class="line">
-                            <div class="margin">
-                                <img class="s-12 l-2" src="{{ base_url }}{{ news.thumb }}">
-                                <p class="s-12 l-10">{{ news.detail }}</p>
-                            </div>
-                        </div>
-                        <hr>
-                    </article>
-                {% endfor %}
-            </section>
-            
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-    <script type="text/javascript" src="{{ base_url }}public/owl-carousel/owl.carousel.js"></script>  
+    <script type="text/javascript" src="{{ base_url }}public/owl-carousel/owl.carousel.js"></script>
     <script type="text/javascript">
-        jQuery(document).ready(function($) {	  
-            $("#owl-demo").owlCarousel({		
+        jQuery(document).ready(function($) {
+            $("#owl-demo").owlCarousel({
                 navigation : true,
                 slideSpeed : 300,
                 paginationSpeed : 400,
@@ -48,6 +46,6 @@
                 singleItem:true,
                 autoHeight : true
             });
-        });	 
+        });
     </script>
 {% endblock %}

@@ -2,7 +2,7 @@
 $l = [
 	// Menu
 	'M_MENU' => 'เมนู',
-    'HOME' => 'หน้าแรก',
+    'HOME' => 'หน้าหลัก',
     'NEWS' => 'ข่าว',
     'GALLERY' => 'คลังภาพ',
     'CONTACT' => 'ติดต่อ',
@@ -75,4 +75,10 @@ $l = [
     'config_url' => 'เว็บไซต์',
     'config_email' => 'อีเมล์',
     'config_lang' => 'ภาษา',
+    
+    // User menu
+    'user_config' => 'ตั้งค่าเว็บไซต์',
+    'user_news' => 'จัดการข้อมูลข่าว',
+    'user_gallery' => 'จัดการกิจกรรม',
+    'user_profile' => 'แก้ไขข้อมูลส่วนตัว',
 ];

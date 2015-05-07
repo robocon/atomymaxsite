@@ -1,0 +1,19 @@
+{% extends "index.twig" %}
+{% block content %}
+
+<div class="line">
+    <div class="box margin-bottom">
+        <div class="margin">
+            <div class="s-12 l-3">
+                <aside>
+                    {{ include('left_column.twig') }}
+                </aside>
+            </div>
+            <div class="s-12 l-9">
+                <h1>{{ news_title }}</h1>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

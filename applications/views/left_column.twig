@@ -1,0 +1,22 @@
+{% if user %}
+    <div class="aside-block">
+        <ul>
+            {% if user.level == '1' %}
+            <li><a href="{{ base_url }}config/">{{ lang.user_config }}</a></li>
+            <li><a href="{{ base_url }}admin/news/">{{ lang.user_news }}</a></li>
+            <li><a href="{{ base_url }}manage/gallery/">{{ lang.user_gallery }}</a></li>
+            {% endif %}
+            <li><a href="{{ base_url }}user/profile/">{{ lang.user_profile }}</a></li>
+            <li><a href="{{ base_url }}login/logout">{{ lang.LOGOUT }}</a></li>
+        </ul>
+    </div>
+{% else %}
+    <h3>{{ lang.login }}</h3>
+    <form class="customform" method="post" action="{{ base_url }}user/login">
+        <input name="email" placeholder="{{ lang.login_email }}" title="{{ lang.login_email }}" type="text">
+        <input name="password" placeholder="{{ lang.login_password }}" title="{{ lang.login_password }}" type="password">
+        <button type="submit">{{ lang.login }}</button>
+        <p><a href="{{ base_url }}login/register">{{ lang.create_account }}</a></p>
+        <p><a href="#">{{ lang.forgot_password }}</a></p>
+    </form>
+{% endif %}

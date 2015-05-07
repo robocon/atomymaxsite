@@ -28,7 +28,7 @@
             <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
         <![endif]-->
     </head>
-    <body class="size-960">
+    <body class="size-1140">
         <!-- HEADER -->
         <header>
             <div class="line">
@@ -48,22 +48,6 @@
                             <li><a href="{{ base_url }}news/page">{{ lang.NEWS }}</a></li>
                             <li><a href="{{ base_url }}gallery">{{ lang.GALLERY }}</a></li>
                             <li><a href="{{ base_url }}contact">{{ lang.CONTACT }}</a></li>
-                            {% if user %}
-                            <li>
-                                <a>User</a>
-                                    <ul>
-                                        {% if user.level == '1' %}
-                                        <li><a href="{{ base_url }}config/">Config</a></li>
-                                        <li><a href="{{ base_url }}manage/news/">News Manager</a></li>
-                                        <li><a href="{{ base_url }}manage/gallery/">Gallery Manager</a></li>
-                                        {% endif %}
-                                        <li><a href="{{ base_url }}user/profile/">Profile</a></li>
-                                        <li><a href="{{ base_url }}login/logout">{{ lang.LOGOUT }}</a></li>
-                                    </ul>
-                            </li>
-                            {% else %}
-                            <li><a href="{{ base_url }}login">{{ lang.LOGIN }}</a></li>
-                            {% endif %}
                         </ul>
                     </div>
                 </nav>
